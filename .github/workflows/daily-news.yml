@@ -1,0 +1,37 @@
+name: Daily World News
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # 2am UTC = 12pm Sydney AEDT — runs before the 6pm posting workflow
+  workflow_dispatch:
+
+jobs:
+  fetch-news:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install anthropic
+
+      - name: Get day name
+        id: day
+        run: echo "DAY_NAME=$(date +%A)" >> $GITHUB_OUTPUT
+
+      - name: Fetch and create world news files
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python fetch_news.py "${{ steps.day.outputs.DAY_NAME }}"
+
+      - name: Commit and push files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add "*NewsEN.yml" "*NewsES.yml"
+          git diff --staged --quiet || git commit -m "World news update: ${{ steps.day.outputs.DAY_NAME }}"
+          git push
