@@ -30,6 +30,7 @@ def get_news(day_name):
         "Return ONLY raw JSON, no markdown, no backticks, no explanation:\n"
         '{"news": [{"title": "headline under 20 words"}, {"title": "headline under 20 words"}, {"title": "headline under 20 words"}, {"title": "headline under 20 words"}, {"title": "headline under 20 words"}]}'
     )
+    en_text = extract_json(en_text)
     print(f"Cleaned EN text: {repr(en_text)}")
     en_data = json.loads(en_text)
 
