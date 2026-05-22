@@ -158,6 +158,6 @@ def generate_with_search(prompt):
 if __name__ == "__main__":
     # Quick smoke test
     out = generate_with_search(
-        "In 3 bullet points, what are today's top news stories in Australia?"
+        "In 5 bullet points, what are today's top news stories globally?"
     )
     print("\n=== RESULT ===\n", out)
