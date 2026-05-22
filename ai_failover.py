@@ -28,8 +28,8 @@ import time
 # CONFIG: model names change often. Update these in ONE place when needed.
 # Confirm current model strings at each provider's docs before deploying.
 # --------------------------------------------------------------------------
-CLAUDE_MODEL = "claude-opus-4-7"
-OPENAI_MODEL = "gpt-5.5"
+CLAUDE_MODEL = "claude-haiku-4-5-20251001"
+OPENAI_MODEL = "gpt-4o-mini"
 GEMINI_MODEL = "gemini-2.5-flash"
 
 MAX_TOKENS = 2000          # for providers that need an explicit cap
