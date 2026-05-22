@@ -21,8 +21,9 @@ def extract_json(text):
 
 
 def get_news(day_name):
-
+    import anthropic
     from ai_failover import generate_with_search
+
     en_text = generate_with_search(
         "Search for the 5 most important world news stories today. "
         "Choose stories from different regions and topics — avoid picking 2 stories about the same country or subject. "
@@ -35,8 +36,9 @@ def get_news(day_name):
     en_data = json.loads(en_text)
 
     # --- Translate to Spanish (Spain) ---
-    time.sleep(10)  # wait for rate limit window to reset
+    time.sleep(10)
     headlines = "\n".join(f"- {n['title']}" for n in en_data["news"])
+    client = anthropic.Anthropic()
     es_response = client.messages.create(
         model="claude-haiku-4-5-20251001",
         max_tokens=500,
