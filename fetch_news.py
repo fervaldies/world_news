@@ -9,10 +9,8 @@ from datetime import datetime
 def extract_json(text):
     """Extract the first complete JSON object from text, ignoring any preamble."""
     text = text.strip()
-    # Remove markdown fences if present
     text = re.sub(r"```(?:json)?\s*", "", text)
     text = text.replace("```", "").strip()
-    # Find the first { and last } to isolate the JSON object
     start = text.find("{")
     end = text.rfind("}")
     if start == -1 or end == -1:
@@ -24,16 +22,27 @@ def get_news(day_name):
     import anthropic
     from ai_failover import generate_with_search
 
-    en_text = generate_with_search(
-        "Search for the 5 most important world news stories today. "
-        "Choose stories from different regions and topics — avoid picking 2 stories about the same country or subject. "
-        "Prioritise stories with broad global relevance. "
-        "Return ONLY raw JSON, no markdown, no backticks, no explanation:\n"
-        '{"news": [{"title": "headline under 20 words"}, {"title": "headline under 20 words"}, {"title": "headline under 20 words"}, {"title": "headline under 20 words"}, {"title": "headline under 20 words"}]}'
-    )
-    en_text = extract_json(en_text)
-    print(f"Cleaned EN text: {repr(en_text)}")
-    en_data = json.loads(en_text)
+    # --- Fetch 5 world news headlines in English (with retry) ---
+    en_data = None
+    for attempt in range(3):
+        en_text = generate_with_search(
+            "Search for the 5 most important world news stories today. "
+            "Choose stories from different regions and topics — avoid picking 2 stories "
+            "about the same country or subject. Prioritise stories with broad global relevance. "
+            "You MUST return ONLY a JSON object with no other text whatsoever. "
+            "No prose, no explanation, no apology — even if uncertain, pick the 5 best "
+            "headlines you found and return them in this exact format:\n"
+            '{"news": [{"title": "headline under 20 words"}, {"title": "headline under 20 words"}, {"title": "headline under 20 words"}, {"title": "headline under 20 words"}, {"title": "headline under 20 words"}]}'
+        )
+        try:
+            en_text = extract_json(en_text)
+            print(f"Cleaned EN text: {repr(en_text)}")
+            en_data = json.loads(en_text)
+            break
+        except (ValueError, json.JSONDecodeError) as e:
+            print(f"⚠️ Attempt {attempt + 1}/3 failed to get valid JSON: {e}")
+            if attempt == 2:
+                raise
 
     # --- Translate to Spanish (Spain) ---
     time.sleep(10)
