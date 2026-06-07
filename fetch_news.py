@@ -39,9 +39,24 @@ def extract_json(text):
 
 
 def clean_title(title):
-    """Remove source attribution like ' - Reuters' from the end of a headline."""
+    """
+    Remove trailing source attribution like ' - Reuters' or ' - BBC News'.
+    Only strips if the part after the LAST dash is short (likely a source name)
+    and does not look like part of a sentence.
+    """
     if " - " in title:
-        title = title.rsplit(" - ", 1)[0]
+        parts = title.rsplit(" - ", 1)
+        suffix = parts[1].strip()
+        sentence_words = {"the", "a", "an", "and", "or", "but", "in",
+                          "on", "at", "to", "of", "for", "is", "are",
+                          "was", "were", "not", "new", "old", "it"}
+        words = suffix.lower().split()
+        looks_like_source = (
+            len(suffix) < 30 and
+            not any(w in sentence_words for w in words)
+        )
+        if looks_like_source:
+            return parts[0].strip()
     return title.strip()
 
 
