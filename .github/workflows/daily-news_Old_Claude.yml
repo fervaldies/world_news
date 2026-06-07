@@ -1,8 +1,8 @@
 name: Daily World News Old
 
 on:
-  schedule:
-    - cron: '0 2 * * *'  # 2am UTC = 12pm Sydney AEDT — runs before the 6pm posting workflow
+  #schedule:
+    #- cron: '0 2 * * *'  # 2am UTC = 12pm Sydney AEDT — runs before the 6pm posting workflow
   workflow_dispatch:
 
 jobs:
