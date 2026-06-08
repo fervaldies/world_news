@@ -108,9 +108,11 @@ def fetch_world_news():
         raise ValueError(f"GNews returned only {len(articles)} articles — need at least 5")
 
     headlines = []
+    seen = set()
     for article in articles:
         title = clean_title(article.get("title", ""))
-        if title:
+        if title and len(title) > 10 and title not in seen:
+            seen.add(title)
             headlines.append(title)
 
     return headlines
