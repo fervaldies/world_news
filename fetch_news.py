@@ -202,6 +202,7 @@ def get_news(day_name):
 
     # Step 2 — pick 5 diverse, globally relevant stories
     en_news = pick_best_5(all_headlines)
+    en_news  = rewrite_headlines(en_news)
     en_data = {"news": en_news}
     print(f"✅ Selected {len(en_data['news'])} headlines:")
     for n in en_data["news"]:
