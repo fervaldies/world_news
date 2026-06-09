@@ -172,6 +172,28 @@ def translate_to_spanish(headlines):
     return extract_json(text)
 
 
+def rewrite_headlines(headlines):
+    """Rewrite raw API headlines to sound natural and punchy for social media."""
+    numbered = "\n".join(f"{i+1}. {n['title']}" for i, n in enumerate(headlines))
+    print("✍️ Rewriting headlines for natural language...")
+    text = github_models_call([{
+        "role": "user",
+        "content": (
+            "Rewrite these 5 news headlines to sound natural and punchy for social media. "
+            "Rules: remove prefixes like 'LIVE UPDATES:', 'Study:', 'Report:', 'Breaking:'. "
+            "Remove dates in parentheses. Replace semicolons with a comma or 'and'. "
+            "Simplify scientific jargon into plain language. Remove marketing-speak. "
+            "Keep each headline under 20 words and factually accurate. "
+            "Return ONLY raw JSON, no markdown, no backticks:\n"
+            '{"news": [{"title": "rewritten"}, {"title": "rewritten"}, '
+            '{"title": "rewritten"}, {"title": "rewritten"}, {"title": "rewritten"}]}\n\n'
+            f"Headlines:\n{numbered}"
+        )
+    }])
+    text = extract_json(text)
+    rewritten = json.loads(text)["news"]
+    return rewritten
+
 # ── main ──────────────────────────────────────────────────────────────────────
 
 def get_news(day_name):
