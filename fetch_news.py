@@ -95,7 +95,7 @@ def fetch_world_news():
 
     url = (
         f"https://gnews.io/api/v4/top-headlines"
-        f"?lang=en&max=10&apikey={GNEWS_API_KEY}"
+        f"?lang=en&max=25&apikey={GNEWS_API_KEY}"
     )
     print("📰 Fetching from GNews API...")
     with urllib.request.urlopen(url, timeout=15) as r:
@@ -121,33 +121,34 @@ def fetch_world_news():
 def pick_best_5(headlines):
     """Use GitHub Models to pick the 5 most diverse and globally relevant stories."""
     numbered = "\n".join(f"{i}. {h}" for i, h in enumerate(headlines))
-
     print("🤖 Picking best 5 via GitHub Models...")
     text = github_models_call([{
         "role": "user",
         "content": (
             "You are a news editor. From the list below, pick the 5 most important "
-            "and globally relevant stories. Prioritise variety — avoid picking 2 stories "
-            "about the same country or topic. "
+            "and globally relevant stories.\n\n"
+            "AVOID headlines that:\n"
+            "- Are vague or could apply to any day (e.g. 'Group tackles issues head-on')\n"
+            "- Mention no specific person, country, company, or place\n"
+            "- Are about local/regional sport lineups or minor celebrity news\n"
+            "- Read like opinion or feature teasers rather than hard news\n\n"
+            "PREFER headlines that name a specific country, leader, company, or "
+            "concrete event, and that would make sense to an international viewer. "
+            "Prioritise variety — avoid picking 2 stories about the same country or topic.\n\n"
             "Return ONLY raw JSON, no markdown, no backticks:\n"
             '{"selected_indexes": [0, 1, 2, 3, 4]}\n\n'
-            "Indexes are 0-based. Stories:\n\n"
-            f"{numbered}"
+            f"Indexes are 0-based. Stories:\n\n{numbered}"
         )
     }], max_tokens=100)
-
     text    = extract_json(text)
     indexes = json.loads(text)["selected_indexes"]
     selected = [headlines[i] for i in indexes if i < len(headlines)]
-
-    # Pad if needed
     if len(selected) < 5:
         for h in headlines:
             if h not in selected:
                 selected.append(h)
             if len(selected) == 5:
                 break
-
     return [{"title": t} for t in selected[:5]]
 
 
