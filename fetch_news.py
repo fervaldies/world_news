@@ -1,9 +1,11 @@
 """
 fetch_news.py — world_news
 --------------------------
-Fetches top world news headlines using GNews API (free),
-uses GitHub Models to pick the 5 most diverse/important stories,
-then translates them to Spanish using GitHub Models (free).
+Fetches world news by randomly picking 5 topics from a curated list of
+continent/region-flavoured topics, searching GNews for each (5 articles each),
+pooling ~25 candidates, de-duplicating, then using GitHub Models to pick the
+best 5 (naming specific people/places/events, with topic variety).
+Then rewrites them punchy and translates to Spanish — all free.
 
 Required environment variables:
   GNEWS_API_KEY   — free API key from gnews.io
@@ -14,7 +16,10 @@ import sys
 import json
 import re
 import os
+import time
+import random
 import urllib.request
+import urllib.parse
 import urllib.error
 from datetime import datetime
 
@@ -22,6 +27,42 @@ GNEWS_API_KEY      = os.environ.get("GNEWS_API_KEY", "")
 GITHUB_TOKEN       = os.environ.get("GITHUB_TOKEN", "")
 GITHUB_MODELS_URL  = "https://models.inference.ai.azure.com/chat/completions"
 GITHUB_MODEL       = "gpt-4o-mini"
+
+# Curated topic pool — continent/region flavoured, specific enough to force
+# concrete, named stories rather than vague wire copy. Each run picks 5 at random.
+TOPICS = [
+    "Europe politics",
+    "European Union",
+    "United Kingdom news",
+    "France news",
+    "Germany news",
+    "Oceania news",
+    "Australia news",
+    "United States politics",
+    "United States economy",
+    "Canada news",
+    "Middle East conflict",
+    "Israel news",
+    "Asia technology",
+    "China news",
+    "Japan news",
+    "India news",
+    "Africa news",
+    "South Africa news",
+    "Nigeria news",
+    "South America news",
+    "Brazil news",
+    "Mexico news",
+    "Russia Ukraine war",
+    "world economy",
+    "global climate",
+    "space exploration",
+    "artificial intelligence",
+    "world health",
+]
+
+TOPICS_PER_RUN    = 5
+ARTICLES_PER_TOPIC = 5
 
 
 # ── helpers ───────────────────────────────────────────────────────────────────
@@ -39,11 +80,7 @@ def extract_json(text):
 
 
 def clean_title(title):
-    """
-    Remove trailing source attribution like ' - Reuters' or ' - BBC News'.
-    Only strips if the part after the LAST dash is short (likely a source name)
-    and does not look like part of a sentence.
-    """
+    """Remove trailing source attribution like ' - Reuters' if it looks like a source."""
     if " - " in title:
         parts = title.rsplit(" - ", 1)
         suffix = parts[1].strip()
@@ -58,6 +95,27 @@ def clean_title(title):
         if looks_like_source:
             return parts[0].strip()
     return title.strip()
+
+
+def remove_near_duplicates(headlines):
+    """Drop headlines that share too many significant words with an earlier one."""
+    stop = {"the", "a", "an", "and", "or", "but", "in", "on", "at", "to", "of",
+            "for", "as", "is", "are", "was", "were", "with", "from", "by", "its",
+            "amid", "over", "after", "new", "say", "says"}
+    kept, kept_wordsets = [], []
+    for h in headlines:
+        words = {w.lower().strip(".,'\"") for w in h.split()
+                 if w.lower() not in stop and len(w) > 3}
+        is_dup = False
+        for ws in kept_wordsets:
+            overlap = len(words & ws)
+            if overlap >= 3 and overlap >= 0.5 * min(len(words), len(ws)):
+                is_dup = True
+                break
+        if not is_dup:
+            kept.append(h)
+            kept_wordsets.append(words)
+    return kept
 
 
 def github_models_call(messages, max_tokens=600):
@@ -88,38 +146,60 @@ def github_models_call(messages, max_tokens=600):
 
 # ── news fetching ─────────────────────────────────────────────────────────────
 
+def fetch_topic(topic):
+    """Search GNews for one topic, return cleaned headlines."""
+    params = urllib.parse.urlencode({
+        "q":      topic,
+        "lang":   "en",
+        "max":    str(ARTICLES_PER_TOPIC),
+        "apikey": GNEWS_API_KEY,
+    })
+    url = f"https://gnews.io/api/v4/search?{params}"
+    try:
+        with urllib.request.urlopen(url, timeout=15) as r:
+            data = json.loads(r.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        print(f"  ⚠️  '{topic}' failed: {e.code}")
+        return []
+    articles = data.get("articles", [])
+    print(f"  '{topic}': {len(articles)} articles")
+    out = []
+    for article in articles:
+        title = clean_title(article.get("title", ""))
+        if title and len(title) > 10:
+            out.append(title)
+    return out
+
+
 def fetch_world_news():
-    """Fetch top world headlines from GNews API (10 articles for diversity selection)."""
+    """Pick 5 random topics, fetch each, pool + de-duplicate the results."""
     if not GNEWS_API_KEY:
         raise ValueError("GNEWS_API_KEY is not set")
 
-    url = (
-        f"https://gnews.io/api/v4/top-headlines"
-        f"?lang=en&max=25&apikey={GNEWS_API_KEY}"
-    )
-    print("📰 Fetching from GNews API...")
-    with urllib.request.urlopen(url, timeout=15) as r:
-        data = json.loads(r.read().decode("utf-8"))
+    chosen = random.sample(TOPICS, TOPICS_PER_RUN)
+    print(f"🎲 Topics this run: {', '.join(chosen)}")
 
-    articles = data.get("articles", [])
-    print(f"  GNews returned {len(articles)} articles")
-
-    if len(articles) < 5:
-        raise ValueError(f"GNews returned only {len(articles)} articles — need at least 5")
-
-    headlines = []
+    pool = []
     seen = set()
-    for article in articles:
-        title = clean_title(article.get("title", ""))
-        if title and len(title) > 10 and title not in seen:
-            seen.add(title)
-            headlines.append(title)
+    for topic in chosen:
+        for title in fetch_topic(topic):
+            if title not in seen:
+                seen.add(title)
+                pool.append(title)
+        time.sleep(1)  # be gentle on the free GNews rate limit
 
-    return headlines
+    print(f"📰 Pool of {len(pool)} unique headlines before de-dup")
+    pool = remove_near_duplicates(pool)
+    print(f"🧹 {len(pool)} headlines after near-duplicate removal")
+
+    if len(pool) < 5:
+        raise ValueError(f"Only {len(pool)} headlines after de-dup — need at least 5")
+
+    return pool
 
 
 def pick_best_5(headlines):
-    """Use GitHub Models to pick the 5 most diverse and globally relevant stories."""
+    """Use GitHub Models to pick the 5 best, varied, globally relevant stories."""
     numbered = "\n".join(f"{i}. {h}" for i, h in enumerate(headlines))
     print("🤖 Picking best 5 via GitHub Models...")
     text = github_models_call([{
@@ -128,17 +208,16 @@ def pick_best_5(headlines):
             "You are a world news editor. Pick the 5 best stories from the list.\n\n"
             "STEP 1 — Remove duplicates FIRST. Group headlines that describe the same "
             "underlying event (same country + same topic = same story, even if the "
-            "wording, angle, or numbers differ). Example: 'France limits alcohol during "
-            "heatwave' and 'France restricts alcohol sales in heatwave' are the SAME "
-            "story — keep only ONE. From each group pick the single clearest headline.\n\n"
-            "STEP 2 — From the de-duplicated stories, pick the 5 most important. "
-            "Each of the 5 MUST be about a different event. Never select two headlines "
-            "that share the same country and topic.\n\n"
-            "AVOID vague headlines with no specific person, country, company, or place, "
-            "and minor sport or celebrity items.\n\n"
-            "PREFER headlines naming a specific country, leader, company, or concrete "
-            "event that would make sense to an international viewer, with variety of "
-            "countries and topics.\n\n"
+            "wording, angle, or numbers differ). From each group keep only the single "
+            "clearest headline.\n\n"
+            "STEP 2 — From the de-duplicated stories, pick the 5 most important and "
+            "globally interesting. Prefer variety of regions and topics, but you MAY "
+            "pick 2 from the same region if both are genuinely strong and clearly "
+            "different events.\n\n"
+            "AVOID vague headlines with no specific person, country, company, or place "
+            "(e.g. 'Man robs a bank' with no location), and minor sport or celebrity items.\n\n"
+            "PREFER headlines that NAME a specific country, leader, company, or concrete "
+            "event, and that would make sense to an international viewer.\n\n"
             "Return ONLY raw JSON, no markdown, no backticks:\n"
             '{"selected_indexes": [0, 1, 2, 3, 4]}\n\n'
             f"Indexes are 0-based. Stories:\n\n{numbered}"
@@ -199,15 +278,16 @@ def rewrite_headlines(headlines):
     rewritten = json.loads(text)["news"]
     return rewritten
 
+
 # ── main ──────────────────────────────────────────────────────────────────────
 
 def get_news(day_name):
-    # Step 1 — fetch world news headlines
+    # Step 1 — fetch world news across 5 random topics
     all_headlines = fetch_world_news()
 
     # Step 2 — pick 5 diverse, globally relevant stories
     en_news = pick_best_5(all_headlines)
-    en_news  = rewrite_headlines(en_news)
+    en_news = rewrite_headlines(en_news)
     en_data = {"news": en_news}
     print(f"✅ Selected {len(en_data['news'])} headlines:")
     for n in en_data["news"]:
