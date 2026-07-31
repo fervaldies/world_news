@@ -24,9 +24,9 @@ import urllib.error
 from datetime import datetime
 
 GNEWS_API_KEY      = os.environ.get("GNEWS_API_KEY", "")
-GITHUB_TOKEN       = os.environ.get("GITHUB_TOKEN", "")
-GITHUB_MODELS_URL  = "https://models.inference.ai.azure.com/chat/completions"
-GITHUB_MODEL       = "gpt-4o-mini"
+GEMINI_API_KEY  = os.environ.get("GEMINI_API_KEY", "")
+GEMINI_MODEL    = "gemini-3.5-flash-lite"
+GEMINI_URL      = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent"
 
 # Curated topic pool — continent/region flavoured, specific enough to force
 # concrete, named stories rather than vague wire copy. Each run picks 5 at random.
@@ -119,29 +119,38 @@ def remove_near_duplicates(headlines):
 
 
 def github_models_call(messages, max_tokens=600):
-    """Make a call to GitHub Models API and return the response text."""
-    if not GITHUB_TOKEN:
-        raise ValueError("GITHUB_TOKEN is not set")
+    """Make a call to Gemini API and return the response text.
+    Keeps the same function name/interface so callers don't need to change."""
+    if not GEMINI_API_KEY:
+        raise ValueError("GEMINI_API_KEY is not set")
+
+    # Gemini has no separate "system" role — fold everything into one user turn
+    prompt_text = "\n\n".join(m["content"] for m in messages)
 
     payload = json.dumps({
-        "model": GITHUB_MODEL,
-        "messages": messages,
-        "max_tokens": max_tokens
+        "contents": [{"parts": [{"text": prompt_text}]}],
+        "generationConfig": {"maxOutputTokens": max_tokens}
     }).encode("utf-8")
 
+    url = f"{GEMINI_URL}?key={GEMINI_API_KEY}"
     req = urllib.request.Request(
-        GITHUB_MODELS_URL,
+        url,
         data=payload,
-        headers={
-            "Content-Type":  "application/json",
-            "Authorization": f"Bearer {GITHUB_TOKEN}"
-        }
+        headers={"Content-Type": "application/json"}
     )
 
-    with urllib.request.urlopen(req, timeout=30) as r:
-        result = json.loads(r.read().decode("utf-8"))
-
-    return result["choices"][0]["message"]["content"]
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(req, timeout=30) as r:
+                result = json.loads(r.read().decode("utf-8"))
+            return result["candidates"][0]["content"]["parts"][0]["text"]
+        except urllib.error.HTTPError as e:
+            if e.code == 429 and attempt < 2:
+                wait = 5 * (attempt + 1)
+                print(f"  ⏳ Gemini rate limited, retrying in {wait}s...")
+                time.sleep(wait)
+            else:
+                raise
 
 
 # ── news fetching ─────────────────────────────────────────────────────────────
