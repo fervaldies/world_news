@@ -145,6 +145,8 @@ def github_models_call(messages, max_tokens=600):
                 result = json.loads(r.read().decode("utf-8"))
             return result["candidates"][0]["content"]["parts"][0]["text"]
         except urllib.error.HTTPError as e:
+            error_body = e.read().decode("utf-8")
+            print(f"  ❌ Gemini API error {e.code}: {error_body}")
             if e.code == 429 and attempt < 2:
                 wait = 5 * (attempt + 1)
                 print(f"  ⏳ Gemini rate limited, retrying in {wait}s...")
