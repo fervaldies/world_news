@@ -1,0 +1,241 @@
+name: Weekly ID World News + YouTube + Instagram
+
+on:
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Post even if it was already posted (Newsdesk or earlier run)"
+        type: boolean
+        default: false
+  # AUTOMATIC POSTING IS OFF — to turn it on, remove the # from the next two lines and commit:
+  # schedule:
+  #   - cron: "20 11 * * 0"   # 18:00 Jakarta (Sundays)
+
+permissions:
+  contents: read
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: reels
+    steps:
+      # Runs in this PUBLIC repo (no Actions minutes). Scripts, backgrounds and music come
+      # from the private world-news-reels repo. Only scheduled and manual runs — never add pull_request triggers.
+      - name: Check out the videos, music and scripts (private repo)
+        uses: actions/checkout@v4
+        with:
+          repository: fervaldies/world-news-reels
+          token: ${{ secrets.GH_PAT }}
+          path: reels
+      # ── Already posted? (by Newsdesk or an earlier run) ─────────────────────
+      # Looks in news-metrics for a weekly record of this channel+language posted
+      # in the last WINDOW_HOURS. Sets YT_DONE / IG_DONE / TRIAL_DONE / MAIN_DONE /
+      # ALL_DONE. If news-metrics can't be read, nothing is set and the job posts normally.
+      - name: Check if already posted
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+          CHANNEL: world
+          LANG_CODE: id
+          KIND: weekly
+          WINDOW_HOURS: "48"
+          HAS_TRIAL: "false"
+          FORCE: ${{ inputs.force }}
+        run: |
+          if [ "$FORCE" = "true" ]; then echo "Force run — skipping the check"; exit 0; fi
+          M1=$(date -u +%Y-%m)
+          M0=$(date -u -d "$(date -u +%Y-%m-01) -1 day" +%Y-%m)
+          if git clone -q --depth 1 --filter=blob:none --sparse \
+               "https://x-access-token:${GH_PAT}@github.com/fervaldies/news-metrics.git" nm \
+             && git -C nm sparse-checkout set "posts/$M1" "posts/$M0"; then
+            python3 - <<'PY'
+          import glob, json, os
+          from datetime import datetime, timedelta, timezone
+
+          ch, lang, kind = os.environ["CHANNEL"], os.environ["LANG_CODE"], os.environ["KIND"]
+          has_trial = os.environ.get("HAS_TRIAL") == "true"
+          cutoff = datetime.now(timezone.utc) - timedelta(hours=float(os.environ["WINDOW_HOURS"]))
+          done, trial_done = set(), False
+          for path in glob.glob("nm/posts/*/*.json"):
+              name = os.path.basename(path)
+              if f"_{ch}_{lang}_" not in name or f"_{kind}_" not in name:
+                  continue
+              try:
+                  r = json.load(open(path))
+              except Exception:
+                  continue
+              if r.get("channel") != ch or r.get("lang") != lang or r.get("kind") != kind:
+                  continue
+              ts = r.get("posted_at") or r.get("created_at") or ""
+              try:
+                  t = datetime.fromisoformat(ts.replace("Z", "+00:00"))
+              except ValueError:
+                  continue
+              if t < cutoff:
+                  continue
+              if r.get("trial"):
+                  if r.get("platform") == "instagram":
+                      trial_done = True
+                      print(f"Found: trial {r.get('post_id')} posted {ts}")
+              else:
+                  done.add(r.get("platform"))
+                  print(f"Found: {r.get('platform')} {r.get('post_id')} posted {ts}")
+
+          yt, ig = "youtube" in done, "instagram" in done
+          trial = trial_done if has_trial else True
+          main = yt and ig
+          b = lambda x: str(x).lower()
+          with open(os.environ["GITHUB_ENV"], "a") as f:
+              f.write(f"YT_DONE={b(yt)}\nIG_DONE={b(ig)}\nTRIAL_DONE={b(trial)}\n"
+                      f"MAIN_DONE={b(main)}\nALL_DONE={b(main and trial)}\n")
+          print(f"YouTube done: {yt} · Instagram done: {ig}" + (f" · Trial done: {trial_done}" if has_trial else ""))
+          PY
+          else
+            echo "⚠️ Could not read news-metrics — posting normally"
+          fi
+          rm -rf nm
+
+      - name: Tell Telegram it was skipped
+        if: env.ALL_DONE == 'true'
+        env:
+          BOT: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          curl -s -X POST "https://api.telegram.org/bot${BOT}/sendMessage" \
+            -d chat_id="${CHAT}" \
+            --data-urlencode text="⏭️ 🌍 Weekly World News ID already posted — GitHub run skipped" > /dev/null
+
+      # ── Normal run ──────────────────────────────────────────────────────────
+
+      - name: Set up Python
+        if: env.ALL_DONE != 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install ffmpeg
+        if: env.ALL_DONE != 'true'
+        timeout-minutes: 5
+        run: |
+          CURL="curl -fsSL --connect-timeout 20 --max-time 180 --retry 3 --retry-delay 5 --retry-all-errors"
+
+          if $CURL https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz -o ffmpeg.tar.xz \
+             && tar -xf ffmpeg.tar.xz; then
+            echo "✅ ffmpeg from GitHub (BtbN builds)"
+            sudo mv ffmpeg-master-latest-linux64-gpl/bin/ffmpeg ffmpeg-master-latest-linux64-gpl/bin/ffprobe /usr/local/bin/
+          elif $CURL https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz -o ffmpeg2.tar.xz \
+             && tar -xf ffmpeg2.tar.xz; then
+            echo "✅ ffmpeg from johnvansickle.com"
+            sudo mv ffmpeg-*-amd64-static/ffmpeg ffmpeg-*-amd64-static/ffprobe /usr/local/bin/
+          else
+            echo "⚠️ Both downloads failed — falling back to apt-get"
+            sudo apt-get update && sudo apt-get install -y ffmpeg
+          fi
+
+          rm -rf ffmpeg*.tar.xz ffmpeg-master-latest-linux64-gpl ffmpeg-*-amd64-static
+          ffmpeg -version
+
+      - name: Install dependencies
+        if: env.ALL_DONE != 'true'
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install google-auth-oauthlib google-api-python-client edge-tts
+
+      - name: Select random music
+        if: env.ALL_DONE != 'true'
+        id: random_assets
+        run: |
+          # Select random music (worldmusic.mp3, worldmusic2.mp3 ... worldmusic10.mp3)
+          MUSIC_NUM=$((RANDOM % 32 + 1))
+          if [ "$MUSIC_NUM" -eq 1 ]; then
+            MUSIC_FILE="worldmusic.mp3"
+          else
+            MUSIC_FILE="worldmusic${MUSIC_NUM}.mp3"
+          fi
+
+          echo "Selected music: $MUSIC_FILE"
+          echo "music_file=$MUSIC_FILE" >> $GITHUB_OUTPUT
+
+      - name: Build weekly current.yml from world news repo
+        if: env.ALL_DONE != 'true'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python build_weekly.py
+
+      - name: Verify inputs exist
+        if: env.ALL_DONE != 'true'
+        run: |
+          test -f weeks/current.yml || (echo "Missing weeks/current.yml" && exit 1)
+          test -f weekly_worldvideo.mp4 || (echo "Missing worldvideo.mp4" && exit 1)
+
+      - name: Generate ID video
+        if: env.MAIN_DONE != 'true'
+        run: |
+          python make_reels_es_en.py \
+            --yml weeks/current.yml \
+            --video weekly_worldvideo.mp4 \
+            --music ${{ steps.random_assets.outputs.music_file }} \
+            --lang id \
+
+      - name: Find output folder
+        if: env.MAIN_DONE != 'true'
+        id: out
+        run: |
+          WEEK_DIR=$(ls -d week_* | sort | tail -n 1)
+          echo "week_dir=$WEEK_DIR" >> $GITHUB_OUTPUT
+
+      - name: Use the finished ID video (voice + music already mixed in)
+        if: env.MAIN_DONE != 'true'
+        run: |
+          echo "OUT_FINAL=$(ls "${{ steps.out.outputs.week_dir }}"/reel_id_*.mp4 | head -n 1)" >> $GITHUB_ENV
+          echo "OUT_CAP=$(ls ${{ steps.out.outputs.week_dir }}/caption_id_*.txt | head -n 1)" >> $GITHUB_ENV
+
+      - name: Upload ID to YouTube
+        if: env.YT_DONE != 'true'
+        #if: false
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_NEWSDESK_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_NEWSDESK_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_ID_REFRESH_TOKEN }}
+        run: python upload_youtube.py "$OUT_FINAL" "$OUT_CAP" "id"
+
+      - name: Re-encode ID video for Instagram
+        if: env.MAIN_DONE != 'true'
+        run: |
+          ffmpeg -i "$OUT_FINAL" \
+            -vf "scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,fps=30" \
+            -c:v libx264 -profile:v baseline -level 3.0 \
+            -pix_fmt yuv420p \
+            -b:v 3500k -maxrate 3500k -bufsize 7000k \
+            -c:a aac -b:a 128k -ar 44100 -ac 2 \
+            -movflags +faststart \
+            -t 90 \
+            "${{ steps.out.outputs.week_dir }}"/reel_id_instagram.mp4
+          echo "OUT_FINAL=${{ steps.out.outputs.week_dir }}/reel_id_instagram.mp4" >> $GITHUB_ENV
+
+      - name: Upload ID to Instagram
+        if: env.IG_DONE != 'true'
+        env:
+          INSTAGRAM_ID_TOKEN: ${{ secrets.INSTAGRAM_ID_TOKEN }}
+          INSTAGRAM_ID_USER_ID: ${{ secrets.INSTAGRAM_ID_USER_ID }}
+          FACEBOOK_ID_PAGE_ID: ${{ secrets.FACEBOOK_ID_PAGE_ID }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python upload_instagram.py "$OUT_FINAL" "$OUT_CAP" "id"
+
+      - name: Send ID to Telegram
+        if: env.MAIN_DONE != 'true'
+        env:
+          BOT: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          OUT_CAP_TEXT=$(cat "$OUT_CAP")
+          curl -s -X POST "https://api.telegram.org/bot${BOT}/sendDocument" \
+            -F chat_id="${CHAT}" \
+            -F document=@"${OUT_FINAL}" \
+            -F caption="🌍 Weekly World News ID ✅"
+          curl -s -X POST "https://api.telegram.org/bot${BOT}/sendMessage" \
+            -d chat_id="${CHAT}" \
+            --data-urlencode text="${OUT_CAP_TEXT}"
