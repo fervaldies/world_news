@@ -365,7 +365,48 @@ def get_news(day_name):
         f.write(build_yml(es_data))
 
     print(f"✅ Created {day_name}NewsEN.yml and {day_name}NewsES.yml")
+    write_extra_languages(en_data["news"], day_name, date_str)
 
+
+
+# ── Extra languages for the PT / ID networks (non-fatal) ──────────────────────
+EXTRA_LANGS = {
+    "PT": ("Brazilian Portuguese (pt-BR), as written by Brazilian news media. Use Brazilian number "
+           "formats (6,3 bilhões; 2,8%; US$ 5 milhões)."),
+    "ID": ("Indonesian (Bahasa Indonesia), natural news style as written by Kompas or Tempo. Use "
+           "Indonesian number formats (6,3 miliar; 2,8 persen)."),
+}
+
+
+def write_extra_languages(en_news, day_name, date_str):
+    """Translate today's 5 English headlines into PT and ID and write {Day}NewsPT/ID.yml."""
+    headlines_text = "\n".join(f"- {n['title']}" for n in en_news)
+    for code, style in EXTRA_LANGS.items():
+        try:
+            print(f"🌐 Translating to {code}...")
+            text = github_models_call([{
+                "role": "user",
+                "content": (
+                    f"Translate these 5 news headlines into {style} "
+                    "Keep every number, name, place and organisation exactly as in the original; "
+                    "natural, concise headline style; same order; no extra words. "
+                    "Return ONLY raw JSON, no markdown, no backticks, no explanation:\n"
+                    '{"news": [{"title": "..."}, {"title": "..."}, {"title": "..."}, '
+                    '{"title": "..."}, {"title": "..."}]}\n\n'
+                    f"Headlines:\n{headlines_text}"
+                )
+            }])
+            data = json.loads(extract_json(text))
+            news = [n["title"].strip() for n in data.get("news", []) if n.get("title")]
+            if len(news) != len(en_news):
+                raise ValueError(f"got {len(news)} headlines instead of {len(en_news)}")
+            lines = [f"date: {date_str}", f"day: {day_name}", "news:"]
+            lines += [f'  - title: "{t.replace(chr(34), chr(39))}"' for t in news]
+            with open(f"{day_name}News{code}.yml", "w", encoding="utf-8") as f:
+                f.write("\n".join(lines) + "\n")
+            print(f"✅ Created {day_name}News{code}.yml")
+        except Exception as e:
+            print(f"⚠️ {code} translation skipped (non-fatal): {e}")
 
 if __name__ == "__main__":
     day_name = sys.argv[1]
