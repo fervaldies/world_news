@@ -1,0 +1,168 @@
+name: Special edition — all channels and languages
+
+# Paste the combined YAML from the "Special Edition — All Channels" Claude project into
+# special_all.yml (this repo) and commit: every region and language in it is posted, one
+# after the other. Optional first line:  langs: [en, es, pt, id]   (default: all four)
+# Commit with "[skip ci]" in the message to save without posting.
+# Runs in this PUBLIC repo (no Actions minutes); scripts, backgrounds and music come from the
+# private reels repos. Only push and manual runs — never add pull_request triggers.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [special_all.yml]
+
+concurrency:
+  group: special-all
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      max-parallel: 1          # one video after another
+      fail-fast: false         # one failure doesn't stop the others
+      matrix:
+        include:
+          - {ch: australia, CH: AUSTRALIA, repo: australia-news-reels, flag: "🇦🇺", video: DailyNewsVideo, music: daily_music, lang: en, yt: AUSTRALIA_YOUTUBE_REFRESH_TOKEN}
+          - {ch: australia, CH: AUSTRALIA, repo: australia-news-reels, flag: "🇦🇺", video: DailyNewsVideo, music: daily_music, lang: es, yt: AUSTRALIA_YOUTUBE_REFRESH_TOKEN}
+          - {ch: australia, CH: AUSTRALIA, repo: australia-news-reels, flag: "🇦🇺", video: DailyNewsVideo, music: daily_music, lang: pt, yt: AUSTRALIA_YOUTUBE_PT_REFRESH_TOKEN}
+          - {ch: australia, CH: AUSTRALIA, repo: australia-news-reels, flag: "🇦🇺", video: DailyNewsVideo, music: daily_music, lang: id, yt: AUSTRALIA_YOUTUBE_ID_REFRESH_TOKEN}
+          - {ch: world, CH: WORLD, repo: world-news-reels, flag: "🌍", video: worldvideo, music: worldmusic, lang: en, yt: WORLD_YOUTUBE_EN_REFRESH_TOKEN}
+          - {ch: world, CH: WORLD, repo: world-news-reels, flag: "🌍", video: worldvideo, music: worldmusic, lang: es, yt: WORLD_YOUTUBE_ES_REFRESH_TOKEN}
+          - {ch: world, CH: WORLD, repo: world-news-reels, flag: "🌍", video: worldvideo, music: worldmusic, lang: pt, yt: WORLD_YOUTUBE_PT_REFRESH_TOKEN}
+          - {ch: world, CH: WORLD, repo: world-news-reels, flag: "🌍", video: worldvideo, music: worldmusic, lang: id, yt: WORLD_YOUTUBE_ID_REFRESH_TOKEN}
+          - {ch: europe, CH: EUROPE, repo: europe-news-reels, flag: "🇪🇺", video: eurovideo, music: euromusic, lang: en, yt: EUROPE_YOUTUBE_EN_REFRESH_TOKEN}
+          - {ch: europe, CH: EUROPE, repo: europe-news-reels, flag: "🇪🇺", video: eurovideo, music: euromusic, lang: es, yt: EUROPE_YOUTUBE_ES_REFRESH_TOKEN}
+          - {ch: europe, CH: EUROPE, repo: europe-news-reels, flag: "🇪🇺", video: eurovideo, music: euromusic, lang: pt, yt: EUROPE_YOUTUBE_PT_REFRESH_TOKEN}
+          - {ch: europe, CH: EUROPE, repo: europe-news-reels, flag: "🇪🇺", video: eurovideo, music: euromusic, lang: id, yt: EUROPE_YOUTUBE_ID_REFRESH_TOKEN}
+    name: ${{ matrix.ch }} ${{ matrix.lang }}
+    steps:
+      - name: Check out special_all.yml (this repo)
+        uses: actions/checkout@v4
+        with:
+          path: pub
+
+      - name: Is this region + language in the file?
+        id: pick
+        run: |
+          pip install -q pyyaml
+          python3 - <<'PY'
+          import os, yaml
+          ch, lang = "${{ matrix.ch }}", "${{ matrix.lang }}"
+          d = yaml.safe_load(open("pub/special_all.yml", encoding="utf-8")) or {}
+          langs = d.get("langs") or ["en", "es", "pt", "id"]
+          sec = d.get(ch) or {}
+          ok = lang in langs and isinstance(sec.get(f"title_{lang}"), str) and len(sec.get(f"news_{lang}") or []) >= 5
+          # the video maker always reads title_en/news_en/title_es/news_es too
+          if ok:
+              for k in ("title_en", "title_es", "news_en", "news_es"):
+                  sec.setdefault(k, sec.get(f"{k[:-3]}_{lang}"))
+              os.makedirs("special", exist_ok=True)
+              yaml.safe_dump(sec, open("special/special.yml", "w", encoding="utf-8"), allow_unicode=True, sort_keys=False, width=1000)
+          print("Posting" if ok else "Not in the file — skipping", ch, lang)
+          open(os.environ["GITHUB_OUTPUT"], "a").write(f"go={'true' if ok else 'false'}\n")
+          PY
+
+      - name: Check out the videos, music and scripts (private repo)
+        if: steps.pick.outputs.go == 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: fervaldies/${{ matrix.repo }}
+          token: ${{ secrets.GH_PAT }}
+          path: reels
+
+      - name: Set up Python
+        if: steps.pick.outputs.go == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install ffmpeg
+        if: steps.pick.outputs.go == 'true'
+        timeout-minutes: 5
+        run: |
+          CURL="curl -fsSL --connect-timeout 20 --max-time 180 --retry 3 --retry-delay 5 --retry-all-errors"
+          if $CURL https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz -o ffmpeg.tar.xz && tar -xf ffmpeg.tar.xz; then
+            sudo mv ffmpeg-master-latest-linux64-gpl/bin/ffmpeg ffmpeg-master-latest-linux64-gpl/bin/ffprobe /usr/local/bin/
+          elif $CURL https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz -o ffmpeg2.tar.xz && tar -xf ffmpeg2.tar.xz; then
+            sudo mv ffmpeg-*-amd64-static/ffmpeg ffmpeg-*-amd64-static/ffprobe /usr/local/bin/
+          else
+            sudo apt-get update && sudo apt-get install -y ffmpeg
+          fi
+          rm -rf ffmpeg*.tar.xz ffmpeg-master-latest-linux64-gpl ffmpeg-*-amd64-static
+
+      - name: Install dependencies
+        if: steps.pick.outputs.go == 'true'
+        working-directory: reels
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyyaml google-auth-oauthlib google-api-python-client edge-tts
+
+      - name: Make the video
+        if: steps.pick.outputs.go == 'true'
+        working-directory: reels
+        run: |
+          V=$(ls ${{ matrix.video }}*.mp4 | grep -E '^${{ matrix.video }}[0-9]*\.mp4$' | shuf -n1)
+          M=$(ls ${{ matrix.music }}*.mp3 | grep -E '^${{ matrix.music }}[0-9]*\.mp3$' | shuf -n1)
+          echo "Background: $V · Music: $M"
+          cp ../special/special.yml nd_special_all.yml
+          python make_reels_es_en.py --yml nd_special_all.yml --video "$V" --music "$M" \
+            --lang ${{ matrix.lang }} --output-dir special_out --no-week-label --title-color red
+          echo "OUT_FINAL=$(ls special_out/reel_${{ matrix.lang }}_*.mp4 | head -n 1)" >> $GITHUB_ENV
+          echo "OUT_CAP=$(ls special_out/caption_${{ matrix.lang }}_*.txt | head -n 1)" >> $GITHUB_ENV
+
+      - name: Upload to YouTube
+        if: steps.pick.outputs.go == 'true'
+        working-directory: reels
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_NEWSDESK_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_NEWSDESK_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets[matrix.yt] }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+        run: python upload_youtube.py "$OUT_FINAL" "$OUT_CAP" "${{ matrix.lang }}"
+
+      - name: Prepare the Instagram version
+        if: steps.pick.outputs.go == 'true'
+        working-directory: reels
+        run: |
+          ffmpeg -loglevel error -i "$OUT_FINAL" \
+            -vf "scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,fps=30" \
+            -c:v libx264 -profile:v baseline -level 3.0 -pix_fmt yuv420p \
+            -b:v 3500k -maxrate 3500k -bufsize 7000k -c:a aac -b:a 128k -ar 44100 -ac 2 \
+            -movflags +faststart -t 90 special_out/reel_instagram.mp4
+
+      - name: Post to Instagram + Facebook
+        if: steps.pick.outputs.go == 'true'
+        working-directory: reels
+        env:
+          INSTAGRAM_EN_TOKEN: ${{ secrets.INSTAGRAM_TOKEN }}
+          INSTAGRAM_ES_TOKEN: ${{ secrets.INSTAGRAM_TOKEN }}
+          INSTAGRAM_PT_TOKEN: ${{ secrets.INSTAGRAM_TOKEN }}
+          INSTAGRAM_ID_TOKEN: ${{ secrets.INSTAGRAM_TOKEN }}
+          INSTAGRAM_EN_USER_ID: ${{ secrets[format('{0}_INSTAGRAM_EN_USER_ID', matrix.CH)] }}
+          INSTAGRAM_ES_USER_ID: ${{ secrets[format('{0}_INSTAGRAM_ES_USER_ID', matrix.CH)] }}
+          INSTAGRAM_PT_USER_ID: ${{ secrets[format('{0}_INSTAGRAM_PT_USER_ID', matrix.CH)] }}
+          INSTAGRAM_ID_USER_ID: ${{ secrets[format('{0}_INSTAGRAM_ID_USER_ID', matrix.CH)] }}
+          FACEBOOK_EN_PAGE_ID: ${{ secrets[format('{0}_FACEBOOK_EN_PAGE_ID', matrix.CH)] }}
+          FACEBOOK_ES_PAGE_ID: ${{ secrets[format('{0}_FACEBOOK_ES_PAGE_ID', matrix.CH)] }}
+          FACEBOOK_PT_PAGE_ID: ${{ secrets[format('{0}_FACEBOOK_PT_PAGE_ID', matrix.CH)] }}
+          FACEBOOK_ID_PAGE_ID: ${{ secrets[format('{0}_FACEBOOK_ID_PAGE_ID', matrix.CH)] }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python upload_instagram.py special_out/reel_instagram.mp4 "$OUT_CAP" "${{ matrix.lang }}"
+
+      - name: Tell Telegram
+        if: always() && steps.pick.outputs.go == 'true'
+        env:
+          BOT: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          L=$(echo "${{ matrix.lang }}" | tr a-z A-Z)
+          if [ "${{ job.status }}" = "success" ]; then T="🔴 ${{ matrix.flag }} Special edition $L posted ✅"; else T="⚠️ ${{ matrix.flag }} Special edition $L failed — check the Actions log"; fi
+          curl -s -X POST "https://api.telegram.org/bot${BOT}/sendMessage" -d chat_id="${CHAT}" --data-urlencode text="$T" > /dev/null

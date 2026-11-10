@@ -1,0 +1,4 @@
+# Paste the combined YAML from the "Special Edition — All Channels" Claude project below and
+# commit: every region and language in it is posted, one after the other.
+# Optional: keep only some languages with  langs: [en, es]  (default: all four).
+# Commit with "[skip ci]" in the message to save without posting.
