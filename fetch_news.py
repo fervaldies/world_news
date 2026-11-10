@@ -217,6 +217,7 @@ def fetch_topic(topic):
     out = []
     for article in articles:
         title = clean_title(article.get("title", ""))
+        remember_article(title, article)
         if title and len(title) > 10:
             out.append(title)
     return out
@@ -338,7 +339,9 @@ def get_news(day_name):
 
     # Step 2 — pick 5 diverse, globally relevant stories
     en_news = pick_best_5(all_headlines)
+    remember_picked(en_news)
     en_news = rewrite_headlines(en_news)
+    en_news  = friday_good_news(en_news)
     en_data = {"news": en_news}
     print(f"✅ Selected {len(en_data['news'])} headlines:")
     for n in en_data["news"]:
@@ -366,6 +369,7 @@ def get_news(day_name):
 
     print(f"✅ Created {day_name}NewsEN.yml and {day_name}NewsES.yml")
     write_extra_languages(en_data["news"], day_name, date_str)
+    enrich_day_files(day_name, en_data["news"])
 
 
 
@@ -407,6 +411,129 @@ def write_extra_languages(en_news, day_name, date_str):
             print(f"✅ Created {day_name}News{code}.yml")
         except Exception as e:
             print(f"⚠️ {code} translation skipped (non-fatal): {e}")
+
+
+# ═══ Story details for the new daily style (non-fatal) ═══════════════════════
+# Keeps each story's source and link, writes "why it matters" for two stories, picks a
+# visual (map / number / icon) and a category, and on Fridays swaps story 5 for good news.
+import datetime as _dt
+ARTICLE_INFO = {}            # headline → {"source": ..., "url": ...}
+PICKED = []                  # details of the 5 picked stories, in order
+GOOD_INDEX = None
+CATEGORIES = ["POLITICS", "ECONOMY", "BUSINESS", "TECH", "CLIMATE", "ENERGY", "HEALTH", "JUSTICE", "TRANSPORT",
+              "WEATHER", "SPORT", "SCIENCE", "SOCIETY", "CONFLICT", "WORLD"]
+
+
+def remember_article(title, article):
+    src = (article.get("source") or {}).get("name") or ""
+    ARTICLE_INFO.setdefault(title, {"source": src.strip(), "url": article.get("url") or ""})
+
+
+def remember_picked(news):
+    global PICKED
+    PICKED = [dict(ARTICLE_INFO.get(n["title"], {})) for n in news]
+
+
+def friday_good_news(en_news):
+    """On Fridays: replace story 5 with a genuinely positive story (if one is found)."""
+    global GOOD_INDEX
+    if _dt.datetime.utcnow().weekday() != 4 or len(en_news) < 5 or not GNEWS_API_KEY:
+        return en_news
+    try:
+        q = '(breakthrough OR rescued OR recovery OR "good news" OR conservation)'
+        params = urllib.parse.urlencode({"q": q, "lang": "en", "max": "10", "apikey": GNEWS_API_KEY,
+                                         "from": (_dt.datetime.utcnow() - _dt.timedelta(days=3)).strftime("%Y-%m-%dT%H:%M:%SZ")})
+        with urllib.request.urlopen(f"https://gnews.io/api/v4/search?{params}", timeout=15) as r:
+            arts = json.loads(r.read().decode("utf-8")).get("articles", [])
+        cands = [(clean_title(a.get("title", "")), a) for a in arts if a.get("title")]
+        cands = [(t, a) for t, a in cands if t and t not in [n["title"] for n in en_news]]
+        if not cands:
+            return en_news
+        numbered = "\n".join(f"{i}. {t}" for i, (t, a) in enumerate(cands))
+        text = github_models_call([{"role": "user", "content": (
+            "Pick the ONE headline that is genuinely good news for ordinary people (a breakthrough, rescue, "
+            "record, recovery, community win, conservation success). Not sport results, not company profits, "
+            "not anything involving deaths or disasters. If none qualifies, answer -1. Then rewrite it as a "
+            "natural, punchy, factual headline under 18 words. Return ONLY raw JSON: "
+            '{"index": 0, "title": "..."}\n\n' + numbered)}], max_tokens=200)
+        j = json.loads(extract_json(text))
+        i = int(j.get("index", -1))
+        if i < 0 or i >= len(cands) or not str(j.get("title", "")).strip():
+            print("ℹ️ No good-news story today — keeping the normal five")
+            return en_news
+        t, a = cands[i]
+        en_news = en_news[:4] + [{"title": str(j["title"]).strip()}]
+        while len(PICKED) < 5:
+            PICKED.append({})
+        PICKED[4] = {"source": ((a.get("source") or {}).get("name") or "").strip(), "url": a.get("url") or ""}
+        GOOD_INDEX = 4
+        print(f"🌱 Good news for Friday: {en_news[4]['title']}")
+    except Exception as e:
+        print(f"⚠️ Good-news search skipped (non-fatal): {e}")
+    return en_news
+
+
+def enrich_day_files(day_name, en_news):
+    """Adds why / source / url / cat / good / visual to every language file of today."""
+    try:
+        import yaml
+        titles = [n["title"] for n in en_news]
+        numbered = "\n".join(f"{i}. {t}" for i, t in enumerate(titles))
+        text = github_models_call([{"role": "user", "content": (
+            "For each of these 5 news headlines, return details for a short news video.\n"
+            f"- cat: one of {', '.join(CATEGORIES)}.\n"
+            "- why: ONLY for the 2 stories that most need context, one factual sentence (max 12 words) on why it "
+            "matters to ordinary people; no opinion, nothing not implied by the headline. Empty string for the others.\n"
+            "- visual: {\"type\": \"number\", \"number\": \"945\", \"label\": \"days in detention\"} when the headline has "
+            "a striking number (label max 3 words); else {\"type\": \"map\", \"country\": \"<country name as in "
+            "Natural Earth, e.g. Australia, Japan, United States of America>\", \"place\": \"<short place label>\", "
+            "\"lat\": <number>, \"lon\": <number>, \"span\": <degrees to show around it: 3 for a city, 12 for a "
+            "state, 25 for a country>} when it is about a specific place (add country2/place2/lat2/lon2 when two "
+            "places are linked); else {\"type\": \"icon\"}.\n"
+            "Return ONLY raw JSON: {\"stories\": [{\"cat\": \"...\", \"why\": \"...\", \"visual\": {...}}, ...5]}\n\n"
+            + numbered)}], max_tokens=1500)
+        stories = json.loads(extract_json(text)).get("stories", [])
+        if len(stories) != len(titles):
+            raise ValueError(f"got {len(stories)} story details")
+        # translate the short texts (why lines, number labels, place labels) once
+        bits = {"why": [s.get("why") or "" for s in stories],
+                "label": [(s.get("visual") or {}).get("label") or "" for s in stories],
+                "place": [(s.get("visual") or {}).get("place") or "" for s in stories],
+                "place2": [(s.get("visual") or {}).get("place2") or "" for s in stories]}
+        tr = {}
+        if any(x for v in bits.values() for x in v):
+            t2 = github_models_call([{"role": "user", "content": (
+                "Translate every string in these lists into Spanish from Spain (es), Brazilian Portuguese (pt) "
+                "and Indonesian (id). Keep empty strings empty, keep numbers and names exactly, keep it short. "
+                "Return ONLY raw JSON: {\"es\": {same keys}, \"pt\": {...}, \"id\": {...}}\n\n"
+                + json.dumps(bits, ensure_ascii=False))}], max_tokens=2000)
+            tr = json.loads(extract_json(t2))
+        for code in ("EN", "ES", "PT", "ID"):
+            path = f"{day_name}News{code}.yml"
+            if not os.path.exists(path):
+                continue
+            data = yaml.safe_load(open(path, encoding="utf-8")) or {}
+            items = data.get("news") or []
+            loc = bits if code == "EN" else (tr.get(code.lower()) or {})
+            for i, it in enumerate(items[:len(stories)]):
+                s = stories[i]
+                vis = dict(s.get("visual") or {"type": "icon"})
+                for key in ("label", "place", "place2"):
+                    vals = loc.get(key) or bits[key]
+                    if i < len(vals) and vals[i]:
+                        vis[key] = vals[i]
+                whys = loc.get("why") or bits["why"]
+                info = PICKED[i] if i < len(PICKED) else {}
+                it.update({"why": (whys[i] if i < len(whys) else "") or "",
+                           "source": info.get("source") or "", "url": info.get("url") or "",
+                           "cat": "GOOD NEWS" if GOOD_INDEX == i else str(s.get("cat") or "WORLD").upper(),
+                           "good": GOOD_INDEX == i, "visual": vis})
+            data["news"] = items
+            with open(path, "w", encoding="utf-8") as f:
+                yaml.safe_dump(data, f, allow_unicode=True, sort_keys=False, width=1000)
+        print("✅ Story details added (why it matters, sources, visuals)")
+    except Exception as e:
+        print(f"⚠️ Story details skipped (non-fatal): {e}")
 
 if __name__ == "__main__":
     day_name = sys.argv[1]
