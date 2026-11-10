@@ -1,8 +1,73 @@
 date: 2026-11-10
 day: Tuesday
 news:
-  - title: "Papa Leão XIV defende união latino-americana enquanto presidente da Argentina esnobam vitória eleitoral de Lula"
-  - title: "Derrotas de Trump nas eleições de meio de mandato golpeiam direita populista, mas francesa Le Pen ainda tem caminho para a vitória"
-  - title: "Líderes da cúpula do clima instam o mundo a acelerar ação com aproximação de prazos"
-  - title: "Forte terremoto atinge o centro do Japão, deixando 22 feridos e estilhaçando vidraças de lojas"
-  - title: "Alemanha deve ter sua primeira mulher presidente após Merz apoiar conservadora bávara Aigner"
+- title: Acusações de espionagem contra Nvidia devem desencadear regras mais rígidas dos EUA sobre exportação de chips de IA para a China
+  why: ''
+  source: U.S. News & World Report
+  url: https://www.usnews.com/news/top-news/articles/2026-11-09/nvidia-spy-allegations-likely-to-spur-laws-to-tighten-chinas-access-to-ai-chips
+  cat: TECH
+  good: false
+  visual:
+    type: map
+    country: United States of America
+    place: Estados Unidos
+    lat: 37.0902
+    lon: -95.7129
+    span: 25
+    country2: China
+    place2: China
+    lat2: 35.8617
+    lon2: 104.1954
+    span2: 25
+- title: Líderes globais na cúpula do clima instam nações a acelerar cortes de emissões
+  why: ''
+  source: Al-Monitor
+  url: https://www.al-monitor.com/originals/2026/11/cop31-summit-leaders-urge-world-move-faster-climate
+  cat: CLIMATE
+  good: false
+  visual:
+    type: icon
+- title: A morte trágica de um jovem migrante no Canadá expõe os riscos que trabalhadores vulneráveis enfrentam no exterior
+  why: As condições de trabalho de estrangeiros não regulamentadas ameaçam diretamente a segurança dos trabalhadores migrantes.
+  source: Lokmat Times
+  url: https://www.lokmattimes.com/international/canada-punjab-youths-tragic-death-highlights-migrant-vulnerability-a001-w02/
+  cat: SOCIETY
+  good: false
+  visual:
+    type: map
+    country: Canada
+    place: Canadá
+    lat: 56.1304
+    lon: -106.3468
+    span: 25
+- title: Índia e UE revisam progresso de acordo comercial antes da visita de Modi a Bruxelas
+  why: ''
+  source: Hindustan Times
+  url: https://www.hindustantimes.com/india-news/india-eu-review-fta-progress-ahead-of-pm-modi-brussels-visit-push-investment-trade-ties-101794244839525.html
+  cat: BUSINESS
+  good: false
+  visual:
+    type: map
+    country: India
+    place: Nova Deli
+    lat: 28.6139
+    lon: 77.209
+    span: 12
+    country2: Belgium
+    place2: Bruxelas
+    lat2: 50.8503
+    lon2: 4.3517
+    span2: 12
+- title: Bihar proíbe fogos de artifício perto de margens de rios e barcos particulares durante Chhath Puja para garantir segurança
+  why: ''
+  source: Hindustan Times
+  url: https://www.hindustantimes.com/india-news/bihar-govt-bans-firecrackers-near-ghats-private-boat-operations-during-chhath-puja-101794243169861.html
+  cat: SOCIETY
+  good: false
+  visual:
+    type: map
+    country: India
+    place: Bihar
+    lat: 25.0961
+    lon: 85.3131
+    span: 6
