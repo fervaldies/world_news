@@ -6,8 +6,8 @@ name: Special edition — all channels and languages
 # Commit with "[skip ci]" in the message to save without posting.
 # Runs in this PUBLIC repo (no Actions minutes); scripts, backgrounds and music come from the
 # private reels repos. Only push and manual runs — never add pull_request triggers.
+# Starts ONLY when a commit changes special_all.yml.
 on:
-  workflow_dispatch:
   push:
     branches: [main]
     paths: [special_all.yml]
@@ -20,7 +20,35 @@ permissions:
   contents: read
 
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      go: ${{ steps.c.outputs.go }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Is there anything to post?
+        id: c
+        run: |
+          pip install -q pyyaml
+          python3 - <<'PY'
+          import os, yaml
+          go = False
+          try:
+              d = yaml.safe_load(open("special_all.yml", encoding="utf-8")) or {}
+              go = isinstance(d, dict) and any(isinstance(d.get(k), dict) and d[k].get("news_en") or
+                                               isinstance(d.get(k), dict) and d[k].get("news_es")
+                                               for k in ("australia", "world", "europe"))
+          except FileNotFoundError:
+              print("special_all.yml not found — nothing to post")
+          except Exception as e:
+              print(f"special_all.yml couldn't be read ({e}) — nothing posted")
+          print("Posting the special editions" if go else "No channel sections in special_all.yml — nothing to post")
+          open(os.environ["GITHUB_OUTPUT"], "a").write(f"go={'true' if go else 'false'}\n")
+          PY
+
   post:
+    needs: check
+    if: needs.check.outputs.go == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     strategy:
