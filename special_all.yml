@@ -1,4 +1,29 @@
-# Paste the combined YAML from the "Special Edition — All Channels" Claude project below and
-# commit: every region and language in it is posted, one after the other.
-# Optional: keep only some languages with  langs: [en, es]  (default: all four).
-# Commit with "[skip ci]" in the message to save without posting.
+australia:
+  title_en: "Australia News\nSpecial Edition\nWestpac Outage\nNovember 11, 2026"
+  title_es: "Noticias de Australia\nEdición Especial\nCaída de Westpac\n11 de noviembre de 2026"
+  title_pt: "Notícias da Austrália\nEdição Especial\nPane do Westpac\n11 de novembro de 2026"
+  title_id: "Berita Australia\nEdisi Khusus\nGangguan Westpac\n11 November 2026"
+  news_en:
+    - "Thousands of Westpac customers were locked out of the app and online banking on Tuesday"
+    - "PayID and Osko transfers were also disrupted, leaving many unable to move money"
+    - "Westpac says the outage appears to be a technical glitch, not a hack"
+    - "Customers reported being unable to pay at shops or cover direct debits during the outage"
+    - "Westpac says all services are back after an overnight fix and apologises for the disruption"
+  news_es:
+    - "Miles de clientes de Westpac se quedaron el martes sin app ni banca online"
+    - "Las transferencias por PayID y Osko también fallaron y muchos no pudieron mover su dinero"
+    - "Westpac afirma que la caída parece un fallo técnico y no un ciberataque"
+    - "Los clientes denuncian que no pudieron pagar en tiendas ni hacer frente a domiciliaciones"
+    - "Westpac restablece todos los servicios tras trabajar toda la noche y pide disculpas"
+  news_pt:
+    - "Milhares de clientes do Westpac ficaram sem acesso ao app e ao internet banking na terça"
+    - "Transferências via PayID e Osko também falharam, e muitos não conseguiram movimentar dinheiro"
+    - "Westpac diz que a pane parece ser uma falha técnica, não um ataque hacker"
+    - "Clientes relatam que não conseguiram pagar compras nem débitos automáticos durante a pane"
+    - "Westpac restabelece todos os serviços após trabalhar a noite toda e pede desculpas"
+  news_id:
+    - "Ribuan nasabah Westpac tak bisa mengakses aplikasi dan perbankan daring pada Selasa"
+    - "Transfer lewat PayID dan Osko juga terganggu, banyak nasabah tak bisa memindahkan uang"
+    - "Westpac menyebut gangguan tampaknya akibat kesalahan teknis, bukan serangan peretas"
+    - "Nasabah mengaku tak bisa membayar belanja maupun tagihan debit otomatis selama gangguan"
+    - "Westpac memulihkan seluruh layanan setelah bekerja semalaman dan meminta maaf"
