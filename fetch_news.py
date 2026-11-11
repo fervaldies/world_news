@@ -252,7 +252,7 @@ def fetch_world_news():
 
 def pick_best_5(headlines):
     """Use GitHub Models to pick the 5 best, varied, globally relevant stories."""
-    numbered = "\n".join(f"{i}. {h}" for i, h in enumerate(headlines))
+    numbered = trend_numbered(headlines)            # ★ on stories people are searching for
     print("🤖 Picking best 5 via GitHub Models...")
     text = github_models_call([{
         "role": "user",
@@ -306,6 +306,94 @@ def translate_to_spanish(headlines):
     }])
 
     return extract_json(text)
+
+
+# ── Google Trends boost ───────────────────────────────────────────────────────
+# Stories that match what people in the region are searching for right now get a small
+# bonus when the 5 are picked (a ★ and a note to the AI: prefer it only when two stories
+# are equally important). Free RSS feed, no key. If Trends fails, nothing changes.
+TRENDS_GEOS = ["US", "GB", "IN", "CA"]       # Google Trends countries for this channel
+TRENDING_TITLES = set()
+_TREND_STOP = set("""a an and are as at be but by for from has have he her his in into is it its of on or
+our over says she than that the their them they this to up was we were what when where which who why will
+with you your after before about more most new news live today update latest vs""".split())
+# one-word searches too general to mean "this story" (they still count inside longer searches)
+_TREND_GENERIC = set("""weather rain storm heat news football soccer cricket tennis golf rugby nba nfl afl nrl lotto
+powerball lottery game games movie movies music traffic google youtube facebook instagram netflix wordle horoscope
+time today tomorrow results score scores election""".split())
+
+
+def _trend_words(text, min_len=3):
+    return {w for w in re.findall(r"[a-z0-9áéíóúñüàèìòùçãõâêôäöß']+", str(text).lower())
+            if len(w) >= min_len and w not in _TREND_STOP}
+
+
+def google_trends(geos):
+    """[(term, [related news titles])] from Google Trends' 'Trending now' feed for these countries."""
+    import xml.etree.ElementTree as ET
+    out = []
+    for geo in geos:
+        for url in (f"https://trends.google.com/trending/rss?geo={geo}",
+                    f"https://trends.google.com/trends/trendingsearches/daily/rss?geo={geo}"):
+            try:
+                req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (news-reels)"})
+                with urllib.request.urlopen(req, timeout=15) as r:
+                    root = ET.fromstring(r.read())
+                n = 0
+                for item in root.iter("item"):
+                    term = (item.findtext("title") or "").strip()
+                    news = [(el.text or "").strip() for el in item.iter() if el.tag.endswith("news_item_title")]
+                    if term:
+                        out.append((term, news))
+                        n += 1
+                if n:
+                    break
+            except Exception:
+                continue
+    return out
+
+
+def trend_matches(headlines, trends):
+    """Indexes of headlines that match a trending search: every meaningful word of the search term is in
+    the headline, or the headline shares 3+ meaningful words with a news title linked to that search."""
+    hits = {}
+    for i, h in enumerate(headlines):
+        hw = _trend_words(h)
+        for term, news in trends:
+            tw = _trend_words(term)
+            if len(tw) == 1 and tw <= _TREND_GENERIC:
+                tw = set()
+            if tw and tw <= hw and any(len(w) >= 4 for w in tw):
+                hits[i] = term
+                break
+            if any(len(hw & _trend_words(t, 4)) >= 3 for t in news):
+                hits[i] = term
+                break
+    return hits
+
+
+def trend_numbered(headlines):
+    """The numbered list for the picker, with ★ on trending stories and a short rule at the end."""
+    numbered = "\n".join(f"{i}. {h}" for i, h in enumerate(headlines))
+    try:
+        trends = google_trends(TRENDS_GEOS)
+        if not trends:
+            print("📈 Google Trends: nothing received — picking as usual")
+            return numbered
+        hits = trend_matches(headlines, trends)
+        TRENDING_TITLES.clear()
+        TRENDING_TITLES.update(headlines[i] for i in hits)
+        print(f"📈 Google Trends: {len(trends)} searches, {len(hits)} of {len(headlines)} stories match"
+              + (": " + "; ".join(f"{headlines[i][:50]} ← {t}" for i, t in list(hits.items())[:5]) if hits else ""))
+        if not hits:
+            return numbered
+        numbered = "\n".join(f"{i}. {'★ ' if i in hits else ''}{h}" for i, h in enumerate(headlines))
+        return numbered + ("\n\n★ = people are searching for this right now. When two stories are equally "
+                           "important, prefer the ★ one. Never pick a weaker or duplicate story just for ★, "
+                           "and don't copy the ★ into anything.")
+    except Exception as e:
+        print(f"📈 Google Trends skipped ({e}) — picking as usual")
+        return numbered
 
 
 def rewrite_headlines(headlines):
@@ -431,7 +519,9 @@ def remember_article(title, article):
 
 def remember_picked(news):
     global PICKED
-    PICKED = [dict(ARTICLE_INFO.get(n["title"], {})) for n in news]
+    PICKED = [{**ARTICLE_INFO.get(n["title"], {}), "trending": n["title"] in TRENDING_TITLES} for n in news]
+    if any(p["trending"] for p in PICKED):
+        print(f"📈 {sum(p['trending'] for p in PICKED)} of the 5 picked stories are trending searches")
 
 
 def friday_good_news(en_news):
@@ -549,7 +639,8 @@ def enrich_day_files(day_name, en_news):
                 info = PICKED[i] if i < len(PICKED) else {}
                 good = (GOOD_INDEX == i) or bool(it.get("good"))
                 it.update({"source": info.get("source") or it.get("source") or "",
-                           "url": info.get("url") or it.get("url") or "", "good": good})
+                           "url": info.get("url") or it.get("url") or "", "good": good,
+                           "trending": bool(info.get("trending") or it.get("trending"))})
                 if stories:
                     s = stories[i]
                     vis = dict(s.get("visual") or {"type": "icon"})

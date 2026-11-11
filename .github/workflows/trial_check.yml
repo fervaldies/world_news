@@ -1,0 +1,29 @@
+name: Trial reels check (weekly)
+
+# Mondays, after the metrics are compiled (04:30 UTC). Switches Instagram trial reels ON for every
+# account that reached TRIAL_MIN_FOLLOWERS (repo variable here, default 1000) and tells Fer on Telegram.
+# Public repo → no Actions minutes.
+on:
+  schedule:
+    - cron: "15 6 * * 1"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Only show what would change"
+        type: boolean
+        default: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check followers and switch on trial reels
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TRIAL_MIN_FOLLOWERS: ${{ vars.TRIAL_MIN_FOLLOWERS }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: python3 trial_check.py
