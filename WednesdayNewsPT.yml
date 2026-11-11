@@ -1,0 +1,66 @@
+date: 2026-11-11
+day: Wednesday
+news:
+- title: Gadi Eisenkot promete reverter políticas de Netanyahu enquanto Israel empossa novo parlamento
+  source: Hindustan Times
+  url: https://www.hindustantimes.com/world-news/gadi-eisenkot-vows-to-reverse-netanyahus-policies-as-israels-new-parliament-is-sworn-in-101794337265795.html
+  good: false
+  why: ''
+  cat: POLITICS
+  visual:
+    type: map
+    country: Israel
+    place: Jerusalém
+    lat: 31.7683
+    lon: 35.2137
+    span: 3
+- title: Índia propõe plano de três etapas para desescalar a guerra Rússia-Ucrânia
+  source: NewsBytes
+  url: https://www.newsbytesapp.com/news/world/india-proposes-3-step-plan-to-deescalate-russia-ukraine-war/tldr
+  good: false
+  why: ''
+  cat: CONFLICT
+  visual:
+    type: map
+    country: India
+    place: Nova Delhi
+    lat: 28.6139
+    lon: 77.209
+    span: 25
+    country2: Ukraine
+    place2: Kiev
+    lat2: 50.4501
+    lon2: 30.5234
+- title: Carney revela orçamento para impulsionar a economia do Canadá em meio à guerra comercial de Trump
+  source: WTOP
+  url: https://wtop.com/world/2026/11/carney-unveils-budget-to-strengthen-canadas-economy-as-trumps-trade-war-continues/
+  good: false
+  why: Novas tarifas ameaçam os orçamentos familiares e o custo dos bens do dia a dia.
+  cat: ECONOMY
+  visual:
+    type: map
+    country: Canada
+    place: Ottawa
+    lat: 45.4215
+    lon: -75.6972
+    span: 12
+    country2: United States of America
+    place2: Washington
+    lat2: 38.8951
+    lon2: -77.0364
+- title: OMS alerta sobre riscos à saúde com dois terços do mundo migrando para cidades até 2050
+  source: The New Indian Express
+  url: https://www.newindianexpress.com/india/2026/Nov/10/who-warns-of-urban-health-risks-as-68-of-global-population-set-to-live-in-cities-by-2050
+  good: false
+  why: O crescimento da população urbana afeta diretamente o acesso à saúde local e aos serviços públicos.
+  cat: HEALTH
+  visual:
+    type: icon
+- title: Médicos realizam o primeiro transplante mundial de medula óssea de doador de órgãos para doença não cancerígena
+  source: The Manila Times
+  url: https://www.manilatimes.net/2026/11/10/tmt-newswire/globenewswire/franciscan-health-and-ossium-health-perform-worlds-first-organ-donor-bone-marrow-transplant-for-non-malignant-disease/2466542
+  good: false
+  why: ''
+  cat: HEALTH
+  visual:
+    type: icon

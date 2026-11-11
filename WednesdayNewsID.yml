@@ -1,0 +1,66 @@
+date: 2026-11-11
+day: Wednesday
+news:
+- title: Gadi Eisenkot Berjanji Balikkan Kebijakan Netanyahu saat Israel Lantik Parlemen Baru
+  source: Hindustan Times
+  url: https://www.hindustantimes.com/world-news/gadi-eisenkot-vows-to-reverse-netanyahus-policies-as-israels-new-parliament-is-sworn-in-101794337265795.html
+  good: false
+  why: ''
+  cat: POLITICS
+  visual:
+    type: map
+    country: Israel
+    place: Jerusalem
+    lat: 31.7683
+    lon: 35.2137
+    span: 3
+- title: India Usulkan Rencana Tiga Langkah untuk Redakan Perang Rusia-Ukraina
+  source: NewsBytes
+  url: https://www.newsbytesapp.com/news/world/india-proposes-3-step-plan-to-deescalate-russia-ukraine-war/tldr
+  good: false
+  why: ''
+  cat: CONFLICT
+  visual:
+    type: map
+    country: India
+    place: New Delhi
+    lat: 28.6139
+    lon: 77.209
+    span: 25
+    country2: Ukraine
+    place2: Kyiv
+    lat2: 50.4501
+    lon2: 30.5234
+- title: Carney Singkap Anggaran untuk Dongkrak Ekonomi Kanada di Tengah Perang Dagang Trump
+  source: WTOP
+  url: https://wtop.com/world/2026/11/carney-unveils-budget-to-strengthen-canadas-economy-as-trumps-trade-war-continues/
+  good: false
+  why: Tarif baru mengancam anggaran rumah tangga dan biaya barang sehari-hari.
+  cat: ECONOMY
+  visual:
+    type: map
+    country: Canada
+    place: Ottawa
+    lat: 45.4215
+    lon: -75.6972
+    span: 12
+    country2: United States of America
+    place2: Washington
+    lat2: 38.8951
+    lon2: -77.0364
+- title: WHO Peringatkan Risiko Kesehatan Seiring Dua Per Tiga Penduduk Dunia Pindah ke Kota pada 2050
+  source: The New Indian Express
+  url: https://www.newindianexpress.com/india/2026/Nov/10/who-warns-of-urban-health-risks-as-68-of-global-population-set-to-live-in-cities-by-2050
+  good: false
+  why: Pertumbuhan populasi perkotaan berdampak langsung pada akses kesehatan lokal dan layanan publik.
+  cat: HEALTH
+  visual:
+    type: icon
+- title: Dokter Lakukan Transplantasi Sumsum Tulang Pendonor Organ Pertama di Dunia untuk Penyakit Non-Kanker
+  source: The Manila Times
+  url: https://www.manilatimes.net/2026/11/10/tmt-newswire/globenewswire/franciscan-health-and-ossium-health-perform-worlds-first-organ-donor-bone-marrow-transplant-for-non-malignant-disease/2466542
+  good: false
+  why: ''
+  cat: HEALTH
+  visual:
+    type: icon
