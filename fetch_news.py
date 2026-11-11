@@ -473,13 +473,35 @@ def friday_good_news(en_news):
     return en_news
 
 
+def ai_json(prompt, max_tokens, check):
+    """Gemini (twice), then Claude. Each answer must be valid JSON that passes `check`, else the next try."""
+    errors = []
+    for who, fn in (("Gemini", gemini_call), ("Gemini", gemini_call), ("Claude", claude_call)):
+        try:
+            data = json.loads(extract_json(fn([{"role": "user", "content": prompt}], max_tokens) or ""))
+            check(data)
+            return data
+        except Exception as e:
+            errors.append(f"{who}: {str(e)[:160]}")
+            print(f"  ⚠️ {who} answer not usable ({str(e)[:160]})")
+    raise ValueError(" | ".join(errors))
+
+
 def enrich_day_files(day_name, en_news):
-    """Adds why / source / url / cat / good / visual to every language file of today."""
+    """Adds source / url / good (always) and cat / visual / why (AI, best effort) to every language
+    file of today. Never fatal; never puts English text into the ES / PT / ID files."""
+    import yaml
+    titles = [n["title"] for n in en_news]
+    stories, tr = None, {}
     try:
-        import yaml
-        titles = [n["title"] for n in en_news]
         numbered = "\n".join(f"{i}. {t}" for i, t in enumerate(titles))
-        text = github_models_call([{"role": "user", "content": (
+
+        def check_stories(d):
+            st = d.get("stories")
+            if not isinstance(st, list) or len(st) != len(titles) or not all(isinstance(s, dict) for s in st):
+                raise ValueError(f"expected {len(titles)} stories, got {len(st) if isinstance(st, list) else st!r}")
+
+        stories = ai_json(
             "For each of these 5 news headlines, return details for a short news video.\n"
             f"- cat: one of {', '.join(CATEGORIES)}.\n"
             "- why: ONLY for the 2 stories that most need context, one factual sentence (max 12 words) on why it "
@@ -490,51 +512,85 @@ def enrich_day_files(day_name, en_news):
             "\"lat\": <number>, \"lon\": <number>, \"span\": <degrees to show around it: 3 for a city, 12 for a "
             "state, 25 for a country>} when it is about a specific place (add country2/place2/lat2/lon2 when two "
             "places are linked); else {\"type\": \"icon\"}.\n"
-            "Return ONLY raw JSON: {\"stories\": [{\"cat\": \"...\", \"why\": \"...\", \"visual\": {...}}, ...5]}\n\n"
-            + numbered)}], max_tokens=1500)
-        stories = json.loads(extract_json(text)).get("stories", [])
-        if len(stories) != len(titles):
-            raise ValueError(f"got {len(stories)} story details")
-        # translate the short texts (why lines, number labels, place labels) once
-        bits = {"why": [s.get("why") or "" for s in stories],
-                "label": [(s.get("visual") or {}).get("label") or "" for s in stories],
-                "place": [(s.get("visual") or {}).get("place") or "" for s in stories],
-                "place2": [(s.get("visual") or {}).get("place2") or "" for s in stories]}
-        tr = {}
+            "Return ONLY raw JSON, no markdown: {\"stories\": [{\"cat\": \"...\", \"why\": \"...\", \"visual\": {...}}, ...5]}\n\n"
+            + numbered, 3000, check_stories)["stories"]
+    except Exception as e:
+        print(f"⚠️ Categories / pictures / why-lines skipped (non-fatal): {e}")
+    bits = None
+    if stories:
+        bits = {"why": [str(s.get("why") or "") for s in stories],
+                "label": [str((s.get("visual") or {}).get("label") or "") for s in stories],
+                "place": [str((s.get("visual") or {}).get("place") or "") for s in stories],
+                "place2": [str((s.get("visual") or {}).get("place2") or "") for s in stories]}
         if any(x for v in bits.values() for x in v):
-            t2 = github_models_call([{"role": "user", "content": (
-                "Translate every string in these lists into Spanish from Spain (es), Brazilian Portuguese (pt) "
-                "and Indonesian (id). Keep empty strings empty, keep numbers and names exactly, keep it short. "
-                "Return ONLY raw JSON: {\"es\": {same keys}, \"pt\": {...}, \"id\": {...}}\n\n"
-                + json.dumps(bits, ensure_ascii=False))}], max_tokens=2000)
-            tr = json.loads(extract_json(t2))
-        for code in ("EN", "ES", "PT", "ID"):
-            path = f"{day_name}News{code}.yml"
-            if not os.path.exists(path):
-                continue
+            def check_tr(d):
+                for lg in ("es", "pt", "id"):
+                    if not isinstance(d.get(lg), dict):
+                        raise ValueError(f"no '{lg}' block")
+            try:
+                tr = ai_json(
+                    "Translate every string in these lists into Spanish from Spain (es), Brazilian Portuguese (pt) "
+                    "and Indonesian (id). Keep empty strings empty, keep numbers and names exactly, keep it short, "
+                    "same list lengths. Return ONLY raw JSON, no markdown: "
+                    "{\"es\": {same keys}, \"pt\": {...}, \"id\": {...}}\n\n"
+                    + json.dumps(bits, ensure_ascii=False), 3000, check_tr)
+            except Exception as e:
+                print(f"⚠️ Translation of the short texts skipped (non-fatal) — ES/PT/ID get pictures without them: {e}")
+    done = []
+    for code in ("EN", "ES", "PT", "ID"):
+        path = f"{day_name}News{code}.yml"
+        if not os.path.exists(path):
+            continue
+        try:
             data = yaml.safe_load(open(path, encoding="utf-8")) or {}
             items = data.get("news") or []
             loc = bits if code == "EN" else (tr.get(code.lower()) or {})
-            for i, it in enumerate(items[:len(stories)]):
-                s = stories[i]
-                vis = dict(s.get("visual") or {"type": "icon"})
-                for key in ("label", "place", "place2"):
-                    vals = loc.get(key) or bits[key]
-                    if i < len(vals) and vals[i]:
-                        vis[key] = vals[i]
-                whys = loc.get("why") or bits["why"]
+            for i, it in enumerate(items[:len(titles)]):
                 info = PICKED[i] if i < len(PICKED) else {}
-                it.update({"why": (whys[i] if i < len(whys) else "") or "",
-                           "source": info.get("source") or "", "url": info.get("url") or "",
-                           "cat": "GOOD NEWS" if GOOD_INDEX == i else str(s.get("cat") or "WORLD").upper(),
-                           "good": GOOD_INDEX == i, "visual": vis})
+                good = (GOOD_INDEX == i) or bool(it.get("good"))
+                it.update({"source": info.get("source") or it.get("source") or "",
+                           "url": info.get("url") or it.get("url") or "", "good": good})
+                if stories:
+                    s = stories[i]
+                    vis = dict(s.get("visual") or {"type": "icon"})
+                    for key in ("label", "place", "place2"):
+                        vals = loc.get(key) or []
+                        if i < len(vals) and vals[i]:
+                            vis[key] = vals[i]                     # translated (or English for EN)
+                        elif key == "label" and code != "EN":
+                            vis.pop(key, None)                     # no English label on a Spanish video
+                    whys = loc.get("why") or []
+                    it.update({"why": (whys[i] if i < len(whys) else "") or "",
+                               "cat": "GOOD NEWS" if good else str(s.get("cat") or "WORLD").upper(),
+                               "visual": vis})
+                else:                                              # keep what's there, fill the minimum
+                    it.setdefault("cat", "GOOD NEWS" if good else "WORLD")
+                    it.setdefault("visual", {"type": "icon"})
+                    it.setdefault("why", "")
             data["news"] = items
             with open(path, "w", encoding="utf-8") as f:
                 yaml.safe_dump(data, f, allow_unicode=True, sort_keys=False, width=1000)
-        print("✅ Story details added (why it matters, sources, visuals)")
-    except Exception as e:
-        print(f"⚠️ Story details skipped (non-fatal): {e}")
+            done.append(code)
+        except Exception as e:
+            print(f"⚠️ Story details not written to {path} (non-fatal): {e}")
+    print(f"✅ Story details in {', '.join(done) or 'no files'}: sources ✓ · categories/pictures "
+          f"{'✓' if stories else '✗'} · ES/PT/ID short texts {'✓' if tr else '✗'}")
+
+
+def details_only(day_name):
+    """Repair today's files without re-picking the stories: python fetch_news.py <Day> --details-only"""
+    import yaml
+    data = yaml.safe_load(open(f"{day_name}NewsEN.yml", encoding="utf-8")) or {}
+    news = [{"title": str(n.get("title", ""))} for n in data.get("news") or []]
+    global GOOD_INDEX
+    GOOD_INDEX = next((i for i, n in enumerate(data.get("news") or []) if n.get("good")), None)
+    print(f"🔧 Adding story details to the existing {day_name} files ({len(news)} stories)")
+    enrich_day_files(day_name, news)
+
 
 if __name__ == "__main__":
     day_name = sys.argv[1]
-    get_news(day_name)
+    if "--details-only" in sys.argv[2:]:
+        details_only(day_name)
+    else:
+        get_news(day_name)
