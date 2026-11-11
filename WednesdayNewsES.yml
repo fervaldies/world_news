@@ -1,8 +1,58 @@
 date: 2026-11-04
 day: Wednesday
 news:
-  - title: "El perro callejero que venció a los humanos en la órbita espacial de la Unión Soviética"
-  - title: "El jefe espacial de Europa viaja al Golfo mientras el bloque busca alternativas a EE. UU."
-  - title: "Los nuevos ataques de EE. UU. en el estrecho de Ormuz plantean dudas sobre el conflicto con Irán"
-  - title: "Francia condena los últimos ataques de Rusia en Ucrania y denuncia al Kremlin"
-  - title: "Melania Trump acogerá conversaciones sobre la guerra entre Rusia y Ucrania tras un alto el fuego"
+- title: El perro callejero que venció a los humanos en la órbita espacial de la Unión Soviética
+  source: ''
+  url: ''
+  good: false
+  why: ''
+  cat: SCIENCE
+  visual:
+    type: icon
+- title: El jefe espacial de Europa viaja al Golfo mientras el bloque busca alternativas a EE. UU.
+  source: ''
+  url: ''
+  good: false
+  why: Las asociaciones espaciales europeas impactan directamente en el empleo tecnológico local y la financiación de la investigación.
+  cat: TECH
+  visual:
+    type: map
+    country: United Arab Emirates
+    place: El Golfo
+    lat: 24.4539
+    lon: 54.3773
+    span: 25
+- title: Los nuevos ataques de EE. UU. en el estrecho de Ormuz plantean dudas sobre el conflicto con Irán
+  source: ''
+  url: ''
+  good: false
+  why: Las crecientes huelgas regionales amenazan con perturbar el suministro mundial de petróleo y encarecer los combustibles.
+  cat: CONFLICT
+  visual:
+    type: map
+    country: Iran
+    place: Estrecho de Ormuz
+    lat: 26.5667
+    lon: 56.25
+    span: 12
+- title: Francia condena los últimos ataques de Rusia en Ucrania y denuncia al Kremlin
+  source: ''
+  url: ''
+  good: false
+  why: ''
+  cat: CONFLICT
+  visual:
+    type: map
+    country: France
+    place: París
+    lat: 48.8566
+    lon: 2.3522
+    span: 12
+- title: Melania Trump acogerá conversaciones sobre la guerra entre Rusia y Ucrania tras un alto el fuego
+  source: ''
+  url: ''
+  good: false
+  why: ''
+  cat: POLITICS
+  visual:
+    type: icon

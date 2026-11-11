@@ -1,8 +1,58 @@
 date: 2026-11-04
 day: Wednesday
 news:
-  - title: "The stray dog that beat humans into space orbit for the Soviet Union"
-  - title: "Europe's space chief heads to the Gulf as the bloc looks beyond the US"
-  - title: "New US strikes in the Strait of Hormuz raise questions about the Iran conflict"
-  - title: "France condemns Russia's latest Ukraine attacks and denounces the Kremlin"
-  - title: "Melania Trump to host Russia-Ukraine war talks after a ceasefire"
+- title: The stray dog that beat humans into space orbit for the Soviet Union
+  source: ''
+  url: ''
+  good: false
+  why: ''
+  cat: SCIENCE
+  visual:
+    type: icon
+- title: Europe's space chief heads to the Gulf as the bloc looks beyond the US
+  source: ''
+  url: ''
+  good: false
+  why: European space partnerships directly impact local high-tech jobs and research funding.
+  cat: TECH
+  visual:
+    type: map
+    country: United Arab Emirates
+    place: The Gulf
+    lat: 24.4539
+    lon: 54.3773
+    span: 25
+- title: New US strikes in the Strait of Hormuz raise questions about the Iran conflict
+  source: ''
+  url: ''
+  good: false
+  why: Escalating regional strikes risk disrupting global oil supplies and raising fuel prices.
+  cat: CONFLICT
+  visual:
+    type: map
+    country: Iran
+    place: Strait of Hormuz
+    lat: 26.5667
+    lon: 56.25
+    span: 12
+- title: France condemns Russia's latest Ukraine attacks and denounces the Kremlin
+  source: ''
+  url: ''
+  good: false
+  why: ''
+  cat: CONFLICT
+  visual:
+    type: map
+    country: France
+    place: Paris
+    lat: 48.8566
+    lon: 2.3522
+    span: 12
+- title: Melania Trump to host Russia-Ukraine war talks after a ceasefire
+  source: ''
+  url: ''
+  good: false
+  why: ''
+  cat: POLITICS
+  visual:
+    type: icon
