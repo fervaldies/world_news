@@ -3,64 +3,76 @@ day: Wednesday
 news:
 - title: Gadi Eisenkot Berjanji Balikkan Kebijakan Netanyahu saat Israel Lantik Parlemen Baru
   source: Hindustan Times
-  url: https://www.hindustantimes.com/world-news/gadi-eisenkot-vows-to-reverse-netanyahus-policies-as-israels-new-parliament-is-sworn-in-101794337265795.html
+  url: https://www.hindustantimes.com/world-news/mexico-arrests-jalisco-cartel-kingpin-r2-linked-to-killings-drug-trafficking-19-others-held-101794193397363.html
+  good: false
+  why: Penangkapan kartel mengurangi kejahatan kekerasan dan ketersediaan narkoba di komunitas lokal.
+  cat: JUSTICE
+  visual:
+    type: map
+    country: Mexico
+    place: Meksiko
+    lat: 23.6345
+    lon: -102.5528
+    span: 25
+  trending: false
+- title: India Usulkan Rencana Tiga Langkah untuk Redakan Perang Rusia-Ukraina
+  source: The Irish Times
+  url: https://www.irishtimes.com/politics/2026/11/09/high-politics-and-traffic-chaos-europes-leaders-are-coming-to-dublin/
   good: false
   why: ''
   cat: POLITICS
   visual:
     type: map
-    country: Israel
-    place: Jerusalem
-    lat: 31.7683
-    lon: 35.2137
+    country: Ireland
+    place: Dublin
+    lat: 53.3498
+    lon: -6.2603
     span: 3
-- title: India Usulkan Rencana Tiga Langkah untuk Redakan Perang Rusia-Ukraina
-  source: NewsBytes
-  url: https://www.newsbytesapp.com/news/world/india-proposes-3-step-plan-to-deescalate-russia-ukraine-war/tldr
+  trending: false
+- title: Carney Singkap Anggaran untuk Dongkrak Ekonomi Kanada di Tengah Perang Dagang Trump
+  source: Lokmat Times
+  url: https://www.lokmattimes.com/international/us-china-ai-talks-unresolved-says-rubio-ahead-of-key-summits-a001-w02/
+  good: false
+  why: ''
+  cat: POLITICS
+  visual:
+    type: map
+    country: China
+    place: Tiongkok
+    lat: 35.8617
+    lon: 104.1954
+    span: 25
+    country2: United States of America
+    place2: Amerika Serikat
+    lat2: 37.0902
+    lon2: -95.7129
+    span2: 25
+  trending: false
+- title: WHO Peringatkan Risiko Kesehatan Seiring Dua Per Tiga Penduduk Dunia Pindah ke Kota pada 2050
+  source: The Straits Times
+  url: https://www.straitstimes.com/business/openai-q3-revenue-soars-nearly-50-to-us10-billion
+  good: false
+  why: ''
+  cat: BUSINESS
+  visual:
+    type: icon
+  trending: false
+- title: Dokter Lakukan Transplantasi Sumsum Tulang Pendonor Organ Pertama di Dunia untuk Penyakit Non-Kanker
+  source: The Hitavada
+  url: https://www.thehitavada.com/Encyc/2026/11/11/russia-ukraine-hold-nearly-4-hrs-of-us-mediated-talks.html
   good: false
   why: ''
   cat: CONFLICT
   visual:
     type: map
-    country: India
-    place: New Delhi
-    lat: 28.6139
-    lon: 77.209
+    country: Ukraine
+    place: Ukraina
+    lat: 48.3794
+    lon: 31.1656
     span: 25
-    country2: Ukraine
-    place2: Kyiv
-    lat2: 50.4501
-    lon2: 30.5234
-- title: Carney Singkap Anggaran untuk Dongkrak Ekonomi Kanada di Tengah Perang Dagang Trump
-  source: WTOP
-  url: https://wtop.com/world/2026/11/carney-unveils-budget-to-strengthen-canadas-economy-as-trumps-trade-war-continues/
-  good: false
-  why: Tarif baru mengancam anggaran rumah tangga dan biaya barang sehari-hari.
-  cat: ECONOMY
-  visual:
-    type: map
-    country: Canada
-    place: Ottawa
-    lat: 45.4215
-    lon: -75.6972
-    span: 12
-    country2: United States of America
-    place2: Washington
-    lat2: 38.8951
-    lon2: -77.0364
-- title: WHO Peringatkan Risiko Kesehatan Seiring Dua Per Tiga Penduduk Dunia Pindah ke Kota pada 2050
-  source: The New Indian Express
-  url: https://www.newindianexpress.com/india/2026/Nov/10/who-warns-of-urban-health-risks-as-68-of-global-population-set-to-live-in-cities-by-2050
-  good: false
-  why: Pertumbuhan populasi perkotaan berdampak langsung pada akses kesehatan lokal dan layanan publik.
-  cat: HEALTH
-  visual:
-    type: icon
-- title: Dokter Lakukan Transplantasi Sumsum Tulang Pendonor Organ Pertama di Dunia untuk Penyakit Non-Kanker
-  source: The Manila Times
-  url: https://www.manilatimes.net/2026/11/10/tmt-newswire/globenewswire/franciscan-health-and-ossium-health-perform-worlds-first-organ-donor-bone-marrow-transplant-for-non-malignant-disease/2466542
-  good: false
-  why: ''
-  cat: HEALTH
-  visual:
-    type: icon
+    country2: Russia
+    place2: Rusia
+    lat2: 61.524
+    lon2: 105.3188
+    span2: 25
+  trending: false

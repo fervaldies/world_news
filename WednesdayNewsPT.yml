@@ -1,66 +1,78 @@
-date: 2026-11-11
+date: 2026-11-12
 day: Wednesday
 news:
-- title: Gadi Eisenkot promete reverter políticas de Netanyahu enquanto Israel empossa novo parlamento
+- title: México prende chefão do cartel ligado a assassinatos e tráfico de drogas, junto com outros 19
   source: Hindustan Times
-  url: https://www.hindustantimes.com/world-news/gadi-eisenkot-vows-to-reverse-netanyahus-policies-as-israels-new-parliament-is-sworn-in-101794337265795.html
+  url: https://www.hindustantimes.com/world-news/mexico-arrests-jalisco-cartel-kingpin-r2-linked-to-killings-drug-trafficking-19-others-held-101794193397363.html
   good: false
+  trending: false
+  why: Prisões de cartéis reduzem o crime violento e a disponibilidade de drogas nas comunidades locais.
+  cat: JUSTICE
+  visual:
+    type: map
+    country: Mexico
+    place: México
+    lat: 23.6345
+    lon: -102.5528
+    span: 25
+- title: Lideranças da Europa vão a Dublin trazendo alta política e enorme caos no trânsito
+  source: The Irish Times
+  url: https://www.irishtimes.com/politics/2026/11/09/high-politics-and-traffic-chaos-europes-leaders-are-coming-to-dublin/
+  good: false
+  trending: false
   why: ''
   cat: POLITICS
   visual:
     type: map
-    country: Israel
-    place: Jerusalém
-    lat: 31.7683
-    lon: 35.2137
+    country: Ireland
+    place: Dublin
+    lat: 53.3498
+    lon: -6.2603
     span: 3
-- title: Índia propõe plano de três etapas para desescalar a guerra Rússia-Ucrânia
-  source: NewsBytes
-  url: https://www.newsbytesapp.com/news/world/india-proposes-3-step-plan-to-deescalate-russia-ukraine-war/tldr
+- title: Conversas dos EUA com a China continuam sem solução antes de cúpulas importantes, diz Marco Rubio
+  source: Lokmat Times
+  url: https://www.lokmattimes.com/international/us-china-ai-talks-unresolved-says-rubio-ahead-of-key-summits-a001-w02/
   good: false
+  trending: false
+  why: ''
+  cat: POLITICS
+  visual:
+    type: map
+    country: China
+    place: China
+    lat: 35.8617
+    lon: 104.1954
+    span: 25
+    country2: United States of America
+    place2: Estados Unidos
+    lat2: 37.0902
+    lon2: -95.7129
+    span2: 25
+- title: Receita da OpenAI no terceiro trimestre disparou quase 50 por cento para atingir US$ 10 bilhões
+  source: The Straits Times
+  url: https://www.straitstimes.com/business/openai-q3-revenue-soars-nearly-50-to-us10-billion
+  good: false
+  trending: false
+  why: ''
+  cat: BUSINESS
+  visual:
+    type: icon
+- title: Rússia e Ucrânia realizam quase quatro horas de conversas mediadas pelos EUA
+  source: The Hitavada
+  url: https://www.thehitavada.com/Encyc/2026/11/11/russia-ukraine-hold-nearly-4-hrs-of-us-mediated-talks.html
+  good: false
+  trending: false
   why: ''
   cat: CONFLICT
   visual:
     type: map
-    country: India
-    place: Nova Delhi
-    lat: 28.6139
-    lon: 77.209
+    country: Ukraine
+    place: Ucrânia
+    lat: 48.3794
+    lon: 31.1656
     span: 25
-    country2: Ukraine
-    place2: Kiev
-    lat2: 50.4501
-    lon2: 30.5234
-- title: Carney revela orçamento para impulsionar a economia do Canadá em meio à guerra comercial de Trump
-  source: WTOP
-  url: https://wtop.com/world/2026/11/carney-unveils-budget-to-strengthen-canadas-economy-as-trumps-trade-war-continues/
-  good: false
-  why: Novas tarifas ameaçam os orçamentos familiares e o custo dos bens do dia a dia.
-  cat: ECONOMY
-  visual:
-    type: map
-    country: Canada
-    place: Ottawa
-    lat: 45.4215
-    lon: -75.6972
-    span: 12
-    country2: United States of America
-    place2: Washington
-    lat2: 38.8951
-    lon2: -77.0364
-- title: OMS alerta sobre riscos à saúde com dois terços do mundo migrando para cidades até 2050
-  source: The New Indian Express
-  url: https://www.newindianexpress.com/india/2026/Nov/10/who-warns-of-urban-health-risks-as-68-of-global-population-set-to-live-in-cities-by-2050
-  good: false
-  why: O crescimento da população urbana afeta diretamente o acesso à saúde local e aos serviços públicos.
-  cat: HEALTH
-  visual:
-    type: icon
-- title: Médicos realizam o primeiro transplante mundial de medula óssea de doador de órgãos para doença não cancerígena
-  source: The Manila Times
-  url: https://www.manilatimes.net/2026/11/10/tmt-newswire/globenewswire/franciscan-health-and-ossium-health-perform-worlds-first-organ-donor-bone-marrow-transplant-for-non-malignant-disease/2466542
-  good: false
-  why: ''
-  cat: HEALTH
-  visual:
-    type: icon
+    country2: Russia
+    place2: Rússia
+    lat2: 61.524
+    lon2: 105.3188
+    span2: 25
