@@ -583,7 +583,38 @@ def ai_json(prompt, max_tokens, check):
 # One AI call (Gemini, Claude as fallback) reads each picked story's text (headline + GNews description
 # + the start of the article) and returns the figures with the exact sentence each comes from. Then CODE
 # checks every number against the article text; a chart that fails keeps the older number / map / icon.
-CHART_KINDS = ("bars", "line", "donut", "slope", "bignum")
+CHART_KINDS = ("bars", "line", "donut", "slope", "bignum", "map")
+AU_PLACES = {"new south wales": "NSW", "nsw": "NSW", "victoria": "VIC", "vic": "VIC", "queensland": "QLD", "qld": "QLD",
+             "western australia": "WA", "wa": "WA", "south australia": "SA", "sa": "SA", "tasmania": "TAS", "tas": "TAS",
+             "northern territory": "NT", "nt": "NT", "australian capital territory": "ACT", "act": "ACT", "canberra": "ACT"}
+EUROPE = {"AUT", "BEL", "BGR", "HRV", "CYP", "CZE", "DNK", "EST", "FIN", "FRA", "DEU", "GRC", "HUN", "IRL", "ITA", "LVA",
+          "LTU", "LUX", "MLT", "NLD", "POL", "PRT", "ROU", "SVK", "SVN", "ESP", "SWE", "GBR", "NOR", "CHE", "ISL", "UKR",
+          "SRB", "ALB", "BIH", "MKD", "MNE", "MDA", "BLR", "KOS", "XKX"}
+COUNTRY_ISO = {  # names the articles use → ISO3 (Natural Earth codes)
+    "austria": "AUT", "belgium": "BEL", "bulgaria": "BGR", "croatia": "HRV", "cyprus": "CYP", "czechia": "CZE",
+    "czech republic": "CZE", "denmark": "DNK", "estonia": "EST", "finland": "FIN", "france": "FRA", "germany": "DEU",
+    "greece": "GRC", "hungary": "HUN", "ireland": "IRL", "italy": "ITA", "latvia": "LVA", "lithuania": "LTU",
+    "luxembourg": "LUX", "malta": "MLT", "netherlands": "NLD", "the netherlands": "NLD", "poland": "POL", "portugal": "PRT",
+    "romania": "ROU", "slovakia": "SVK", "slovenia": "SVN", "spain": "ESP", "sweden": "SWE", "united kingdom": "GBR",
+    "uk": "GBR", "britain": "GBR", "great britain": "GBR", "norway": "NOR", "switzerland": "CHE", "iceland": "ISL",
+    "ukraine": "UKR", "serbia": "SRB", "albania": "ALB", "moldova": "MDA", "belarus": "BLR", "russia": "RUS",
+    "turkey": "TUR", "türkiye": "TUR", "united states": "USA", "us": "USA", "usa": "USA", "canada": "CAN",
+    "mexico": "MEX", "brazil": "BRA", "argentina": "ARG", "chile": "CHL", "colombia": "COL", "peru": "PER",
+    "china": "CHN", "japan": "JPN", "south korea": "KOR", "korea": "KOR", "india": "IND", "indonesia": "IDN",
+    "australia": "AUS", "new zealand": "NZL", "south africa": "ZAF", "nigeria": "NGA", "egypt": "EGY", "kenya": "KEN",
+    "saudi arabia": "SAU", "iran": "IRN", "israel": "ISR", "pakistan": "PAK", "bangladesh": "BGD", "vietnam": "VNM",
+    "thailand": "THA", "malaysia": "MYS", "philippines": "PHL", "singapore": "SGP", "taiwan": "TWN"}
+
+
+def map_keys(labels):
+    """(region, keys) for a list of place names, or (None, None) if any place isn't recognised."""
+    low = [str(l).strip().lower() for l in labels]
+    if low and all(l in AU_PLACES for l in low):
+        return "au", [AU_PLACES[l] for l in low]
+    keys = [COUNTRY_ISO.get(l) for l in low]
+    if not low or any(k is None for k in keys):
+        return None, None
+    return ("europe" if all(k in EUROPE for k in keys) else "world"), keys
 CHART_NOTES = []                         # what happened to every chart today (Telegram summary + logs)
 
 
@@ -643,6 +674,8 @@ def check_chart(c, text, headline):
         problems.append(f"bars need 2–8 values (got {n})")
     if k == "line" and not 4 <= n <= 15:
         problems.append(f"a line needs 4+ points (got {n})")
+    if k == "map" and not 3 <= n <= 60:
+        problems.append(f"a map needs 3+ places (got {n})")
     if k == "donut" and not 2 <= n <= 6:
         problems.append(f"a donut needs 2–6 shares (got {n})")
     if k == "slope" and (len(c.get("periods") or []) != 2 or not c.get("series")):
@@ -675,6 +708,26 @@ def check_chart(c, text, headline):
     return list(dict.fromkeys(problems))
 
 
+RECORD_WORDS = ("record", "highest", "lowest", "biggest", "smallest", "first", "most", "least", "since", "ever", "fastest", "slowest")
+
+
+def check_so_what(c, text):
+    """The key-point line is kept only when the article backs it: real quote, same numbers/years, same record words."""
+    sw = str(c.get("so_what") or "").strip()
+    if not sw:
+        return ""
+    T = _norm_text(text)
+    q = _norm_text(c.get("so_what_quote") or "")
+    if not q or q[:70] not in T:
+        return ""
+    nums = _num_tokens(text)
+    if any(not _close(n, nums, 2) for n in _num_tokens(sw)):
+        return ""
+    if any(w in sw.lower() and w not in T for w in RECORD_WORDS):
+        return ""
+    return sw[:60]
+
+
 def extract_charts(titles):
     """Per story: (chart dict or None, note). One AI call for the 5 stories."""
     texts = []
@@ -696,16 +749,21 @@ def extract_charts(titles):
             "- change over time with 4+ dates → line;\n- parts of one whole (shares that add up) → donut;\n"
             "- the same things at two moments → slope;\n- a ranking / comparison of 2–8 things → bars;\n"
             "- one value plus its previous value or its change → bignum;\n"
+            "- values for 3+ Australian states/territories or 3+ countries → map (labels = the place names);\n"
             "- only ONE number, or nothing comparable → none (never force a weak chart).\n"
             "Set hedge true when the text says the figure is an estimate, forecast, preliminary, expected or "
             "unconfirmed. source = the organisation the text credits for the figures (e.g. 'ABS', 'Eurostat'), "
             "else the outlet name. title = max 6 words saying what is measured (no opinion).\n"
+            "so_what = the key point in max 6 words ONLY if the text itself states it (e.g. 'Highest since 2009', "
+            "'Lowest in the EU'), with so_what_quote = the exact sentence; otherwise empty strings. Never claim a "
+            "record or a first unless the text says so.\n"
             "Return ONLY JSON: {\"stories\": [{\"chart\": \"bars|line|donut|slope|bignum|none\", \"title\": \"...\", "
             "\"unit\": \"% or a short unit or ''\", \"prefix\": \"'$' or ''\", \"decimals\": 1, "
             "\"labels\": [...], \"values\": [...], \"periods\": [\"2024\", \"2025\"], "
             "\"series\": [{\"label\": \"...\", \"from\": 1, \"to\": 2}], \"value\": 0, \"previous\": 0, "
             "\"change\": 0, \"change_unit\": \"% or pts\", \"label\": \"...\", \"period_prev\": \"...\", "
-            "\"highlight\": 0, \"source\": \"...\", \"hedge\": false, \"quotes\": [\"...\"]}, ...one per story in order]}\n"
+            "\"highlight\": 0, \"source\": \"...\", \"hedge\": false, \"quotes\": [\"...\"], "
+            "\"so_what\": \"\", \"so_what_quote\": \"\"}, ...one per story in order]}\n"
             "Leave out the fields a chart type doesn't use.\n\n" + blocks, 3500, check_shape)
     except Exception as e:
         return [(None, f"figures not read ({str(e)[:80]})") for _ in titles]
@@ -714,6 +772,15 @@ def extract_charts(titles):
         if not isinstance(c, dict) or c.get("chart") in (None, "none", ""):
             res.append((None, "no chart-worthy figures"))
             continue
+        if c.get("chart") == "map":                                              # place names → map outlines
+            region, keys = map_keys(c.get("labels") or [])
+            if region and len(keys) >= 3:
+                c = {**c, "region": region, "keys": keys}
+            elif 2 <= len(c.get("values") or []) <= 8:
+                c = {**c, "chart": "bars"}                                       # unknown place: bars instead
+            else:
+                res.append((None, "places not recognised for a map"))
+                continue
         if c.get("chart") == "line" and len(c.get("values") or []) == 2:         # two moments → before/after
             c = {**c, "chart": "slope", "periods": [str(x) for x in c.get("labels") or []],
                  "series": [{"label": c.get("title") or "", "from": c["values"][0], "to": c["values"][1]}]}
@@ -723,6 +790,7 @@ def extract_charts(titles):
         if problems:
             res.append((None, "; ".join(problems[:3])))
             continue
+        c["so_what"] = check_so_what(c, texts[i])
         res.append((c, "ok"))
     return res
 
@@ -733,6 +801,8 @@ def chart_spec(c, source_fallback):
     s = {"type": "chart", "chart": k, "unit": str(c.get("unit") or ""), "prefix": str(c.get("prefix") or ""),
          "decimals": int(c.get("decimals", 1) or 0), "source": str(c.get("source") or source_fallback or ""),
          "hedge": bool(c.get("hedge")), "title_en": str(c.get("title") or "")}
+    if c.get("so_what"):
+        s["so_what_en"] = c["so_what"]
     if k == "slope":
         s.update(periods=[str(p) for p in c["periods"]],
                  series=[{"label_en": str(x.get("label", "")), "from": x["from"], "to": x["to"]} for x in c["series"]],
@@ -742,6 +812,8 @@ def chart_spec(c, source_fallback):
         for key in ("previous", "change", "period_prev"):
             if c.get(key) is not None:
                 s[key] = c[key]
+    elif k == "map":
+        s.update(region=c["region"], keys=c["keys"], labels_en=[str(x) for x in c.get("labels") or []], values=c["values"])
     else:
         s.update(labels_en=[str(x) for x in (c.get("labels") or [])], values=c["values"])
         if isinstance(c.get("highlight"), int):
@@ -757,7 +829,7 @@ def translate_charts(specs):
             items.append(None)
             continue
         items.append({"title": s.get("title_en", ""), "labels": s.get("labels_en") or [], "label": s.get("label_en", ""),
-                      "period_prev": str(s.get("period_prev") or ""),
+                      "period_prev": str(s.get("period_prev") or ""), "so_what": s.get("so_what_en", ""),
                       "series": [x.get("label_en", "") for x in s.get("series") or []],
                       "unit": s["unit"] if s["unit"] and s["unit"] not in ("%", "pp", "pts", "k", "m", "bn") else ""})
     if not any(items):
@@ -802,6 +874,8 @@ def localize_chart(spec, tr, lang):
         s[f"unit_{lang}"] = t["unit"]
     if spec.get("period_prev") and t.get("period_prev"):
         s[f"period_prev_{lang}"] = t["period_prev"]
+    if spec.get("so_what_en") and t.get("so_what"):
+        s[f"so_what_{lang}"] = t["so_what"]
     return s
 
 
