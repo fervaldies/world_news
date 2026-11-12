@@ -1,53 +1,78 @@
 date: 2026-11-12
 day: Thursday
 news:
-- title: Mercados asiáticos sobem com demanda por chips de IA apesar de queda em Wall Street por dados de inflação
-  source: ITV News
-  url: https://www.itv.com/news/2026-11-11/ai-chip-demand-boosts-asian-stocks-despite-wall-street-retreat-on-inflation-data
+- title: Liderança de colonos israelenses é rejeitada ao chegar à França.
+  source: Hindustan Times
+  url: https://www.hindustantimes.com/world-news/israeli-settler-representative-turned-back-after-arriving-in-france-101794429139456.html
   good: false
   trending: false
   why: ''
-  cat: BUSINESS
-  visual:
-    type: icon
-- title: Primeiro-ministro canadense Mark Carney classifica os EUA como ameaça maior à segurança do que a China
-  source: Breitbart News Network
-  url: https://www.breitbart.com/politics/2026/11/10/canadian-prime-minister-mark-carney-labels-united-states-more-of-a-security-threat-than-china/
-  good: false
-  trending: false
-  why: A mudança nas alianças de segurança nacional afeta diretamente a segurança cotidiana e o comércio.
   cat: POLITICS
   visual:
     type: map
-    country: United States of America
-    place: Washington
-    lat: 38.8951
-    lon: -77.0364
+    country: France
+    place: França
+    lat: 46.2276
+    lon: 2.2137
     span: 25
-- title: Ameaças de bomba alertando que o tempo está esgotando perturbam canais de TV pela Europa
+- title: Ameaças de bomba alertando que o tempo está esgotando interrompem canais de TV pela Europa.
   source: U.S. News & World Report
   url: https://www.usnews.com/news/world/articles/2026-11-06/bomb-threats-warning-the-clock-is-ticking-disrupt-tv-channels-across-europe
   good: false
   trending: false
-  why: ''
+  why: Interrupções ameaçam a transmissão de televisão diária e os serviços de emergência em toda a Europa.
   cat: TECH
   visual:
-    type: icon
-- title: Empresas de defesa ucranianas lançam polo em Bruxelas para financiamento e parcerias da UE
-  source: EUROPE SAYS
-  url: https://www.europesays.com/3368791/
+    type: map
+    country: France
+    place: Europa
+    lat: 54.526
+    lon: 15.2551
+    span: 25
+- title: Índia e Nigéria assinam novo acordo para impulsionar os direitos humanos.
+  source: Lokmat Times
+  url: https://www.lokmattimes.com/international/india-nigeria-boost-human-rights-cooperation-with-new-agreement-a001-w02/
   good: false
   trending: false
   why: ''
-  cat: ECONOMY
+  cat: WORLD
   visual:
-    type: icon
-- title: Loot boxes, influenciadores e recursos viciantes enfrentam repressão da UE
-  source: The Verge
-  url: https://www.theverge.com/policy/1031575/digital-fairness-act-eu-dfa-consumer-protection
+    type: map
+    country: India
+    place: Índia
+    lat: 20.5937
+    lon: 78.9629
+    span: 25
+    country2: Nigeria
+    place2: Nigéria
+    lat2: 9.082
+    lon2: 8.6753
+    span2: 25
+- title: Migrantes caminham para o norte através do México, impulsionados pelo resultado da eleição nos EUA.
+  source: U.S. News & World Report
+  url: https://www.usnews.com/news/world/articles/2026-11-11/migrants-trek-north-through-mexico-buoyed-by-us-election-result
   good: false
   trending: false
   why: ''
   cat: SOCIETY
   visual:
-    type: icon
+    type: map
+    country: Mexico
+    place: México
+    lat: 23.6345
+    lon: -102.5528
+    span: 25
+- title: Papa Leão XIV chega ao Uruguai para iniciar sua turnê sul-americana.
+  source: ITV News
+  url: https://www.itv.com/news/2026-11-06/pope-leo-xiv-lands-in-uruguay-to-begin-south-american-tour
+  good: false
+  trending: false
+  why: ''
+  cat: WORLD
+  visual:
+    type: map
+    country: Uruguay
+    place: Uruguai
+    lat: -32.5228
+    lon: -55.7658
+    span: 12

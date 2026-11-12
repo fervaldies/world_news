@@ -1,53 +1,78 @@
 date: 2026-11-12
 day: Thursday
 news:
-- title: Asian markets rise on AI chip demand despite Wall Street dipping over inflation data
-  source: ITV News
-  url: https://www.itv.com/news/2026-11-11/ai-chip-demand-boosts-asian-stocks-despite-wall-street-retreat-on-inflation-data
+- title: An Israeli settler leader was turned away upon arriving in France.
+  source: Hindustan Times
+  url: https://www.hindustantimes.com/world-news/israeli-settler-representative-turned-back-after-arriving-in-france-101794429139456.html
   good: false
   trending: false
   why: ''
-  cat: BUSINESS
-  visual:
-    type: icon
-- title: Canadian Prime Minister Mark Carney labels the US a bigger security threat than China
-  source: Breitbart News Network
-  url: https://www.breitbart.com/politics/2026/11/10/canadian-prime-minister-mark-carney-labels-united-states-more-of-a-security-threat-than-china/
-  good: false
-  trending: false
-  why: Shifting national security alliances directly impact everyday safety and trade.
   cat: POLITICS
   visual:
     type: map
-    country: United States of America
-    place: Washington
-    lat: 38.8951
-    lon: -77.0364
+    country: France
+    place: France
+    lat: 46.2276
+    lon: 2.2137
     span: 25
-- title: Bomb threats warning the clock is ticking disrupt TV channels across Europe
+- title: Bomb threats warning the clock is ticking disrupt TV channels across Europe.
   source: U.S. News & World Report
   url: https://www.usnews.com/news/world/articles/2026-11-06/bomb-threats-warning-the-clock-is-ticking-disrupt-tv-channels-across-europe
   good: false
   trending: false
-  why: ''
+  why: Disruptions threaten daily television broadcasting and emergency services across Europe.
   cat: TECH
   visual:
-    type: icon
-- title: Ukrainian defense companies launch a Brussels hub for EU funding and partnerships
-  source: EUROPE SAYS
-  url: https://www.europesays.com/3368791/
+    type: map
+    country: France
+    place: Europe
+    lat: 54.526
+    lon: 15.2551
+    span: 25
+- title: India and Nigeria sign a new agreement to boost human rights.
+  source: Lokmat Times
+  url: https://www.lokmattimes.com/international/india-nigeria-boost-human-rights-cooperation-with-new-agreement-a001-w02/
   good: false
   trending: false
   why: ''
-  cat: ECONOMY
+  cat: WORLD
   visual:
-    type: icon
-- title: Loot boxes, influencers, and addictive features face an EU crackdown
-  source: The Verge
-  url: https://www.theverge.com/policy/1031575/digital-fairness-act-eu-dfa-consumer-protection
+    type: map
+    country: India
+    place: India
+    lat: 20.5937
+    lon: 78.9629
+    span: 25
+    country2: Nigeria
+    place2: Nigeria
+    lat2: 9.082
+    lon2: 8.6753
+    span2: 25
+- title: Migrants trek north through Mexico, buoyed by the US election result.
+  source: U.S. News & World Report
+  url: https://www.usnews.com/news/world/articles/2026-11-11/migrants-trek-north-through-mexico-buoyed-by-us-election-result
   good: false
   trending: false
   why: ''
   cat: SOCIETY
   visual:
-    type: icon
+    type: map
+    country: Mexico
+    place: Mexico
+    lat: 23.6345
+    lon: -102.5528
+    span: 25
+- title: Pope Leo XIV arrives in Uruguay to begin his South American tour.
+  source: ITV News
+  url: https://www.itv.com/news/2026-11-06/pope-leo-xiv-lands-in-uruguay-to-begin-south-american-tour
+  good: false
+  trending: false
+  why: ''
+  cat: WORLD
+  visual:
+    type: map
+    country: Uruguay
+    place: Uruguay
+    lat: -32.5228
+    lon: -55.7658
+    span: 12
