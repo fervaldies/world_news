@@ -514,7 +514,9 @@ CATEGORIES = ["POLITICS", "ECONOMY", "BUSINESS", "TECH", "CLIMATE", "ENERGY", "H
 
 def remember_article(title, article):
     src = (article.get("source") or {}).get("name") or ""
-    ARTICLE_INFO.setdefault(title, {"source": src.strip(), "url": article.get("url") or ""})
+    ARTICLE_INFO.setdefault(title, {"source": src.strip(), "url": article.get("url") or "",
+                                    "description": (article.get("description") or "")[:600],
+                                    "content": (article.get("content") or "")[:1500]})    # for the chart figures
 
 
 def remember_picked(news):
@@ -577,6 +579,248 @@ def ai_json(prompt, max_tokens, check):
     raise ValueError(" | ".join(errors))
 
 
+# ── Charts from the article's own figures (charts item 1) + number check (item 16) ─────────────
+# One AI call (Gemini, Claude as fallback) reads each picked story's text (headline + GNews description
+# + the start of the article) and returns the figures with the exact sentence each comes from. Then CODE
+# checks every number against the article text; a chart that fails keeps the older number / map / icon.
+CHART_KINDS = ("bars", "line", "donut", "slope", "bignum")
+CHART_NOTES = []                         # what happened to every chart today (Telegram summary + logs)
+
+
+def _num_tokens(text):
+    """Every number written in a text, as floats (3.6 / 3,6 / 1,200 / 1.200 / -2)."""
+    out = []
+    for m in re.findall(r"(?<![\w])-?\d[\d.,]*", str(text)):
+        m = m.rstrip(".,")
+        if not m or m == "-":
+            continue
+        if re.fullmatch(r"-?\d{1,3}([.,]\d{3})+", m):             # thousands separators only
+            out.append(float(re.sub(r"[.,]", "", m)))
+        elif m.count(",") + m.count(".") == 1:
+            out.append(float(m.replace(",", ".")))
+        else:
+            try:
+                out.append(float(re.sub(r"[.,]", "", m)))
+            except ValueError:
+                pass
+    return out
+
+
+def _close(v, nums, dec):
+    tol = 0.5 * 10 ** (-max(0, int(dec))) + 1e-9
+    return any(abs(float(v) - n) <= tol for n in nums)
+
+
+def _norm_text(s):
+    return re.sub(r"\s+", " ", str(s).lower().replace("’", "'")).strip()
+
+
+def chart_values(c):
+    k = c.get("chart")
+    if k == "slope":
+        return [v for x in c.get("series") or [] for v in (x.get("from"), x.get("to"))]
+    if k == "bignum":
+        return [v for v in (c.get("value"), c.get("previous")) if v is not None] + \
+               ([c["change"]] if c.get("change") is not None and c.get("previous") is None else [])
+    return list(c.get("values") or [])
+
+
+def check_chart(c, text, headline):
+    """Problems that stop this chart (empty list = OK). Values, units, years, quotes, headline match."""
+    problems = []
+    T = _norm_text(text)
+    nums = _num_tokens(text)
+    dec = int(c.get("decimals", 1) or 0)
+    k = c.get("chart")
+    if k not in CHART_KINDS:
+        return [f"unknown chart type '{k}'"]
+    try:
+        vals = [float(v) for v in chart_values(c)]
+    except (TypeError, ValueError):
+        return ["a value isn't a number"]
+    n = len(c.get("values") or [])
+    if k == "bars" and not 2 <= n <= 8:
+        problems.append(f"bars need 2–8 values (got {n})")
+    if k == "line" and not 4 <= n <= 15:
+        problems.append(f"a line needs 4+ points (got {n})")
+    if k == "donut" and not 2 <= n <= 6:
+        problems.append(f"a donut needs 2–6 shares (got {n})")
+    if k == "slope" and (len(c.get("periods") or []) != 2 or not c.get("series")):
+        problems.append("a before/after chart needs two periods")
+    if k == "bignum" and (c.get("value") is None or (c.get("previous") is None and c.get("change") is None)):
+        problems.append("one number without a change — the count-up number is used instead")
+    for v in vals:
+        if not _close(v, nums, dec):
+            problems.append(f"{v:g} isn't in the article")
+    for q in c.get("quotes") or []:
+        if q and _norm_text(q)[:70] not in T:
+            problems.append("a quoted sentence isn't in the article")
+            break
+    unit = str(c.get("unit") or "")
+    if unit == "%" and not ("%" in text or "per cent" in T or "percent" in T or "pct" in T):
+        problems.append("shown as % but the article has no percentage")
+    for word, short in (("million", "m"), ("billion", "bn"), ("trillion", "tn")):       # 1.2 million / 1.2m
+        if word in unit.lower() and word not in T and not re.search(rf"\d\s?{short}\b", T):
+            problems.append(f"'{word}' isn't in the article")
+    labs = [str(x) for x in (c.get("labels") or []) + (c.get("periods") or [])]
+    for y in {m for l in labs for m in re.findall(r"\b(19\d\d|20\d\d)\b", l)}:
+        if y not in text:
+            problems.append(f"the year {y} isn't in the article")
+    if k == "donut" and unit == "%" and vals and not 95 <= sum(vals) <= 105:
+        problems.append(f"the shares add up to {sum(vals):g}%, not 100%")
+    for m in re.finditer(r"(-?\d[\d.,]*)\s*(%|per ?cent)", str(headline)):        # headline vs chart
+        hv = _num_tokens(m.group(1))
+        if unit == "%" and hv and not _close(hv[0], vals + ([float(c["change"])] if c.get("change") is not None else []), dec):
+            problems.append(f"the headline says {m.group(1)}% but the chart doesn't")
+    return list(dict.fromkeys(problems))
+
+
+def extract_charts(titles):
+    """Per story: (chart dict or None, note). One AI call for the 5 stories."""
+    texts = []
+    for i, t in enumerate(titles):
+        info = PICKED[i] if i < len(PICKED) else {}
+        texts.append(" ".join(x for x in (t, info.get("description", ""), info.get("content", "")) if x).strip())
+    if not any(_num_tokens(x) for x in texts):
+        return [(None, "no figures in the article") for _ in titles]
+    blocks = "\n\n".join(f"STORY {i}\n{x}" for i, x in enumerate(texts))
+
+    def check_shape(d):
+        if not isinstance(d.get("stories"), list) or len(d["stories"]) != len(titles):
+            raise ValueError("wrong number of stories")
+    try:
+        out = ai_json(
+            "You prepare small charts for a news video. For each story use ONLY figures written in its text below — "
+            "never estimate, calculate, convert or invent numbers. For every figure give the exact sentence it comes "
+            "from (copy it from the text). Pick the chart by the data:\n"
+            "- change over time with 4+ dates → line;\n- parts of one whole (shares that add up) → donut;\n"
+            "- the same things at two moments → slope;\n- a ranking / comparison of 2–8 things → bars;\n"
+            "- one value plus its previous value or its change → bignum;\n"
+            "- only ONE number, or nothing comparable → none (never force a weak chart).\n"
+            "Set hedge true when the text says the figure is an estimate, forecast, preliminary, expected or "
+            "unconfirmed. source = the organisation the text credits for the figures (e.g. 'ABS', 'Eurostat'), "
+            "else the outlet name. title = max 6 words saying what is measured (no opinion).\n"
+            "Return ONLY JSON: {\"stories\": [{\"chart\": \"bars|line|donut|slope|bignum|none\", \"title\": \"...\", "
+            "\"unit\": \"% or a short unit or ''\", \"prefix\": \"'$' or ''\", \"decimals\": 1, "
+            "\"labels\": [...], \"values\": [...], \"periods\": [\"2024\", \"2025\"], "
+            "\"series\": [{\"label\": \"...\", \"from\": 1, \"to\": 2}], \"value\": 0, \"previous\": 0, "
+            "\"change\": 0, \"change_unit\": \"% or pts\", \"label\": \"...\", \"period_prev\": \"...\", "
+            "\"highlight\": 0, \"source\": \"...\", \"hedge\": false, \"quotes\": [\"...\"]}, ...one per story in order]}\n"
+            "Leave out the fields a chart type doesn't use.\n\n" + blocks, 3500, check_shape)
+    except Exception as e:
+        return [(None, f"figures not read ({str(e)[:80]})") for _ in titles]
+    res = []
+    for i, c in enumerate(out["stories"]):
+        if not isinstance(c, dict) or c.get("chart") in (None, "none", ""):
+            res.append((None, "no chart-worthy figures"))
+            continue
+        if c.get("chart") == "line" and len(c.get("values") or []) == 2:         # two moments → before/after
+            c = {**c, "chart": "slope", "periods": [str(x) for x in c.get("labels") or []],
+                 "series": [{"label": c.get("title") or "", "from": c["values"][0], "to": c["values"][1]}]}
+        elif c.get("chart") == "line" and len(c.get("values") or []) < 4:       # 3 dates: bars read better
+            c["chart"] = "bars"
+        problems = check_chart(c, texts[i], titles[i])
+        if problems:
+            res.append((None, "; ".join(problems[:3])))
+            continue
+        res.append((c, "ok"))
+    return res
+
+
+def chart_spec(c, source_fallback):
+    """The day-file `visual` for a checked chart (English texts; other languages are added later)."""
+    k = c["chart"]
+    s = {"type": "chart", "chart": k, "unit": str(c.get("unit") or ""), "prefix": str(c.get("prefix") or ""),
+         "decimals": int(c.get("decimals", 1) or 0), "source": str(c.get("source") or source_fallback or ""),
+         "hedge": bool(c.get("hedge")), "title_en": str(c.get("title") or "")}
+    if k == "slope":
+        s.update(periods=[str(p) for p in c["periods"]],
+                 series=[{"label_en": str(x.get("label", "")), "from": x["from"], "to": x["to"]} for x in c["series"]],
+                 highlight=int(c.get("highlight") or 0))
+    elif k == "bignum":
+        s.update(value=c["value"], label_en=str(c.get("label") or ""), change_unit=str(c.get("change_unit") or ""))
+        for key in ("previous", "change", "period_prev"):
+            if c.get(key) is not None:
+                s[key] = c[key]
+    else:
+        s.update(labels_en=[str(x) for x in (c.get("labels") or [])], values=c["values"])
+        if isinstance(c.get("highlight"), int):
+            s["highlight"] = c["highlight"]
+    return s
+
+
+def translate_charts(specs):
+    """{lang: [per-story dict of translated texts or None]} for es / pt / id (one AI call)."""
+    items = []
+    for s in specs:
+        if not s:
+            items.append(None)
+            continue
+        items.append({"title": s.get("title_en", ""), "labels": s.get("labels_en") or [], "label": s.get("label_en", ""),
+                      "period_prev": str(s.get("period_prev") or ""),
+                      "series": [x.get("label_en", "") for x in s.get("series") or []],
+                      "unit": s["unit"] if s["unit"] and s["unit"] not in ("%", "pp", "pts", "k", "m", "bn") else ""})
+    if not any(items):
+        return {}
+
+    def check(d):
+        for lg in ("es", "pt", "id"):
+            if not isinstance(d.get(lg), list) or len(d[lg]) != len(items):
+                raise ValueError(f"no '{lg}' list")
+    try:
+        return ai_json("Translate the texts of these small news charts into Spanish from Spain (es), Brazilian "
+                       "Portuguese (pt) and Indonesian (id). Translate place and country names the way that language "
+                       "writes them; keep numbers, organisations and years exactly; keep it short; same structure "
+                       "(null stays null). Return ONLY JSON: {\"es\": [...], \"pt\": [...], \"id\": [...]}\n\n"
+                       + json.dumps(items, ensure_ascii=False), 3000, check)
+    except Exception as e:
+        print(f"⚠️ Chart texts not translated ({e}) — ES/PT/ID keep the older picture")
+        return {}
+
+
+def localize_chart(spec, tr, lang):
+    """Add one language's texts to a chart; None if that language has no translation (never English on screen)."""
+    if lang == "en":
+        return spec
+    t = tr if isinstance(tr, dict) else None
+    if not t:
+        return None
+    s = dict(spec)
+    s[f"title_{lang}"] = t.get("title") or ""
+    if spec.get("labels_en"):
+        if len(t.get("labels") or []) != len(spec["labels_en"]):
+            return None
+        s[f"labels_{lang}"] = t["labels"]
+    if spec.get("label_en"):
+        s[f"label_{lang}"] = t.get("label") or ""
+    if spec.get("series"):
+        names = t.get("series") or []
+        if len(names) != len(spec["series"]):
+            return None
+        s["series"] = [{**x, f"label_{lang}": names[j]} for j, x in enumerate(spec["series"])]
+    if t.get("unit"):
+        s[f"unit_{lang}"] = t["unit"]
+    if spec.get("period_prev") and t.get("period_prev"):
+        s[f"period_prev_{lang}"] = t["period_prev"]
+    return s
+
+
+def chart_telegram(day_name):
+    """One Telegram line per fetch when a chart was dropped by the number check."""
+    bad = [n for n in CHART_NOTES if not n.startswith("✅")]
+    bot, chat = os.environ.get("TELEGRAM_BOT_TOKEN"), os.environ.get("TELEGRAM_CHAT_ID")
+    if not bad or not (bot and chat):
+        return
+    name = {"aus_news": "🇦🇺 Australia", "world_news": "🌍 World", "europe_news": "🇪🇺 Europe"}.get(
+        os.path.basename(os.getcwd()), os.path.basename(os.getcwd()))
+    text = f"📊 {name} charts ({day_name}): " + " · ".join(CHART_NOTES)
+    try:
+        data = urllib.parse.urlencode({"chat_id": chat, "text": text[:3500]}).encode()
+        urllib.request.urlopen(f"https://api.telegram.org/bot{bot}/sendMessage", data=data, timeout=20)
+    except Exception as e:
+        print(f"⚠️ Telegram (charts): {e}")
+
+
 def enrich_day_files(day_name, en_news):
     """Adds source / url / good (always) and cat / visual / why (AI, best effort) to every language
     file of today. Never fatal; never puts English text into the ES / PT / ID files."""
@@ -626,6 +870,21 @@ def enrich_day_files(day_name, en_news):
                     + json.dumps(bits, ensure_ascii=False), 3000, check_tr)
             except Exception as e:
                 print(f"⚠️ Translation of the short texts skipped (non-fatal) — ES/PT/ID get pictures without them: {e}")
+    CHART_NOTES.clear()
+    charts, chart_tr = [None] * len(titles), {}
+    try:
+        found = extract_charts(titles)
+        for i, (c, note) in enumerate(found):
+            if c:
+                charts[i] = chart_spec(c, (PICKED[i] if i < len(PICKED) else {}).get("source"))
+                CHART_NOTES.append(f"✅ story {i + 1}: {c['chart']}")
+            elif note not in ("no chart-worthy figures", "no figures in the article"):
+                CHART_NOTES.append(f"✖ story {i + 1}: {note}")
+        if any(charts):
+            chart_tr = translate_charts(charts)
+        print("📊 Charts: " + (" · ".join(CHART_NOTES) if CHART_NOTES else "none today (no comparable figures)"))
+    except Exception as e:
+        print(f"⚠️ Chart step skipped (non-fatal): {e}")
     done = []
     for code in ("EN", "ES", "PT", "ID"):
         path = f"{day_name}News{code}.yml"
@@ -658,12 +917,25 @@ def enrich_day_files(day_name, en_news):
                     it.setdefault("cat", "GOOD NEWS" if good else "WORLD")
                     it.setdefault("visual", {"type": "icon"})
                     it.setdefault("why", "")
+                if i < len(charts) and charts[i]:              # checked chart, older picture kept as fallback
+                    lang = code.lower()
+                    tr_i = (chart_tr.get(lang) or [None] * len(titles))[i] if lang != "en" else None
+                    spec = localize_chart(charts[i], tr_i, lang)
+                    if spec:
+                        it["visual"] = {**spec, "fallback": it.get("visual") or {"type": "icon"}}
+                    it["chart_check"] = {"result": "ok" if spec else "no translation — older picture used",
+                                         "template": charts[i]["chart"]}
+                else:
+                    note = next((n for n in CHART_NOTES if n.startswith(f"✖ story {i + 1}:")), None)
+                    if note:
+                        it["chart_check"] = {"result": "not used: " + note.split(":", 1)[1].strip()}
             data["news"] = items
             with open(path, "w", encoding="utf-8") as f:
                 yaml.safe_dump(data, f, allow_unicode=True, sort_keys=False, width=1000)
             done.append(code)
         except Exception as e:
             print(f"⚠️ Story details not written to {path} (non-fatal): {e}")
+    chart_telegram(day_name)
     print(f"✅ Story details in {', '.join(done) or 'no files'}: sources ✓ · categories/pictures "
           f"{'✓' if stories else '✗'} · ES/PT/ID short texts {'✓' if tr else '✗'}")
 
