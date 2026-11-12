@@ -172,6 +172,15 @@ def gh(method, path, body=None):
                      {"Authorization": f"token {PAT}", "Accept": "application/vnd.github+json"})
 
 
+def gh_raw(path, repo=None):
+    """A file of the private news-metrics repo (main branch), as text."""
+    req = urllib.request.Request(f"https://api.github.com/repos/{repo or STATE_REPO}/contents/{path}",
+                                 headers={"Authorization": f"token {PAT}", "Accept": "application/vnd.github.raw",
+                                          "User-Agent": "news-alerts"})
+    with urllib.request.urlopen(req, timeout=60) as r:
+        return r.read().decode("utf-8")
+
+
 def load_state():
     try:
         d = gh("GET", f"/repos/{STATE_REPO}/contents/{STATE_FILE}?ref={STATE_BRANCH}")
@@ -481,6 +490,9 @@ def handle(st, upd, allow_publish=True):
     kind, data, obj = got
     if kind == "tap":
         tg("answerCallbackQuery", callback_query_id=obj["id"])
+    r = DESK.route(st, kind, data, obj)                             # the control desk (menu, flows) first
+    if r is not DESK.NOT_MINE:
+        return r
     if kind == "text":
         cmd = data.lower()
         if cmd in ("check", "/check", "breaking"):
@@ -549,7 +561,7 @@ def handle(st, upd, allow_publish=True):
         say(f"🎬 Making the {' + '.join(l.upper() for l in d['langs'])} video{'s' if len(d['langs']) > 1 else ''}"
             + (f" — you'll get {'them' if len(d['langs']) > 1 else 'it'} here to approve before posting (about {mins}–{mins + 4} min)."
                if APPROVE_VIDEO else f" and posting (about {mins + 2}–{mins + 8} min)."))
-        return ("post", parts[1])
+        return ("post", DESK.job_from_breaking(st, parts[1]))
     return None
 
 
@@ -583,7 +595,10 @@ def run_bot():
     if any(d["status"] == "drafted" and now() - parse_iso(d["t"]) < timedelta(minutes=LISTEN_MIN) for d in st["drafts"].values()):
         listen_until = time.time() + 60 * LISTEN_MIN
     result = None
-    while True:
+    waiting_jobs = sorted(((j["t"], jid) for jid, j in (st.get("jobs") or {}).items() if j["status"] == "queued"))
+    if waiting_jobs:
+        result = waiting_jobs[0][1]
+    while not result:
         if due(st, force or st.pop("_force_check", False)):
             force = False
             st["last_check"] = iso()
@@ -616,13 +631,13 @@ def run_bot():
     save_state(st)
     out = os.environ.get("GITHUB_OUTPUT")
     if result:
-        d = st["drafts"][result]
-        c = CHANNELS[d["channel"]]
-        log(f"Publishing requested ({d['channel']}, {'+'.join(d['langs'])})")
+        job = st["jobs"][result]
+        need = {t["channel"] for t in job["tasks"]}
+        log(f"Videos requested ({len(job['tasks'])})")
         if out:
             with open(out, "a") as f:
-                f.write(f"post=true\ndraft={result}\nrepo={c['repo']}\nchk={c['chk']}\n"
-                        + "".join(f"yt_{l}={c['yt'][l]}\n" for l in LANGS))
+                f.write(f"post=true\njob={result}\n" + "".join(f"need_{c}={'true' if c in need else 'false'}\n"
+                                                              for c in CHANNELS))
     elif out:
         with open(out, "a") as f:
             f.write("post=false\n")
@@ -661,8 +676,8 @@ def sh(cmd, logf, env=None, cwd="reels", timeout=1800):
     return r.returncode == 0
 
 
-def pick(prefix, ext):
-    files = [f for f in glob.glob(f"reels/{prefix}*.{ext}") if re.fullmatch(rf"{prefix}\d*\.{ext}", os.path.basename(f))]
+def pick(prefix, ext, folder="reels"):
+    files = [f for f in glob.glob(f"{folder}/{prefix}*.{ext}") if re.fullmatch(rf"{prefix}\d*\.{ext}", os.path.basename(f))]
     return os.path.basename(random.choice(files)) if files else None
 
 
@@ -767,10 +782,14 @@ def run_post():
         + ".")
 
 
+sys.path.insert(0, HERE)
+import desk as DESK                                    # the control desk (menu + flows + job runner)
+DESK.A = sys.modules[__name__]
+
 if __name__ == "__main__":
     mode = sys.argv[1] if len(sys.argv) > 1 else "bot"
     try:
-        run_post() if mode == "post" else run_bot()
+        DESK.run_job(load_state(), os.environ.get("JOB_ID", "")) if mode == "post" else run_bot()
     except Exception as e:
         log(f"Stopped: {type(e).__name__}")              # no details in the public log
         try:
