@@ -1,8 +1,53 @@
-date: 2026-11-05
+date: 2026-11-12
 day: Thursday
 news:
-  - title: "Millones de personas acuden a las urnas en Sudáfrica en unas elecciones locales clave"
-  - title: "Israel refuerza la seguridad ante el creciente temor a un ataque iraní"
-  - title: "Bután se apresura a crear empleo antes de que se cierre su ventana demográfica"
-  - title: "El crecimiento económico de Liberia se dispara, pero los buenos empleos siguen siendo escasos"
-  - title: "Qué significa el revés electoral de Trump para la India y el mundo"
+- title: Los mercados asiáticos suben por la demanda de chips de IA a pesar de la caída de Wall Street por los datos de inflación
+  source: ITV News
+  url: https://www.itv.com/news/2026-11-11/ai-chip-demand-boosts-asian-stocks-despite-wall-street-retreat-on-inflation-data
+  good: false
+  trending: false
+  why: ''
+  cat: BUSINESS
+  visual:
+    type: icon
+- title: El primer ministro canadiense Mark Carney califica a EE. UU. de mayor amenaza para la seguridad que China
+  source: Breitbart News Network
+  url: https://www.breitbart.com/politics/2026/11/10/canadian-prime-minister-mark-carney-labels-united-states-more-of-a-security-threat-than-china/
+  good: false
+  trending: false
+  why: Los cambios en las alianzas de seguridad nacional afectan directamente a la seguridad cotidiana y al comercio.
+  cat: POLITICS
+  visual:
+    type: map
+    country: United States of America
+    place: Washington
+    lat: 38.8951
+    lon: -77.0364
+    span: 25
+- title: Amenazas de bomba que advierten que el tiempo se agota interrumpen canales de televisión en toda Europa
+  source: U.S. News & World Report
+  url: https://www.usnews.com/news/world/articles/2026-11-06/bomb-threats-warning-the-clock-is-ticking-disrupt-tv-channels-across-europe
+  good: false
+  trending: false
+  why: ''
+  cat: TECH
+  visual:
+    type: icon
+- title: Las empresas de defensa ucranianas lanzan un centro en Bruselas para buscar financiación y alianzas en la UE
+  source: EUROPE SAYS
+  url: https://www.europesays.com/3368791/
+  good: false
+  trending: false
+  why: ''
+  cat: ECONOMY
+  visual:
+    type: icon
+- title: Las cajas botín, los 'influencers' y las funciones adictivas se enfrentan a una ofensiva de la UE
+  source: The Verge
+  url: https://www.theverge.com/policy/1031575/digital-fairness-act-eu-dfa-consumer-protection
+  good: false
+  trending: false
+  why: ''
+  cat: SOCIETY
+  visual:
+    type: icon

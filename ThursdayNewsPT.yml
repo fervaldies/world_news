@@ -1,0 +1,53 @@
+date: 2026-11-12
+day: Thursday
+news:
+- title: Mercados asiáticos sobem com demanda por chips de IA apesar de queda em Wall Street por dados de inflação
+  source: ITV News
+  url: https://www.itv.com/news/2026-11-11/ai-chip-demand-boosts-asian-stocks-despite-wall-street-retreat-on-inflation-data
+  good: false
+  trending: false
+  why: ''
+  cat: BUSINESS
+  visual:
+    type: icon
+- title: Primeiro-ministro canadense Mark Carney classifica os EUA como ameaça maior à segurança do que a China
+  source: Breitbart News Network
+  url: https://www.breitbart.com/politics/2026/11/10/canadian-prime-minister-mark-carney-labels-united-states-more-of-a-security-threat-than-china/
+  good: false
+  trending: false
+  why: A mudança nas alianças de segurança nacional afeta diretamente a segurança cotidiana e o comércio.
+  cat: POLITICS
+  visual:
+    type: map
+    country: United States of America
+    place: Washington
+    lat: 38.8951
+    lon: -77.0364
+    span: 25
+- title: Ameaças de bomba alertando que o tempo está esgotando perturbam canais de TV pela Europa
+  source: U.S. News & World Report
+  url: https://www.usnews.com/news/world/articles/2026-11-06/bomb-threats-warning-the-clock-is-ticking-disrupt-tv-channels-across-europe
+  good: false
+  trending: false
+  why: ''
+  cat: TECH
+  visual:
+    type: icon
+- title: Empresas de defesa ucranianas lançam polo em Bruxelas para financiamento e parcerias da UE
+  source: EUROPE SAYS
+  url: https://www.europesays.com/3368791/
+  good: false
+  trending: false
+  why: ''
+  cat: ECONOMY
+  visual:
+    type: icon
+- title: Loot boxes, influenciadores e recursos viciantes enfrentam repressão da UE
+  source: The Verge
+  url: https://www.theverge.com/policy/1031575/digital-fairness-act-eu-dfa-consumer-protection
+  good: false
+  trending: false
+  why: ''
+  cat: SOCIETY
+  visual:
+    type: icon
