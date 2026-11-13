@@ -1,8 +1,71 @@
-date: 2026-11-06
+date: 2026-11-13
 day: Friday
 news:
-  - title: "Google ofrece bajas incentivadas a empleados en varios países"
-  - title: "Un petrolero es alcanzado por proyectiles en el golfo Pérsico frente a las costas de Catar"
-  - title: "El Reino Unido abre una nueva vía para refugiados de India, Pakistán y otros cinco países"
-  - title: "Indonesia combate sus peores incendios forestales en 11 años mientras Australia se suma a las labores de extinción"
-  - title: "Deb Haaland se convierte en la primera gobernadora nativa americana de Nuevo México"
+- title: El consejero delegado de Nvidia, Jensen Huang, dimite tras dos affaires y la directora financiera, Colette Kress, toma el relevo
+  source: The Tribune
+  url: https://www.tribuneindia.com/news/india/nvidia-ceo-jensen-huang-quits-over-twin-affairs-kress-takes-charge-as-interim-ceo/
+  good: false
+  trending: false
+  why: ''
+  cat: BUSINESS
+  visual:
+    type: icon
+- title: SpaceX planea una inversión de 74.000 millones de dólares para construir centros de datos en Texas y Arizona
+  source: The New York Times
+  url: https://www.nytimes.com/2026/11/12/business/spacex-data-center.html
+  good: false
+  trending: false
+  why: Expande la infraestructura masiva de computación en la nube y los mercados laborales regionales.
+  cat: TECH
+  visual:
+    type: map
+    country: United States of America
+    place: Texas y Arizona
+    lat: 31.5
+    lon: -104.5
+    span: 25
+  chart_check:
+    result: 'not used: bars need 2–8 values (got 1)'
+- title: Se espera un acuerdo de libre comercio con Canadá para el mes que viene antes de la visita del primer ministro Modi
+  source: Lokmat Times
+  url: https://www.lokmattimes.com/national/india-canada-fta-likely-next-month-ahead-of-pm-modis-visit-a001-w02/
+  good: false
+  trending: true
+  why: Impulsa el comercio bilateral, creando nuevas oportunidades económicas para los ciudadanos.
+  cat: ECONOMY
+  visual:
+    type: map
+    country: Canada
+    place: Canadá
+    lat: 56.13
+    lon: -106.35
+    span: 25
+- title: Arabia Saudí intercepta misiles después de que un edificio de Aramco en Riad sufra daños
+  source: Baltimore Sun
+  url: https://www.baltimoresun.com/2026/11/08/saudi-arabia-intercepts-missiles-as-aramco-building-in-riyadh-is-damaged-and-other-mideast-news/
+  good: false
+  trending: false
+  why: ''
+  cat: CONFLICT
+  visual:
+    type: map
+    country: Saudi Arabia
+    place: Riad
+    lat: 24.71
+    lon: 46.67
+    span: 12
+  chart_check:
+    result: 'not used: one number without a change — the count-up number is used instead'
+- title: Cinco personas son halladas con vida tras sobrevivir tres meses a la deriva en el mar en una pequeña embarcación
+  source: Fox News
+  url: https://www.foxnews.com/travel/5-found-alive-3-months-adrift-sea-tiny-20-foot-boat
+  good: true
+  trending: false
+  why: ''
+  cat: GOOD NEWS
+  visual:
+    type: number
+    number: '3'
+    label: meses a la deriva
+  chart_check:
+    result: 'not used: one number without a change — the count-up number is used instead; 5 isn''t in the article'

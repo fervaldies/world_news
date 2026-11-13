@@ -1,0 +1,71 @@
+date: 2026-11-13
+day: Friday
+news:
+- title: CEO Nvidia Jensen Huang Mundur Usai Terlibat Dua Skandal, CFO Colette Kress Ambil Alih
+  source: The Tribune
+  url: https://www.tribuneindia.com/news/india/nvidia-ceo-jensen-huang-quits-over-twin-affairs-kress-takes-charge-as-interim-ceo/
+  good: false
+  trending: false
+  why: ''
+  cat: BUSINESS
+  visual:
+    type: icon
+- title: SpaceX Rencanakan Investasi Rp1.182 Triliun untuk Bangun Pusat Data di Texas dan Arizona
+  source: The New York Times
+  url: https://www.nytimes.com/2026/11/12/business/spacex-data-center.html
+  good: false
+  trending: false
+  why: Memperluas infrastruktur komputasi awan besar-besaran dan pasar kerja regional.
+  cat: TECH
+  visual:
+    type: map
+    country: United States of America
+    place: Texas & Arizona
+    lat: 31.5
+    lon: -104.5
+    span: 25
+  chart_check:
+    result: 'not used: bars need 2–8 values (got 1)'
+- title: Perjanjian Perdagangan Bebas Kanada Diharapkan Bulan Depan Jelang Kunjungan PM Modi
+  source: Lokmat Times
+  url: https://www.lokmattimes.com/national/india-canada-fta-likely-next-month-ahead-of-pm-modis-visit-a001-w02/
+  good: false
+  trending: true
+  why: Mendorong perdagangan bilateral, menciptakan peluang ekonomi baru bagi warga negara.
+  cat: ECONOMY
+  visual:
+    type: map
+    country: Canada
+    place: Kanada
+    lat: 56.13
+    lon: -106.35
+    span: 25
+- title: Arab Saudi Ceggat Rudal Usai Gedung Aramco di Riyadh Alami Kerusakan
+  source: Baltimore Sun
+  url: https://www.baltimoresun.com/2026/11/08/saudi-arabia-intercepts-missiles-as-aramco-building-in-riyadh-is-damaged-and-other-mideast-news/
+  good: false
+  trending: false
+  why: ''
+  cat: CONFLICT
+  visual:
+    type: map
+    country: Saudi Arabia
+    place: Riyadh
+    lat: 24.71
+    lon: 46.67
+    span: 12
+  chart_check:
+    result: 'not used: one number without a change — the count-up number is used instead'
+- title: Lima Orang Ditemukan Hidup Usai Bertahan Tiga Bulan Terdampar di Laut dengan Perahu Kecil
+  source: Fox News
+  url: https://www.foxnews.com/travel/5-found-alive-3-months-adrift-sea-tiny-20-foot-boat
+  good: true
+  trending: false
+  why: ''
+  cat: GOOD NEWS
+  visual:
+    type: number
+    number: '3'
+    label: bulan terkatung-katung
+  chart_check:
+    result: 'not used: one number without a change — the count-up number is used instead; 5 isn''t in the article'

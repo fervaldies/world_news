@@ -1,8 +1,71 @@
-date: 2026-11-06
+date: 2026-11-13
 day: Friday
 news:
-  - title: "Google offers voluntary buyouts to employees in several countries"
-  - title: "A tanker is struck by projectiles in the Persian Gulf off Qatar"
-  - title: "The UK opens a new refugee pathway for India, Pakistan, and five other nations"
-  - title: "Indonesia battles its worst wildfires in 11 years as Australia joins the firefighting effort"
-  - title: "Deb Haaland becomes New Mexico's first Native American woman governor"
+- title: Nvidia CEO Jensen Huang steps down following two affairs and CFO Colette Kress takes over
+  source: The Tribune
+  url: https://www.tribuneindia.com/news/india/nvidia-ceo-jensen-huang-quits-over-twin-affairs-kress-takes-charge-as-interim-ceo/
+  good: false
+  trending: false
+  why: ''
+  cat: BUSINESS
+  visual:
+    type: icon
+- title: SpaceX plans a $74 billion investment to build data centers in Texas and Arizona
+  source: The New York Times
+  url: https://www.nytimes.com/2026/11/12/business/spacex-data-center.html
+  good: false
+  trending: false
+  why: Expands massive cloud computing infrastructure and regional job markets.
+  cat: TECH
+  visual:
+    type: map
+    country: United States of America
+    place: Texas & Arizona
+    lat: 31.5
+    lon: -104.5
+    span: 25
+  chart_check:
+    result: 'not used: bars need 2–8 values (got 1)'
+- title: Canada free trade agreement expected next month ahead of PM Modi's visit
+  source: Lokmat Times
+  url: https://www.lokmattimes.com/national/india-canada-fta-likely-next-month-ahead-of-pm-modis-visit-a001-w02/
+  good: false
+  trending: true
+  why: Boosts bilateral trade, creating new economic opportunities for citizens.
+  cat: ECONOMY
+  visual:
+    type: map
+    country: Canada
+    place: Canada
+    lat: 56.13
+    lon: -106.35
+    span: 25
+- title: Saudi Arabia intercepts missiles after an Aramco building in Riyadh suffers damage
+  source: Baltimore Sun
+  url: https://www.baltimoresun.com/2026/11/08/saudi-arabia-intercepts-missiles-as-aramco-building-in-riyadh-is-damaged-and-other-mideast-news/
+  good: false
+  trending: false
+  why: ''
+  cat: CONFLICT
+  visual:
+    type: map
+    country: Saudi Arabia
+    place: Riyadh
+    lat: 24.71
+    lon: 46.67
+    span: 12
+  chart_check:
+    result: 'not used: one number without a change — the count-up number is used instead'
+- title: Five people found alive after surviving three months adrift at sea in a tiny boat
+  source: Fox News
+  url: https://www.foxnews.com/travel/5-found-alive-3-months-adrift-sea-tiny-20-foot-boat
+  good: true
+  trending: false
+  why: ''
+  cat: GOOD NEWS
+  visual:
+    type: number
+    number: '3'
+    label: months adrift
+  chart_check:
+    result: 'not used: one number without a change — the count-up number is used instead; 5 isn''t in the article'
