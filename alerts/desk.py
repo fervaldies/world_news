@@ -25,7 +25,7 @@ import yaml
 
 A = None                                          # alerts module (set by alerts.py)
 MENU = [["🔴 Special edition", "📚 Explainer"], ["🔎 Fact check", "📊 Charts of the Week"],
-        ["📰 Daily", "🗓️ Weekly"], ["ℹ️ Status", "✖ Cancel"]]
+        ["📰 Daily", "🗓️ Weekly"], ["🧪 Trials", "ℹ️ Status"], ["✖ Cancel"]]
 FLOW_OF = {"🔴 Special edition": "special", "📚 Explainer": "explainer", "🔎 Fact check": "claim",
            "📊 Charts of the Week": "charts", "📰 Daily": "daily", "🗓️ Weekly": "weekly"}
 CH = {"australia": "🇦🇺 Australia", "world": "🌍 World", "europe": "🇪🇺 Europe"}
@@ -363,6 +363,8 @@ def route(st, kind, data, obj):
         if low in ("/start", "menu", "/menu", "help", "/help"):
             menu("🤖 Newsdesk on Telegram — pick an option below.")
             return None
+        if t in ("🧪 Trials", "/trials", "trials"):
+            return trials_status()
         if t in ("ℹ️ Status", "/status", "status"):
             status(st)
             return None
@@ -377,6 +379,8 @@ def route(st, kind, data, obj):
             return got_topic(st, f, t)
         return NOT_MINE
     parts = data.split(":")
+    if parts[0] == "t":                                          # trial batch details (read-only)
+        return trial_details(parts[1], msg)
     if parts[0] not in ("c", "l", "w", "g", "x", "k"):
         return NOT_MINE
     f = flow(st)
@@ -675,6 +679,7 @@ def status(st):
          f"• Breaking checks at {', '.join(f'{h}:00' for h in A.ALERT_HOURS)} Sydney · last {last_txt}\n"
          f"• I read this chat every ~10 min, and within seconds for {A.LISTEN_MIN} min after you use it\n"
          + (f"• In progress: {f['flow']} ({f.get('step')})\n" if f else "")
+         + trials_summary_line()
          + ("• Recent jobs:\n" + "\n".join(f"   {A.parse_iso(j['t']).astimezone(A.SYD):%a %H:%M} {j['label']}: {j['status']} "
                                          f"({len(j['tasks'])} video{'s' if len(j['tasks']) > 1 else ''})" for _, j in jobs)
             if jobs else "• No jobs yet"))
@@ -825,3 +830,133 @@ def run_job(st, jid):
     A.save_state(st)
     menu(("✅ Posted: " + ", ".join(done) if done else "⚠️ Nothing posted")
          + (f"\n⚠️ Failed: {', '.join(failed)}" if failed else "") + (f"\n⏭️ Already posted: {', '.join(skipped)}" if skipped else ""))
+
+
+# ── 🧪 Trial batches (stage 1d): read-only status from news-metrics/batches/ (written by Newsdesk) ──
+TRIAL_ICON = {"rendering": "🛠️", "review": "👀", "posting": "📤", "waiting": "⏳", "results": "🏆", "done": "✅",
+              "failed": "✖", "discarded": "🗑️"}
+TRIAL_WORD = {"rendering": "making the trials", "review": "waiting for your review in Newsdesk", "posting": "posting",
+              "waiting": "posted, waiting for results", "results": "results in — make the winner in Newsdesk",
+              "done": "winner made", "failed": "failed", "discarded": "discarded"}
+STYLE_WORD = {"new": "new style", "current-voice": "current + voice", "current-silent": "current, silent"}
+
+
+def trial_batches(limit=6):
+    """The newest batches (this month and last), newest first. [] if none or unreadable."""
+    out, today = [], A.now()
+    months = {today.strftime("%Y-%m"), (today.replace(day=1) - timedelta(days=1)).strftime("%Y-%m")}
+    names = []
+    for m in sorted(months, reverse=True):
+        try:
+            names += [x["name"] for x in A.gh("GET", f"/repos/{A.STATE_REPO}/contents/batches/{m}") if x["name"].endswith(".json")]
+        except Exception:
+            pass
+    for n in sorted(set(names), reverse=True)[:limit]:
+        try:
+            out.append(json.loads(A.gh_raw(f"batches/{_month_of(n)}/{n}")))
+        except Exception:
+            pass
+    return out
+
+
+def _month_of(name):
+    """b-20261113-002345-wo.json → 2026-11"""
+    d = name.split("-")[1]
+    return f"{d[:4]}-{d[4:6]}"
+
+
+def _syd(iso):
+    return f"{A.parse_iso(iso).astimezone(A.SYD):%a %H:%M}" if iso else ""
+
+
+def _who(b):
+    return f"{CH.get(b.get('channel'), b.get('channel'))} · {b.get('format_label', b.get('format'))}" + \
+           (f": {b['topic']}" if b.get("topic") else "")
+
+
+def _winner_line(b, lang):
+    w = (b.get("winners") or {}).get(lang) or {}
+    s = next((x for x in b.get("slots", []) if x.get("key") == w.get("key")), None)
+    if not s:
+        return ""
+    r = s.get("results") or {}
+    t = f"{lang.upper()}: trial {s['slot']} 🥇" + (f" ({r.get('views')} views)" if r.get("views") is not None else "")
+    if w.get("close"):
+        t += " ⚖️ close call"
+    if w.get("done") == "recipe":
+        t += " → used for the next daily" + (" ✓" if w.get("recipe_used_at") else "")
+    elif w.get("done") == "posted":
+        t += " → on YouTube/Facebook; promote it in the Instagram app"
+    return t
+
+
+def trials_status():
+    bs = trial_batches()
+    if not bs:
+        menu("🧪 No trial batches yet. Start one in Newsdesk: Trial batch… on a channel row, or in the special edition, "
+             "explainer, fact check or Charts of the Week windows.")
+        return None
+    lines = ["🧪 Trial batches (newest first)"]
+    for b in bs:
+        st = b.get("status", "")
+        extra = ""
+        if st == "waiting" and b.get("results_due"):
+            extra = f" · results {_syd(b['results_due'])} Sydney"
+        if st in ("results", "done"):
+            wl = [_winner_line(b, l) for l in b.get("langs", [])]
+            extra = (" · " + " · ".join(x for x in wl if x)) if any(wl) else ""
+        n_posted = sum(1 for s in b.get("slots", []) if s.get("status") == "posted")
+        lines.append(f"{TRIAL_ICON.get(st, '•')} {_who(b)} · {'+'.join(l.upper() for l in b.get('langs', []))} · "
+                     f"{n_posted}/{len(b.get('slots', []))} posted — {TRIAL_WORD.get(st, st)}{extra}")
+    rows = [[(f"{TRIAL_ICON.get(b.get('status'), '•')} {(CH.get(b.get('channel'), '') or '?').split()[0]} {b.get('format_label', '')} "
+              f"{b.get('created_at', '')[5:10]}", f"t:{b['id']}")] for b in bs]
+    ask_buttons("\n".join(lines) + "\n\nTap one for the details.", rows)
+    return None
+
+
+def trial_details(bid, msg):
+    try:
+        b = json.loads(A.gh_raw(f"batches/{_month_of(bid + '.json')}/{bid}.json"))
+    except Exception:
+        A.say("⚠️ I couldn't read that batch from news-metrics.")
+        return None
+    st = b.get("status", "")
+    lines = [f"{TRIAL_ICON.get(st, '•')} {_who(b)}", f"{TRIAL_WORD.get(st, st)} · every {b.get('spacing_min')} min · "
+             f"results after {b.get('wait_h')} h" + (f" (due {_syd(b['results_due'])} Sydney)" if b.get("results_due") else "")]
+    for s in sorted(b.get("slots", []), key=lambda x: (x.get("lang"), x.get("slot"))):
+        se, r = s.get("settings") or {}, s.get("results") or {}
+        bits = [STYLE_WORD.get(se.get("style"), "")] if se.get("style") else []
+        if se.get("order"):
+            bits.append(f"#{se['order'][0]} leads")
+        if se.get("voice"):
+            bits.append(se["voice"].split("-")[-1].replace("Neural", ""))
+        nums = (f" · {r.get('views', '–')} views · {r.get('avg_watch_s', '–')} s · skip {r.get('skip_rate', '–')}%"
+                if r else "")
+        win = " 🥇" if ((b.get("winners") or {}).get(s.get("lang")) or {}).get("key") == s.get("key") else ""
+        lines.append(f"• {s['lang'].upper()} {s['slot']}{win}: {', '.join(x for x in bits if x) or 'settings'} — "
+                     f"{s.get('status')}{nums}")
+    wl = [_winner_line(b, l) for l in b.get("langs", [])]
+    if any(wl):
+        lines.append("")
+        lines += [x for x in wl if x]
+    if st == "results":
+        lines.append("\n👉 Make the winner in Newsdesk → Trials.")
+    if b.get("results_at"):
+        lines.append(f"(numbers read {_syd(b['results_at'])} Sydney)")
+    A.say("\n".join(lines)[:4000])
+    return None
+
+
+def trials_summary_line():
+    """One line for ℹ️ Status ('' if nothing to say)."""
+    try:
+        bs = trial_batches(10)
+    except Exception:
+        return ""
+    w = sum(1 for b in bs if b.get("status") == "waiting")
+    r = sum(1 for b in bs if b.get("status") == "results")
+    rv = sum(1 for b in bs if b.get("status") == "review")
+    parts = [f"{w} waiting for results"] if w else []
+    parts += [f"{r} with results in"] if r else []
+    parts += [f"{rv} waiting for your review"] if rv else []
+    return ("• Trial batches: " + ", ".join(parts) + "\n") if parts else ""
