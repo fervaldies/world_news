@@ -1,0 +1,122 @@
+token_reminder_repo: australia-news-reels
+github_owner: fervaldies
+gemini_daily_limit: 500
+metrics_repo: fervaldies/news-metrics
+channels:
+  australia:
+    extra_langs:
+    - pt
+    - id
+    name: Australia
+    flag: 🇦🇺
+    color: '#00843D'
+    accent: '#FFCD00'
+    news_repo: aus_news
+    reels_repo: australia-news-reels
+    daily_video:
+      prefix: DailyNewsVideo
+      count: 34
+      ext: mp4
+    music:
+      prefix: daily_music
+      count: 32
+      ext: mp3
+    weekly_video: NewsVideo.mp4
+    voice_script: true
+    youtube_secret:
+      en: AUSTRALIA_YOUTUBE_REFRESH_TOKEN
+      es: AUSTRALIA_YOUTUBE_REFRESH_TOKEN
+    trials:
+    - es
+    records_in_metrics: true
+  world:
+    extra_langs:
+    - pt
+    - id
+    name: World
+    flag: 🌍
+    color: '#005AC8'
+    accent: '#3CB44B'
+    news_repo: world_news
+    reels_repo: world-news-reels
+    daily_video:
+      prefix: worldvideo
+      count: 32
+      ext: mp4
+    music:
+      prefix: worldmusic
+      count: 32
+      ext: mp3
+    weekly_video: weekly_worldvideo.mp4
+    voice_script: true
+    youtube_secret:
+      en: WORLD_YOUTUBE_EN_REFRESH_TOKEN
+      es: WORLD_YOUTUBE_ES_REFRESH_TOKEN
+    trials:
+    - es
+    records_in_metrics: true
+  europe:
+    extra_langs:
+    - pt
+    - id
+    name: Europe
+    flag: 🇪🇺
+    color: '#003399'
+    accent: '#FFCC00'
+    news_repo: europe_news
+    reels_repo: europe-news-reels
+    daily_video:
+      prefix: eurovideo
+      count: 31
+      ext: mp4
+    music:
+      prefix: euromusic
+      count: 10
+      ext: mp3
+    weekly_video: weekly_eurovideo.mp4
+    voice_script: true
+    youtube_secret:
+      en: EUROPE_YOUTUBE_EN_REFRESH_TOKEN
+      es: EUROPE_YOUTUBE_ES_REFRESH_TOKEN
+    trials: []
+    records_in_metrics: true
+  crypto:
+    daily: false
+    week_review: false
+    name: Crypto
+    flag: ₿
+    color: '#E8A200'
+    accent: '#009688'
+    news_repo: crypto_news
+    reels_repo: crypto-news-reels
+    daily_video:
+      prefix: cryptovideo
+      count: 6
+      ext: mp4
+    music:
+      prefix: cryptomusic
+      count: 10
+      ext: mp3
+    weekly_video: weekly_cryptovideo.mp4
+    voice_script: false
+    youtube_secret:
+      en: CRYPTO_YOUTUBE_EN_REFRESH_TOKEN
+      es: CRYPTO_YOUTUBE_ES_REFRESH_TOKEN
+    trials: []
+    records_in_metrics: false
+facts:
+  name: Australia Facts
+  flag: 🦘
+  color: '#00897B'
+  reels_repo: australia-facts-reels
+  video:
+    prefix: NewsVideo
+    count: 21
+    ext: mp4
+  music:
+    prefix: music
+    count: 32
+    ext: mp3
+  youtube_secret: FACTS_YOUTUBE_REFRESH_TOKEN
+  instagram_user_secret: FACTS_INSTAGRAM_USER_ID
+  telegram_chat_secret: TELEGRAM_FACTS_CHAT_ID

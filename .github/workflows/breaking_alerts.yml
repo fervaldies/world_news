@@ -52,6 +52,46 @@ jobs:
           ALERT_LISTEN_MIN: ${{ vars.ALERT_LISTEN_MIN }}
           ALERT_APPROVE_VIDEO: ${{ vars.ALERT_APPROVE_VIDEO }}
           CHECK_NOW: ${{ inputs.check_now }}
+          # stage 4: logins for Comments and Part 2 answers (read + reply only; masked in logs)
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_NEWSDESK_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_NEWSDESK_CLIENT_SECRET }}
+          INSTAGRAM_TOKEN: ${{ secrets.INSTAGRAM_TOKEN }}
+          YT_AUSTRALIA_EN: ${{ secrets.AUSTRALIA_YOUTUBE_REFRESH_TOKEN }}
+          IG_AUSTRALIA_EN: ${{ secrets.AUSTRALIA_INSTAGRAM_EN_USER_ID }}
+          FB_AUSTRALIA_EN: ${{ secrets.AUSTRALIA_FACEBOOK_EN_PAGE_ID }}
+          YT_AUSTRALIA_ES: ${{ secrets.AUSTRALIA_YOUTUBE_REFRESH_TOKEN }}
+          IG_AUSTRALIA_ES: ${{ secrets.AUSTRALIA_INSTAGRAM_ES_USER_ID }}
+          FB_AUSTRALIA_ES: ${{ secrets.AUSTRALIA_FACEBOOK_ES_PAGE_ID }}
+          YT_AUSTRALIA_PT: ${{ secrets.AUSTRALIA_YOUTUBE_PT_REFRESH_TOKEN }}
+          IG_AUSTRALIA_PT: ${{ secrets.AUSTRALIA_INSTAGRAM_PT_USER_ID }}
+          FB_AUSTRALIA_PT: ${{ secrets.AUSTRALIA_FACEBOOK_PT_PAGE_ID }}
+          YT_AUSTRALIA_ID: ${{ secrets.AUSTRALIA_YOUTUBE_ID_REFRESH_TOKEN }}
+          IG_AUSTRALIA_ID: ${{ secrets.AUSTRALIA_INSTAGRAM_ID_USER_ID }}
+          FB_AUSTRALIA_ID: ${{ secrets.AUSTRALIA_FACEBOOK_ID_PAGE_ID }}
+          YT_WORLD_EN: ${{ secrets.WORLD_YOUTUBE_EN_REFRESH_TOKEN }}
+          IG_WORLD_EN: ${{ secrets.WORLD_INSTAGRAM_EN_USER_ID }}
+          FB_WORLD_EN: ${{ secrets.WORLD_FACEBOOK_EN_PAGE_ID }}
+          YT_WORLD_ES: ${{ secrets.WORLD_YOUTUBE_ES_REFRESH_TOKEN }}
+          IG_WORLD_ES: ${{ secrets.WORLD_INSTAGRAM_ES_USER_ID }}
+          FB_WORLD_ES: ${{ secrets.WORLD_FACEBOOK_ES_PAGE_ID }}
+          YT_WORLD_PT: ${{ secrets.WORLD_YOUTUBE_PT_REFRESH_TOKEN }}
+          IG_WORLD_PT: ${{ secrets.WORLD_INSTAGRAM_PT_USER_ID }}
+          FB_WORLD_PT: ${{ secrets.WORLD_FACEBOOK_PT_PAGE_ID }}
+          YT_WORLD_ID: ${{ secrets.WORLD_YOUTUBE_ID_REFRESH_TOKEN }}
+          IG_WORLD_ID: ${{ secrets.WORLD_INSTAGRAM_ID_USER_ID }}
+          FB_WORLD_ID: ${{ secrets.WORLD_FACEBOOK_ID_PAGE_ID }}
+          YT_EUROPE_EN: ${{ secrets.EUROPE_YOUTUBE_EN_REFRESH_TOKEN }}
+          IG_EUROPE_EN: ${{ secrets.EUROPE_INSTAGRAM_EN_USER_ID }}
+          FB_EUROPE_EN: ${{ secrets.EUROPE_FACEBOOK_EN_PAGE_ID }}
+          YT_EUROPE_ES: ${{ secrets.EUROPE_YOUTUBE_ES_REFRESH_TOKEN }}
+          IG_EUROPE_ES: ${{ secrets.EUROPE_INSTAGRAM_ES_USER_ID }}
+          FB_EUROPE_ES: ${{ secrets.EUROPE_FACEBOOK_ES_PAGE_ID }}
+          YT_EUROPE_PT: ${{ secrets.EUROPE_YOUTUBE_PT_REFRESH_TOKEN }}
+          IG_EUROPE_PT: ${{ secrets.EUROPE_INSTAGRAM_PT_USER_ID }}
+          FB_EUROPE_PT: ${{ secrets.EUROPE_FACEBOOK_PT_PAGE_ID }}
+          YT_EUROPE_ID: ${{ secrets.EUROPE_YOUTUBE_ID_REFRESH_TOKEN }}
+          IG_EUROPE_ID: ${{ secrets.EUROPE_INSTAGRAM_ID_USER_ID }}
+          FB_EUROPE_ID: ${{ secrets.EUROPE_FACEBOOK_ID_PAGE_ID }}
         run: |
           pip install -q pyyaml
           python3 alerts/alerts.py bot

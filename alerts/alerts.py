@@ -594,6 +594,10 @@ def run_bot():
     # still-listening window if a draft is waiting for an answer
     if any(d["status"] == "drafted" and now() - parse_iso(d["t"]) < timedelta(minutes=LISTEN_MIN) for d in st["drafts"].values()):
         listen_until = time.time() + 60 * LISTEN_MIN
+    try:                                                              # stage 4: Part 2 reminders
+        DESK.MORE.tick(st)
+    except Exception as e:
+        log(f"Part 2 reminders: {type(e).__name__}")
     result = None
     waiting_jobs = sorted(((j["t"], jid) for jid, j in (st.get("jobs") or {}).items() if j["status"] == "queued"))
     if waiting_jobs:

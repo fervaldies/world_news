@@ -23,9 +23,12 @@ from datetime import datetime, timedelta
 
 import yaml
 
+import desk_more as MORE                       # stage 4: Your take + Comments
+
 A = None                                          # alerts module (set by alerts.py)
 MENU = [["🔴 Special edition", "📚 Explainer"], ["🔎 Fact check", "📊 Charts of the Week"],
         ["📰 Daily", "🗓️ Weekly"], ["🧪 Trials", "ℹ️ Status"], ["✖ Cancel"]]
+MENU.insert(3, ["🗣️ Your take", "💬 Comments"])     # stage 4
 FLOW_OF = {"🔴 Special edition": "special", "📚 Explainer": "explainer", "🔎 Fact check": "claim",
            "📊 Charts of the Week": "charts", "📰 Daily": "daily", "🗓️ Weekly": "weekly"}
 CH = {"australia": "🇦🇺 Australia", "world": "🌍 World", "europe": "🇪🇺 Europe"}
@@ -372,6 +375,11 @@ def route(st, kind, data, obj):
             st.pop("desk", None)
             menu("✖ Cancelled.")
             return None
+        if t in MORE.MENU_TEXTS:                                  # stage 4: Your take, Comments
+            return MORE.begin(st, MORE.MENU_TEXTS[t])
+        f0 = flow(st)
+        if f0 and f0.get("flow") in MORE.FLOWS and f0.get("step") in ("topic", "text"):
+            return MORE.text(st, f0, t)
         if t in FLOW_OF:
             return begin(st, FLOW_OF[t])
         f = flow(st)
@@ -379,6 +387,8 @@ def route(st, kind, data, obj):
             return got_topic(st, f, t)
         return NOT_MINE
     parts = data.split(":")
+    if parts[0] in ("y", "p", "m"):                              # stage 4: Your take, Part 2, Comments
+        return MORE.tap(st, parts, msg)
     if parts[0] == "t":                                          # trial batch details (read-only)
         return trial_details(parts[1], msg)
     if parts[0] not in ("c", "l", "w", "g", "x", "k"):
@@ -692,6 +702,8 @@ def reels_dir(ck):
 
 def render(task, logf):
     """Make one video. Returns (video, caption) paths, or None."""
+    if task["type"] in ("take", "take2"):                        # stage 4: Your take Part 1 / Part 2
+        return MORE.render(task, logf)
     ck, lang = task["channel"], task["lang"]
     cwd = reels_dir(ck)
     c = A.CHANNELS[ck]
@@ -822,6 +834,8 @@ def run_job(st, jid):
         ig = enc and A.sh(["python", "upload_instagram.py", ig_file, rc, task["lang"]], logf, env, cwd=cwd)
         if yt and ig:
             done.append(task["label"])
+            if task["type"] in ("take", "take2"):                    # stage 4: the shared series list
+                MORE.after_post(task, jid)
         else:
             failed.append(task["label"] + (" (YouTube)" if not yt else "") + (" (Instagram/Facebook)" if not ig else ""))
             A.tg_file("sendDocument", "document", logf, chat_id=A.CHAT, caption=f"⚠️ {task['label']}: posting problem — log")
