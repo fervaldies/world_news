@@ -497,6 +497,7 @@ def handle(st, upd, allow_publish=True):
         cmd = data.lower()
         if cmd in ("check", "/check", "breaking"):
             st["_force_check"] = True
+            st["_asked_check"] = True
         elif cmd in ("status", "/status", "/start", "help", "/help"):
             last = st.get("last_check")
             last_txt = f"{parse_iso(last).astimezone(SYD):%a %H:%M}" if last else "none yet"
@@ -605,6 +606,7 @@ def run_bot():
     while not result:
         if due(st, force or st.pop("_force_check", False)):
             force = False
+            asked = st.pop("_asked_check", False)                  # you pressed the button / sent CHECK
             st["last_check"] = iso()
             try:
                 items = breaking_check(st)
@@ -612,6 +614,8 @@ def run_bot():
                 if items:
                     send_alert(st, items)
                     listen_until = time.time() + 60 * LISTEN_MIN
+                elif asked:
+                    say("✅ Breaking check done — no big new stories right now.")
             except Exception as e:
                 log(f"Breaking check failed ({type(e).__name__})")
             save_state(st)

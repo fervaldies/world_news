@@ -29,6 +29,7 @@ A = None                                          # alerts module (set by alerts
 MENU = [["🔴 Special edition", "📚 Explainer"], ["🔎 Fact check", "📊 Charts of the Week"],
         ["📰 Daily", "🗓️ Weekly"], ["🧪 Trials", "ℹ️ Status"], ["✖ Cancel"]]
 MENU.insert(3, ["🗣️ Your take", "💬 Comments"])     # stage 4
+MENU.insert(0, ["🚨 Breaking check"])                 # breaking news on demand
 FLOW_OF = {"🔴 Special edition": "special", "📚 Explainer": "explainer", "🔎 Fact check": "claim",
            "📊 Charts of the Week": "charts", "📰 Daily": "daily", "🗓️ Weekly": "weekly"}
 CH = {"australia": "🇦🇺 Australia", "world": "🌍 World", "europe": "🇪🇺 Europe"}
@@ -380,6 +381,11 @@ def route(st, kind, data, obj):
         f0 = flow(st)
         if f0 and f0.get("flow") in MORE.FLOWS and f0.get("step") in ("topic", "text"):
             return MORE.text(st, f0, t)
+        if t in ("🚨 Breaking check", "/breaking"):
+            st["_force_check"] = True                             # the bot loop runs the check right away
+            st["_asked_check"] = True
+            menu("🚨 Checking for breaking news now — big stories come here in a minute or two.")
+            return None
         if t in FLOW_OF:
             return begin(st, FLOW_OF[t])
         f = flow(st)
