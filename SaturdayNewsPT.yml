@@ -1,0 +1,67 @@
+date: 2026-11-14
+day: Saturday
+news:
+- title: Microsoft diz que ciberataque não causou pane cibernética global.
+  source: SBS Australia
+  url: https://www.sbs.com.au/language/hindi/en/podcast-episode/top-news-microsoft-says-it-doesnt-believe-a-cyberattack-caused-a-global-outage/cewib7oyh
+  good: false
+  trending: false
+  why: Explica por que sistemas críticos falharam no mundo todo e quem é o responsável.
+  cat: TECH
+  visual:
+    type: icon
+- title: PM Modi diz que investimentos em energia ajudaram Índia a enfrentar impacto da guerra no Oriente Médio.
+  source: Hindustan Times
+  url: https://www.hindustantimes.com/india-news/pm-narendra-modi-energy-investments-helped-withstand-west-asia-war-impact-101794597541890.html
+  good: false
+  trending: false
+  why: Explica como os conflitos globais afetam diretamente os preços dos combustíveis para os cidadãos.
+  cat: ENERGY
+  visual:
+    type: map
+    country: India
+    place: Nova Delhi
+    lat: 28.6139
+    lon: 77.209
+    span: 25
+  chart_check:
+    result: 'not used: one number without a change — the count-up number is used instead'
+- title: Chefe da ONU alerta que precisamos de cortes imediatos e drásticos de emissões para evitar catástrofe climática.
+  source: The Atlanta Journal-Constitution
+  url: https://www.ajc.com/news/2026/11/un-chief-says-immediate-and-drastic-emissions-cuts-needed-to-avert-climate-change-catastrophe/
+  good: false
+  trending: false
+  why: ''
+  cat: CLIMATE
+  visual:
+    type: icon
+- title: Arábia Saudita intercepta mísseis após prédio da Aramco ser danificado em Riad.
+  source: Baltimore Sun
+  url: https://www.baltimoresun.com/2026/11/08/saudi-arabia-intercepts-missiles-as-aramco-building-in-riyadh-is-damaged-and-other-mideast-news/
+  good: false
+  trending: false
+  why: ''
+  cat: CONFLICT
+  visual:
+    type: map
+    country: Saudi Arabia
+    place: Riade
+    lat: 24.7136
+    lon: 46.6753
+    span: 12
+  chart_check:
+    result: 'not used: one number without a change — the count-up number is used instead'
+- title: Celebridade anônima perde disputa judicial no Reino Unido para bloquear relatos de má conduta sexual.
+  source: The Manila Times
+  url: https://www.manilatimes.net/2026/11/04/entertainment-lifestyle/show-times/an-anonymous-celebrity-loses-uk-court-bid-to-block-reports-of-alleged-sexual-misconduct/2461690
+  good: false
+  trending: false
+  why: ''
+  cat: JUSTICE
+  visual:
+    type: map
+    country: United Kingdom
+    place: Londres
+    lat: 51.5074
+    lon: -0.1278
+    span: 12

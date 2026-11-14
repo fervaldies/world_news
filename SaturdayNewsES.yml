@@ -1,8 +1,67 @@
-date: 2026-11-07
+date: 2026-11-14
 day: Saturday
 news:
-  - title: "La carrera electoral en Sudáfrica se reñidas mientras las autoridades piden calma durante el recuento de votos."
-  - title: "El Papa León inicia una gira por América Latina tras una operación de cáncer, haciendo su primera parada en el Uruguay laico."
-  - title: "Un petrolero fue alcanzado por proyectiles frente a las costas de Catar en el golfo Pérsico."
-  - title: "El Reino Unido abre una nueva vía segura para refugiados de la India, Pakistán y otros cinco países."
-  - title: "Nepal necesita una mejor financiación para los sistemas de alerta de inundaciones que nunca recibió."
+- title: Microsoft afirma que un ciberataque no causó la caída tecnológica mundial.
+  source: SBS Australia
+  url: https://www.sbs.com.au/language/hindi/en/podcast-episode/top-news-microsoft-says-it-doesnt-believe-a-cyberattack-caused-a-global-outage/cewib7oyh
+  good: false
+  trending: false
+  why: Explica por qué los sistemas críticos fallaron en todo el mundo y quién es el responsable.
+  cat: TECH
+  visual:
+    type: icon
+- title: El primer ministro Modi señala que las inversiones en energía ayudaron a la India a soportar el impacto de la guerra en Asia Occidental.
+  source: Hindustan Times
+  url: https://www.hindustantimes.com/india-news/pm-narendra-modi-energy-investments-helped-withstand-west-asia-war-impact-101794597541890.html
+  good: false
+  trending: false
+  why: Explica cómo los conflictos globales afectan directamente a los precios del combustible para los ciudadanos.
+  cat: ENERGY
+  visual:
+    type: map
+    country: India
+    place: Nueva Delhi
+    lat: 28.6139
+    lon: 77.209
+    span: 25
+  chart_check:
+    result: 'not used: one number without a change — the count-up number is used instead'
+- title: El jefe de la ONU advierte que necesitamos recortes de emisiones inmediatos y drásticos para evitar una catástrofe climática.
+  source: The Atlanta Journal-Constitution
+  url: https://www.ajc.com/news/2026/11/un-chief-says-immediate-and-drastic-emissions-cuts-needed-to-avert-climate-change-catastrophe/
+  good: false
+  trending: false
+  why: ''
+  cat: CLIMATE
+  visual:
+    type: icon
+- title: Arabia Saudí intercepta misiles tras resultar dañado un edificio de Aramco en Riad.
+  source: Baltimore Sun
+  url: https://www.baltimoresun.com/2026/11/08/saudi-arabia-intercepts-missiles-as-aramco-building-in-riyadh-is-damaged-and-other-mideast-news/
+  good: false
+  trending: false
+  why: ''
+  cat: CONFLICT
+  visual:
+    type: map
+    country: Saudi Arabia
+    place: Riad
+    lat: 24.7136
+    lon: 46.6753
+    span: 12
+  chart_check:
+    result: 'not used: one number without a change — the count-up number is used instead'
+- title: Un famoso anónimo pierde un recurso en un tribunal británico para bloquear informes sobre conducta sexual inaceptable.
+  source: The Manila Times
+  url: https://www.manilatimes.net/2026/11/04/entertainment-lifestyle/show-times/an-anonymous-celebrity-loses-uk-court-bid-to-block-reports-of-alleged-sexual-misconduct/2461690
+  good: false
+  trending: false
+  why: ''
+  cat: JUSTICE
+  visual:
+    type: map
+    country: United Kingdom
+    place: Londres
+    lat: 51.5074
+    lon: -0.1278
+    span: 12
