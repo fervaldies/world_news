@@ -188,13 +188,32 @@ def nums(text):
     return out
 
 
-def spec_values(sp):
+def spec_values(sp):        # stage C2: every chart type
     k = sp.get("chart")
     if k == "slope":
         return [float(v) for x in sp.get("series") or [] for v in (x.get("from"), x.get("to")) if v is not None]
     if k == "bignum":
         return [float(v) for v in (sp.get("value"), sp.get("previous"), sp.get("change")) if v is not None]
-    return [float(v) for v in sp.get("values") or []]
+    out = [float(v) for v in sp.get("values") or [] if v is not None]
+    for x in sp.get("series") or []:                                  # race / area
+        out += [float(v) for v in x.get("values") or [] if v is not None]
+    for x in sp.get("items") or []:                                   # scale / versus
+        out += [float(x[f]) for f in ("value", "from", "to") if x.get(f) is not None]
+    for x in sp.get("rows") or []:                                    # range / ladder
+        out += [float(x[f]) for f in ("low", "high", "value", "margin") if x.get(f) is not None]
+    out += [float(v) for v in sp.get("band") or []]
+    out += [float(x["value"]) for x in sp.get("arcs") or [] if x.get("value") is not None]
+    return out
+
+
+def spec_labels(sp, lang="en"):
+    """The names a chart shows (labels, series, items or rows), for the writer's prompt."""
+    if sp.get(f"labels_{lang}") or sp.get("labels"):
+        return sp.get(f"labels_{lang}") or sp.get("labels")
+    for key in ("series", "items", "rows"):
+        if sp.get(key):
+            return [x.get(f"label_{lang}") or x.get("label") or "" for x in sp[key]]
+    return []
 
 
 def chart_candidates(ck):
@@ -223,9 +242,10 @@ def chart_candidates(ck):
                 ov = ((items[i] if i < len(items) else {}) or {}).get("visual") or {}
                 if ov.get("type") == "chart" and ov.get("chart") == spec.get("chart"):
                     spec.update({k: x for k, x in ov.items() if k.endswith(f"_{l}")})
-                    if spec.get("series") and ov.get("series"):
-                        spec["series"] = [{**a, **{k: x for k, x in b.items() if k.endswith(f"_{l}")}}
-                                          for a, b in zip(spec["series"], ov["series"])]
+                    for key in ("series", "items", "rows", "events"):        # per-language texts inside the lists
+                        if spec.get(key) and ov.get(key):
+                            spec[key] = [{**a, **{k: x for k, x in b.items() if k.endswith(f"_{l}")}}
+                                         for a, b in zip(spec[key], ov[key])]
             cands.append({"date": str(en["date"]), "title": spec.get("title_en") or it.get("title", ""),
                           "chart": spec.get("chart"), "spec": spec, "views": 0,
                           "langs": [l for l in A.LANGS if l == "en" or spec.get(f"title_{l}")]})
@@ -245,7 +265,7 @@ def chart_candidates(ck):
 def write_week(picked, langs, prefer="gemini"):
     blocks = []
     for n, sp in enumerate(picked, 1):
-        labels = sp.get("labels_en") or [x.get("label_en", "") for x in sp.get("series") or []]
+        labels = spec_labels(sp)
         blocks.append(f"CHART {n}: {sp.get('title_en', '')} ({sp.get('chart')}, unit {sp.get('unit', '')}, "
                       f"source {sp.get('source', '')})\nlabels: {labels}\nvalues: {spec_values(sp)}")
     out, _ = A.ask("You write the voice-over of a 'Charts of the Week' news short. Use ONLY the numbers given for each "

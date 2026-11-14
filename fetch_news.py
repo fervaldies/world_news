@@ -583,7 +583,7 @@ def ai_json(prompt, max_tokens, check):
 # One AI call (Gemini, Claude as fallback) reads each picked story's text (headline + GNews description
 # + the start of the article) and returns the figures with the exact sentence each comes from. Then CODE
 # checks every number against the article text; a chart that fails keeps the older number / map / icon.
-CHART_KINDS = ("bars", "line", "donut", "slope", "bignum", "map")
+CHART_KINDS = ("bars", "line", "donut", "slope", "bignum", "map", "waffle", "versus", "scale", "ladder", "range")
 AU_PLACES = {"new south wales": "NSW", "nsw": "NSW", "victoria": "VIC", "vic": "VIC", "queensland": "QLD", "qld": "QLD",
              "western australia": "WA", "wa": "WA", "south australia": "SA", "sa": "SA", "tasmania": "TAS", "tas": "TAS",
              "northern territory": "NT", "nt": "NT", "australian capital territory": "ACT", "act": "ACT", "canberra": "ACT"}
@@ -647,13 +647,38 @@ def _norm_text(s):
 
 
 def chart_values(c):
+    """Every number the chart shows (all must be written in the article)."""
     k = c.get("chart")
+    out = []
+
+    def add(*vs):
+        out.extend(v for v in vs if v is not None and not isinstance(v, bool))
     if k == "slope":
-        return [v for x in c.get("series") or [] for v in (x.get("from"), x.get("to"))]
-    if k == "bignum":
-        return [v for v in (c.get("value"), c.get("previous")) if v is not None] + \
-               ([c["change"]] if c.get("change") is not None and c.get("previous") is None else [])
-    return list(c.get("values") or [])
+        for x in c.get("series") or []:
+            add(x.get("from"), x.get("to"))
+    elif k == "bignum":
+        add(c.get("value"), c.get("previous"))
+        if c.get("change") is not None and c.get("previous") is None:
+            add(c["change"])
+    elif k == "scale":
+        for x in c.get("items") or []:
+            add(x.get("value"))
+    elif k == "versus":
+        for x in c.get("items") or []:
+            add(x.get("from"), x.get("to"))
+    elif k == "range":
+        for x in c.get("rows") or []:
+            add(x.get("low"), x.get("high"), x.get("value"), x.get("margin"))
+    else:
+        add(*(c.get("values") or []))
+    if k in ("line", "range") and c.get("band"):
+        add(*c["band"])
+    return out
+
+
+ORDINALS = ("first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth", "eleventh",
+            "twelfth", "thirteenth", "fourteenth", "fifteenth", "sixteenth", "seventeenth", "eighteenth", "nineteenth",
+            "twentieth")
 
 
 def check_chart(c, text, headline):
@@ -670,6 +695,7 @@ def check_chart(c, text, headline):
     except (TypeError, ValueError):
         return ["a value isn't a number"]
     n = len(c.get("values") or [])
+    labs_n = len(c.get("labels") or [])
     if k == "bars" and not 2 <= n <= 8:
         problems.append(f"bars need 2–8 values (got {n})")
     if k == "line" and not 4 <= n <= 15:
@@ -682,6 +708,41 @@ def check_chart(c, text, headline):
         problems.append("a before/after chart needs two periods")
     if k == "bignum" and (c.get("value") is None or (c.get("previous") is None and c.get("change") is None)):
         problems.append("one number without a change — the count-up number is used instead")
+    if k == "waffle":
+        if not 1 <= n <= 3 or labs_n != n:
+            problems.append("a waffle needs 1–3 shares, each with a label")
+        elif any(not 1 <= float(v) <= 100 for v in c["values"]) or sum(float(v) for v in c["values"]) > 100.5:
+            problems.append("waffle shares must be 1–100% and add up to 100% at most")
+    if k == "scale" and not 2 <= len(c.get("items") or []) <= 4:
+        problems.append("a size comparison needs 2–4 amounts")
+    if k == "scale" and any(float(x.get("value") or 0) <= 0 for x in c.get("items") or []):
+        problems.append("a size comparison needs amounts above zero")
+    if k == "ladder" and c.get("from_rank") is not None:   # an earlier rank the article doesn't give: no move, chart kept
+        try:
+            fr = int(c["from_rank"])
+            ok = _close(fr, nums, 0) or (1 <= fr <= 20 and re.search(rf"\b{ORDINALS[fr - 1]}\b", T)) or \
+                re.search(rf"\b{fr}(st|nd|rd|th)\b", T)
+        except (TypeError, ValueError):
+            ok = False
+        if not ok or not 1 <= fr <= len(c.get("values") or []):   # also: the old rank must be one of the rows shown
+            c.pop("from_rank", None)
+            c.pop("from_period", None)
+    if k == "ladder":
+        hl = c.get("highlight")
+        if not 3 <= n <= 30 or labs_n != n:
+            problems.append(f"a ranking needs 3+ places, each with a value (got {n})")
+        elif not (isinstance(hl, int) and 0 <= hl < n):
+            problems.append("a ranking needs the place to follow (highlight)")
+    if k == "range":
+        rows = c.get("rows") or []
+        if not 2 <= len(rows) <= 8:
+            problems.append("a range chart needs 2–8 rows")
+        for r in rows:
+            if (r.get("low") is None or r.get("high") is None) and (r.get("value") is None or r.get("margin") is None):
+                problems.append("each range needs low + high (or value + margin)")
+                break
+    if k == "versus" and (len(c.get("periods") or []) != 2 or not 1 <= len(c.get("items") or []) <= 3):
+        problems.append("then vs now needs two dates and 1–3 things")
     for v in vals:
         if not _close(v, nums, dec):
             problems.append(f"{v:g} isn't in the article")
@@ -690,15 +751,24 @@ def check_chart(c, text, headline):
             problems.append("a quoted sentence isn't in the article")
             break
     unit = str(c.get("unit") or "")
-    if unit == "%" and not ("%" in text or "per cent" in T or "percent" in T or "pct" in T):
+    if (unit == "%" or k == "waffle") and not ("%" in text or "per cent" in T or "percent" in T or "pct" in T):
         problems.append("shown as % but the article has no percentage")
     for word, short in (("million", "m"), ("billion", "bn"), ("trillion", "tn")):       # 1.2 million / 1.2m
         if word in unit.lower() and word not in T and not re.search(rf"\d\s?{short}\b", T):
             problems.append(f"'{word}' isn't in the article")
-    labs = [str(x) for x in (c.get("labels") or []) + (c.get("periods") or [])]
+    labs = [str(x) for x in (c.get("labels") or []) + (c.get("periods") or [])] + \
+           [str(e.get("at", "")) for e in c.get("events") or []] + [str(c.get("from_period") or "")]
     for y in {m for l in labs for m in re.findall(r"\b(19\d\d|20\d\d)\b", l)}:
         if y not in text:
             problems.append(f"the year {y} isn't in the article")
+    if k == "line":
+        evs = c.get("events") or []
+        if len(evs) > 3:
+            problems.append("a line takes up to 3 events")
+        for e in evs:
+            if str(e.get("at")) not in [str(x) for x in c.get("labels") or []]:
+                problems.append(f"the event date '{e.get('at')}' isn't on the line")
+                break
     if k == "donut" and unit == "%" and vals and not 95 <= sum(vals) <= 105:
         problems.append(f"the shares add up to {sum(vals):g}%, not 100%")
     for m in re.finditer(r"(-?\d[\d.,]*)\s*(%|per ?cent)", str(headline)):        # headline vs chart
@@ -746,8 +816,24 @@ def extract_charts(titles):
             "You prepare small charts for a news video. For each story use ONLY figures written in its text below — "
             "never estimate, calculate, convert or invent numbers. For every figure give the exact sentence it comes "
             "from (copy it from the text). Pick the chart by the data:\n"
-            "- change over time with 4+ dates → line;\n- parts of one whole (shares that add up) → donut;\n"
-            "- the same things at two moments → slope;\n- a ranking / comparison of 2–8 things → bars;\n"
+            "- change over time with 4+ dates → line; add events (max 3: {\"at\": one of the line's labels, \"text\": "
+            "max 3 words}) ONLY for dated events the text names, and band [low, high] + band_label ONLY when the text "
+            "gives a target range (e.g. the 2–3% inflation target);\n"
+            "- parts of one whole (shares that add up) → donut;\n"
+            "- one or a few shares of a group in % (e.g. '25% of Australians rent', 'one in four') → waffle "
+            "(values = the 1–3 shares in %, labels = what each share is, e.g. 'of Australians rent their home');\n"
+            "- the price / cost / amount of 1–3 things then and now → versus (periods [then, now], items "
+            "[{\"label\", \"from\", \"to\"}]);\n"
+            "- other things at two moments → slope;\n"
+            "- 2–4 amounts in the same unit where how big one is next to the others is the point (a cost vs a "
+            "budget) → scale (items [{\"label\", \"value\"}], highlight = the amount the story is about);\n"
+            "- where ONE place stands among 5+ others with a value for each → ladder (labels, values, highlight = "
+            "that place's index, ascending true when lower is better (e.g. unemployment), from_rank + from_period ONLY "
+            "when the text gives its earlier rank);\n"
+            "- forecasts with a low–high range, or polls with a margin of error → range (rows [{\"label\", \"low\", "
+            "\"high\", \"value\"}] or [{\"label\", \"value\", \"margin\"}], 2–8 rows; band + band_label only for a "
+            "target range the text gives);\n"
+            "- a ranking / comparison of 2–8 things → bars;\n"
             "- one value plus its previous value or its change → bignum;\n"
             "- values for 3+ Australian states/territories or 3+ countries → map (labels = the place names);\n"
             "- only ONE number, or nothing comparable → none (never force a weak chart).\n"
@@ -757,11 +843,16 @@ def extract_charts(titles):
             "so_what = the key point in max 6 words ONLY if the text itself states it (e.g. 'Highest since 2009', "
             "'Lowest in the EU'), with so_what_quote = the exact sentence; otherwise empty strings. Never claim a "
             "record or a first unless the text says so.\n"
-            "Return ONLY JSON: {\"stories\": [{\"chart\": \"bars|line|donut|slope|bignum|none\", \"title\": \"...\", "
+            "Return ONLY JSON: {\"stories\": [{\"chart\": \"bars|line|donut|slope|bignum|map|waffle|versus|scale|"
+            "ladder|range|none\", \"title\": \"...\", "
             "\"unit\": \"% or a short unit or ''\", \"prefix\": \"'$' or ''\", \"decimals\": 1, "
             "\"labels\": [...], \"values\": [...], \"periods\": [\"2024\", \"2025\"], "
             "\"series\": [{\"label\": \"...\", \"from\": 1, \"to\": 2}], \"value\": 0, \"previous\": 0, "
             "\"change\": 0, \"change_unit\": \"% or pts\", \"label\": \"...\", \"period_prev\": \"...\", "
+            "\"items\": [{\"label\": \"...\", \"value\": 0, \"from\": 0, \"to\": 0}], "
+            "\"rows\": [{\"label\": \"...\", \"low\": 0, \"high\": 0, \"value\": 0, \"margin\": 0}], "
+            "\"events\": [{\"at\": \"2020\", \"text\": \"...\"}], \"band\": [2, 3], \"band_label\": \"...\", "
+            "\"ascending\": false, \"from_rank\": 0, \"from_period\": \"...\", "
             "\"highlight\": 0, \"source\": \"...\", \"hedge\": false, \"quotes\": [\"...\"], "
             "\"so_what\": \"\", \"so_what_quote\": \"\"}, ...one per story in order]}\n"
             "Leave out the fields a chart type doesn't use.\n\n" + blocks, 3500, check_shape)
@@ -814,10 +905,34 @@ def chart_spec(c, source_fallback):
                 s[key] = c[key]
     elif k == "map":
         s.update(region=c["region"], keys=c["keys"], labels_en=[str(x) for x in c.get("labels") or []], values=c["values"])
+    elif k in ("scale", "versus"):
+        s["items"] = [{"label_en": str(x.get("label") or ""), **({"value": x["value"]} if k == "scale" else
+                       {"from": x["from"], "to": x["to"]})} for x in c["items"]]
+        if k == "versus":
+            s["periods"] = [str(p) for p in c["periods"]]
+        if isinstance(c.get("highlight"), int):
+            s["highlight"] = c["highlight"]
+    elif k == "range":
+        s["rows"] = [{"label_en": str(r.get("label") or ""), **{x: r[x] for x in ("low", "high", "value", "margin")
+                                                               if r.get(x) is not None}} for r in c["rows"]]
+        if isinstance(c.get("highlight"), int):
+            s["highlight"] = c["highlight"]
     else:
         s.update(labels_en=[str(x) for x in (c.get("labels") or [])], values=c["values"])
         if isinstance(c.get("highlight"), int):
             s["highlight"] = c["highlight"]
+        if k == "ladder":
+            s["ascending"] = bool(c.get("ascending"))
+            if c.get("from_rank"):
+                s["from_rank"] = int(c["from_rank"])
+                if c.get("from_period"):
+                    s["from_period"] = str(c["from_period"])
+        if k == "line" and c.get("events"):
+            s["events"] = [{"at": str(e.get("at")), "text_en": str(e.get("text") or "")} for e in c["events"]][:3]
+    if k in ("line", "range") and c.get("band") and len(c["band"]) == 2:
+        s["band"] = list(c["band"])
+        if c.get("band_label"):
+            s["band_label_en"] = str(c["band_label"])
     return s
 
 
@@ -831,6 +946,9 @@ def translate_charts(specs):
         items.append({"title": s.get("title_en", ""), "labels": s.get("labels_en") or [], "label": s.get("label_en", ""),
                       "period_prev": str(s.get("period_prev") or ""), "so_what": s.get("so_what_en", ""),
                       "series": [x.get("label_en", "") for x in s.get("series") or []],
+                      "rows": [x.get("label_en", "") for x in (s.get("items") or s.get("rows") or [])],
+                      "events": [x.get("text_en", "") for x in s.get("events") or []],
+                      "band_label": s.get("band_label_en", ""),
                       "unit": s["unit"] if s["unit"] and s["unit"] not in ("%", "pp", "pts", "k", "m", "bn") else ""})
     if not any(items):
         return {}
@@ -870,6 +988,16 @@ def localize_chart(spec, tr, lang):
         if len(names) != len(spec["series"]):
             return None
         s["series"] = [{**x, f"label_{lang}": names[j]} for j, x in enumerate(spec["series"])]
+    for key, sub in (("items", "label"), ("rows", "label"), ("events", "text")):     # texts inside the lists
+        if spec.get(key):
+            names = t.get("events" if key == "events" else "rows") or []
+            if len(names) != len(spec[key]) or not all(names):
+                return None
+            s[key] = [{**x, f"{sub}_{lang}": names[j]} for j, x in enumerate(spec[key])]
+    if spec.get("band_label_en"):
+        if not t.get("band_label"):
+            return None
+        s[f"band_label_{lang}"] = t["band_label"]
     if t.get("unit"):
         s[f"unit_{lang}"] = t["unit"]
     if spec.get("period_prev") and t.get("period_prev"):
