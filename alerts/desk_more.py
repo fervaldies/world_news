@@ -136,7 +136,7 @@ def tap(st, parts, msg):
     try:
         if kind == "y":
             return take_tap(st, parts, mid)
-        if kind == "p":
+        if kind in ("p", "p2"):
             return part2_tap(st, parts, mid)
         if kind == "m":
             return comments_tap(st, parts, mid)
@@ -296,8 +296,8 @@ def tick(st):
             continue
         say(f"🗣️ Part 2 is due: {t['flag']} {t['name']} {t['lang'].upper()} — “{t['topic']}”"
             f" ({'poll' if t['type'] == 'poll' else 'open questions'}, Part 1 posted {t['posted_at'][:10]})",
-            [[("🗣️ Collect the answers and write Part 2", f"p:{t['id']}:go")],
-             [("⏰ Tomorrow", f"p:{t['id']}:later"), ("⏭️ Skip it", f"p:{t['id']}:skip")]])
+            [[("🗣️ Collect the answers and write Part 2", f"p2:{t['id']}:go")],
+             [("⏰ Tomorrow", f"p2:{t['id']}:later"), ("⏭️ Skip it", f"p2:{t['id']}:skip")]])
         SR.update(t["id"], tg_notified=True, status="due")
 
 
@@ -330,12 +330,12 @@ def part2_tap(st, parts, mid):
         try:
             got = N.SR.collect(N.vault, N.cfg, N.gh, tid)
         except Exception as e:
-            say(f"⚠️ {str(e)[:250]}", [[("🔁 Try again", f"p:{tid}:go"), ("⏰ Tomorrow", f"p:{tid}:later")]])
+            say(f"⚠️ {str(e)[:250]}", [[("🔁 Try again", f"p2:{tid}:go"), ("⏰ Tomorrow", f"p2:{tid}:later")]])
             return None
         n = len(got.get("comments") or [])
         if not n:
             say(f"🤷 No answers yet on “{t['topic']}”." + (f"\n⚠️ {'; '.join(got.get('errors') or [])[:300]}" if got.get("errors") else ""),
-                [[("⏰ Tomorrow", f"p:{tid}:later"), ("⏭️ Skip it", f"p:{tid}:skip")]])
+                [[("⏰ Tomorrow", f"p2:{tid}:later"), ("⏭️ Skip it", f"p2:{tid}:skip")]])
             return None
         votes = got.get("votes")
         say(f"📥 {n} answer{'s' if n > 1 else ''} collected" + (f" · {votes['total']} poll vote{'s' if votes['total'] != 1 else ''}"
@@ -369,7 +369,7 @@ def write_p2(tid, writer):
         try:
             out = N.SR.write_part2(N.vault, N.cfg, tid, writer="claude")
         except Exception as e:
-            say(f"⚠️ Couldn't write Part 2: {str(e)[:250]}", [[("🔁 Try again", f"p:{tid}:rewrite")]])
+            say(f"⚠️ Couldn't write Part 2: {str(e)[:250]}", [[("🔁 Try again", f"p2:{tid}:rewrite")]])
             return None
     t = N.SR.get(tid)
     d = yaml.safe_load(out)
@@ -385,9 +385,9 @@ def write_p2(tid, writer):
         for a in d.get("answers") or []:
             lines += ["", f"❓ {a.get(f'question_{lang}', '')}"] + [f"  “{r}”" for r in a.get(f"replies_{lang}") or []]
     lines += ["", d.get(f"outro_{lang}", ""), "", "Make the video?"]
-    say("\n".join(lines), [[("🎬 Make the video", f"p:{tid}:make")],
-                           [("🔄 Rewrite", f"p:{tid}:rewrite"), ("🔄 With Claude", f"p:{tid}:claude")],
-                           [("✖ Cancel", f"p:{tid}:cancel")]])
+    say("\n".join(lines), [[("🎬 Make the video", f"p2:{tid}:make")],
+                           [("🔄 Rewrite", f"p2:{tid}:rewrite"), ("🔄 With Claude", f"p2:{tid}:claude")],
+                           [("✖ Cancel", f"p2:{tid}:cancel")]])
     return None
 
 

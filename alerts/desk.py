@@ -393,9 +393,9 @@ def route(st, kind, data, obj):
             return got_topic(st, f, t)
         return NOT_MINE
     parts = data.split(":")
-    if parts[0] in ("y", "p", "m"):                              # stage 4: Your take, Part 2, Comments
+    if parts[0] in ("y", "p2", "m") or (parts[0] == "p" and len(parts) == 3 and parts[2] not in ("sel", "x")):                              # stage 4: Your take, Part 2, Comments
         return MORE.tap(st, parts, msg)
-    if parts[0] == "t":                                          # trial batch details (read-only)
+    if parts[0] == "tb" or (parts[0] == "t" and len(parts) == 2):   # trial batch details (button codes fixed)
         return trial_details(parts[1], msg)
     if parts[0] not in ("c", "l", "w", "g", "x", "k"):
         return NOT_MINE
@@ -929,7 +929,7 @@ def trials_status():
         lines.append(f"{TRIAL_ICON.get(st, '•')} {_who(b)} · {'+'.join(l.upper() for l in b.get('langs', []))} · "
                      f"{n_posted}/{len(b.get('slots', []))} posted — {TRIAL_WORD.get(st, st)}{extra}")
     rows = [[(f"{TRIAL_ICON.get(b.get('status'), '•')} {(CH.get(b.get('channel'), '') or '?').split()[0]} {b.get('format_label', '')} "
-              f"{b.get('created_at', '')[5:10]}", f"t:{b['id']}")] for b in bs]
+              f"{b.get('created_at', '')[5:10]}", f"tb:{b['id']}")] for b in bs]
     ask_buttons("\n".join(lines) + "\n\nTap one for the details.", rows)
     return None
 
