@@ -1,0 +1,88 @@
+date: 2026-11-15
+day: Sunday
+news:
+- title: Papa Leão XIV visita o Uruguai semanas após cirurgia no pulmão
+  source: ITV News
+  url: https://www.itv.com/news/2026-11-06/pope-leo-xiv-lands-in-uruguay-to-begin-3-day-south-american-tour
+  good: false
+  trending: false
+  why: ''
+  cat: WORLD
+  visual:
+    type: map
+    country: Uruguay
+    place: Uruguai
+    lat: -32.5228
+    lon: -55.7658
+    span: 12
+- title: Manifestantes em São Francisco protestam contra OpenAI e Anthropic por temor com segurança de IA
+  source: Africanews
+  url: https://www.africanews.com/2026/09/18/protesters-target-openai-and-anthropic-in-san-francisco-over-ai-safety-fears/
+  good: false
+  trending: false
+  why: ''
+  cat: TECH
+  visual:
+    type: map
+    country: United States of America
+    place: San Francisco
+    lat: 37.7749
+    lon: -122.4194
+    span: 3
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2b/Tech_Garden_Building%2C_Warren_Street_and_Onondaga_Street%2C_Syracuse%2C_NY_%2854416778550%29.jpg/1280px-Tech_Garden_Building%2C_Warren_Street_and_Onondaga_Street%2C_Syracuse%2C_NY_%2854416778550%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Warren LeMay from Chicago, IL, United States · CC BY-SA 2.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Tech_Garden_Building,_Warren_Street_and_Onondaga_Street,_Syracuse,_NY_(54416778550).jpg
+    query: modern tech office building
+- title: Elon Musk diz que contratar Jensen Huang seria uma honra após polêmica com a Nvidia
+  source: The Economic Times
+  url: https://economictimes.indiatimes.com/magazines/panache/will-elon-musk-hire-jensen-huang-says-it-would-be-an-honour-after-nvidia-ceos-controversy-what-happens-next/articleshow/135837029.cms
+  good: false
+  trending: true
+  why: ''
+  cat: BUSINESS
+  visual:
+    type: icon
+  photo:
+    url: https://live.staticflickr.com/7166/6682471915_e63df458e1_b.jpg
+    credit: 狐☯忠 ❂ Fidelis · CC BY 2.0 · Flickr
+    page: https://www.flickr.com/photos/64548789@N05/6682471915
+    query: computer microchip processor
+- title: EUA ventilam adesão da Ucrânia à OTAN caso o país abra mão de Donbas
+  source: New York Post
+  url: https://nypost.com/2026/11/14/world-news/us-floats-nato-membership-for-ukraine-in-exchange-for-giving-up-donbas/
+  good: false
+  trending: false
+  why: Altera as garantias de segurança que afetam a estabilidade regional e a segurança dos cidadãos.
+  cat: CONFLICT
+  visual:
+    type: map
+    country: Ukraine
+    place: Donbass
+    lat: 48.0159
+    lon: 37.8028
+    span: 6
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Jordanian_Parliament_Dome_Building_in_Amman%2C_2024.jpg/1280px-Jordanian_Parliament_Dome_Building_in_Amman%2C_2024.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Makeandtoss · CC0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Jordanian_Parliament_Dome_Building_in_Amman,_2024.jpg
+    query: parliament building dome
+- title: Minuta de acordo da polícia de Israel permitiria que o Shin Bet use dados da Europol
+  source: EUROPE SAYS
+  url: https://www.europesays.com/3374984/
+  good: false
+  trending: false
+  why: Expande o acesso de agências de inteligência estrangeiras aos dados de cidadãos nacionais.
+  cat: POLITICS
+  visual:
+    type: map
+    country: Israel
+    place: Israel
+    lat: 31.0461
+    lon: 34.8516
+    span: 6
+  photo:
+    url: https://live.staticflickr.com/5517/11383381483_2bff49b0ee_b.jpg
+    credit: NCinDC · CC BY 2.0 · Flickr
+    page: https://www.flickr.com/photos/11897392@N04/11383381483
+    query: government security building
