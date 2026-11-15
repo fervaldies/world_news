@@ -1023,6 +1023,104 @@ def chart_telegram(day_name):
         print(f"⚠️ Telegram (charts): {e}")
 
 
+# ── stage E2: one open-licence photo per story (places / objects / buildings / symbols — never people) ──
+PHOTO_UA = "NewsReels/1.0 (https://github.com/fervaldies; automated news videos)"
+PHOTO_LICENCE = re.compile(r"^(cc0|cc[ -]by(-sa)?[ -]?\d|public domain|pd\b|pdm)", re.I)
+PHOTO_SKIP = re.compile(r"\b(portrait|selfie|headshot|mugshot|people|person|man|woman|men|women|girl|boy|child|children|"
+                        r"crowd|protest|funeral|victim|logo|poster|screenshot|diagram|chart|map|graph|signature|"
+                        r"meeting|conference|speech|rally|wedding)\b", re.I)
+PHOTO_STOP = set("the and for with from into over under near about after before this that its his her their of in on at "
+                 "to by a an new old".split())
+PHOTO_NOTES = []
+
+
+def _photo_json(url):
+    req = urllib.request.Request(url, headers={"User-Agent": PHOTO_UA})
+    with urllib.request.urlopen(req, timeout=25) as r:
+        return json.loads(r.read().decode("utf-8"))
+
+
+def _plain(s):
+    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", str(s or ""))).strip()
+
+
+def _clear_match(query, text, avoid):
+    """Only clear matches: every key word of the search phrase (≤ 2 words) or all but one (3+) in the
+    photo's title / description, and none of the people named in the headline."""
+    t = " " + re.sub(r"[_\-.,()/]+", " ", str(text).lower()) + " "
+    for name in avoid:
+        if len(name) >= 3 and name.lower() in t:
+            return False
+    if PHOTO_SKIP.search(t):
+        return False
+    words = [w for w in re.findall(r"[a-z0-9]+", query.lower()) if len(w) >= 3 and w not in PHOTO_STOP]
+    if not words:
+        return False
+    hit = sum(1 for w in words if re.search(rf"\b{re.escape(w[:max(4, len(w) - 1)])}", t))
+    return hit >= (len(words) if len(words) <= 2 else len(words) - 1)
+
+
+def photo_commons(query, avoid):
+    url = ("https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrnamespace=6"
+           f"&gsrlimit=15&gsrsearch={urllib.parse.quote('filetype:bitmap ' + query)}"
+           "&prop=imageinfo&iiprop=url|extmetadata|size|mime&iiurlwidth=1280")
+    pages = sorted(((_photo_json(url).get("query") or {}).get("pages") or {}).values(), key=lambda x: x.get("index", 99))
+    for pg in pages:
+        ii = (pg.get("imageinfo") or [{}])[0]
+        meta = ii.get("extmetadata") or {}
+        lic = _plain((meta.get("LicenseShortName") or {}).get("value"))
+        if ii.get("mime") not in ("image/jpeg", "image/png") or (ii.get("width") or 0) < 1000 or not PHOTO_LICENCE.match(lic):
+            continue
+        title = _plain(pg.get("title", "")).replace("File:", "")
+        desc = _plain((meta.get("ImageDescription") or {}).get("value"))[:300]
+        if not _clear_match(query, f"{title} {desc}", avoid):
+            continue
+        artist = _plain((meta.get("Artist") or {}).get("value")) or "Unknown author"
+        return {"url": ii.get("thumburl") or ii.get("url"), "credit": f"{artist[:50]} · {lic} · Wikimedia Commons",
+                "page": ii.get("descriptionurl"), "query": query}
+    return None
+
+
+def photo_openverse(query, avoid):
+    url = (f"https://api.openverse.org/v1/images/?q={urllib.parse.quote(query)}&license=cc0,pdm,by,by-sa"
+           "&page_size=15&mature=false&extension=jpg,png")
+    for r in _photo_json(url).get("results") or []:
+        if (r.get("width") or 0) and r["width"] < 1000:
+            continue
+        if not _clear_match(query, f"{r.get('title') or ''} {' '.join(t.get('name', '') for t in r.get('tags') or [])}", avoid):
+            continue
+        lic = {"cc0": "CC0", "pdm": "Public domain"}.get(r.get("license"),
+                                                          f"CC {str(r.get('license', '')).upper()} {r.get('license_version', '')}".strip())
+        src = str(r.get("source") or "").replace("_", " ").title()
+        return {"url": r.get("url"), "credit": f"{(r.get('creator') or 'Unknown author')[:50]} · {lic} · {src}",
+                "page": r.get("foreign_landing_url"), "query": query}
+    return None
+
+
+def find_story_photos(stories):
+    """[photo dict or None] per story, from each story's `photo` search phrase (AI) — clear matches only."""
+    PHOTO_NOTES.clear()
+    out = []
+    for i, s in enumerate(stories):
+        q = re.sub(r"[^\w\s'-]", " ", str(s.get("photo") or "")).strip()[:60]
+        avoid = [str(n) for n in (s.get("people") or []) if str(n).strip()]
+        found = None
+        if q:
+            for fn in (photo_commons, photo_openverse):
+                try:
+                    found = fn(q, avoid)
+                except Exception as e:
+                    PHOTO_NOTES.append(f"⚠️ story {i + 1}: {fn.__name__[6:]} didn't answer ({str(e)[:60]})")
+                if found:
+                    break
+            time.sleep(0.5)
+        out.append(found)
+        PHOTO_NOTES.append(f"✅ story {i + 1}: {q}" if found else (f"✖ story {i + 1}: no clear match for '{q}'" if q else
+                                                                       f"– story {i + 1}: no photo idea"))
+    print("🖼️ Photos: " + " · ".join(PHOTO_NOTES))
+    return out
+
+
 def enrich_day_files(day_name, en_news):
     """Adds source / url / good (always) and cat / visual / why (AI, best effort) to every language
     file of today. Never fatal; never puts English text into the ES / PT / ID files."""
@@ -1048,7 +1146,11 @@ def enrich_day_files(day_name, en_news):
             "\"lat\": <number>, \"lon\": <number>, \"span\": <degrees to show around it: 3 for a city, 12 for a "
             "state, 25 for a country>} when it is about a specific place (add country2/place2/lat2/lon2 when two "
             "places are linked); else {\"type\": \"icon\"}.\n"
-            "Return ONLY raw JSON, no markdown: {\"stories\": [{\"cat\": \"...\", \"why\": \"...\", \"visual\": {...}}, ...5]}\n\n"
+            "- photo: 2–4 English words to search a free photo library for the PLACE, OBJECT, BUILDING or SYMBOL "
+            "the story is about (e.g. \"Sydney Opera House\", \"oil tanker\", \"wheat field\", \"Bundestag building\"); "
+            "never a person, a face, a logo or a brand name; empty string when no such photo would fit.\n"
+            "- people: the names of the people in the headline (empty list if none).\n"
+            "Return ONLY raw JSON, no markdown: {\"stories\": [{\"cat\": \"...\", \"why\": \"...\", \"visual\": {...}, \"photo\": \"...\", \"people\": []}, ...5]}\n\n"
             + numbered, 3000, check_stories)["stories"]
     except Exception as e:
         print(f"⚠️ Categories / pictures / why-lines skipped (non-fatal): {e}")
@@ -1087,6 +1189,12 @@ def enrich_day_files(day_name, en_news):
         print("📊 Charts: " + (" · ".join(CHART_NOTES) if CHART_NOTES else "none today (no comparable figures)"))
     except Exception as e:
         print(f"⚠️ Chart step skipped (non-fatal): {e}")
+    photos = [None] * len(titles)
+    if stories:                                     # stage E2: one photo per story (never fatal)
+        try:
+            photos = (find_story_photos(stories) + [None] * len(titles))[:len(titles)]
+        except Exception as e:
+            print(f"⚠️ Photo step skipped (non-fatal): {e}")
     done = []
     for code in ("EN", "ES", "PT", "ID"):
         path = f"{day_name}News{code}.yml"
@@ -1119,6 +1227,10 @@ def enrich_day_files(day_name, en_news):
                     it.setdefault("cat", "GOOD NEWS" if good else "WORLD")
                     it.setdefault("visual", {"type": "icon"})
                     it.setdefault("why", "")
+                if i < len(photos) and photos[i]:              # the same photo in every language
+                    it["photo"] = photos[i]
+                else:
+                    it.pop("photo", None)
                 if i < len(charts) and charts[i]:              # checked chart, older picture kept as fallback
                     lang = code.lower()
                     tr_i = (chart_tr.get(lang) or [None] * len(titles))[i] if lang != "en" else None
