@@ -1,88 +1,87 @@
 date: 2026-11-15
 day: Sunday
 news:
-- title: Pope Leo XIV visits Uruguay just weeks after lung surgery
-  source: ITV News
-  url: https://www.itv.com/news/2026-11-06/pope-leo-xiv-lands-in-uruguay-to-begin-3-day-south-american-tour
+- title: China's actions in Japan are spreading fear and silencing critics.
+  source: Lokmat Times
+  url: https://www.lokmattimes.com/international/chinas-repression-in-japan-creates-fear-silences-voices-a001-w02/
   good: false
   trending: false
   why: ''
   cat: WORLD
   visual:
     type: map
-    country: Uruguay
-    place: Uruguay
-    lat: -32.5228
-    lon: -55.7658
-    span: 12
-- title: San Francisco protesters target OpenAI and Anthropic over AI safety fears
-  source: Africanews
-  url: https://www.africanews.com/2026/09/18/protesters-target-openai-and-anthropic-in-san-francisco-over-ai-safety-fears/
+    country: Japan
+    place: Japan
+    lat: 36.2048
+    lon: 138.2529
+    span: 25
+- title: EU leaders say European security is off the table in Ukraine peace talks.
+  source: U.S. News & World Report
+  url: https://www.usnews.com/news/world/articles/2026-11-13/europes-security-cannot-be-part-of-ukraine-peace-talks-eu-leaders-say
   good: false
   trending: false
-  why: ''
-  cat: TECH
+  why: European security arrangements directly impact the safety and stability of all citizens.
+  cat: POLITICS
   visual:
     type: map
-    country: United States of America
-    place: San Francisco
-    lat: 37.7749
-    lon: -122.4194
-    span: 3
+    country: Ukraine
+    place: Ukraine
+    lat: 48.3794
+    lon: 31.1656
+    span: 25
   photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2b/Tech_Garden_Building%2C_Warren_Street_and_Onondaga_Street%2C_Syracuse%2C_NY_%2854416778550%29.jpg/1280px-Tech_Garden_Building%2C_Warren_Street_and_Onondaga_Street%2C_Syracuse%2C_NY_%2854416778550%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: Warren LeMay from Chicago, IL, United States · CC BY-SA 2.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Tech_Garden_Building,_Warren_Street_and_Onondaga_Street,_Syracuse,_NY_(54416778550).jpg
-    query: modern tech office building
-- title: Elon Musk says hiring Jensen Huang would be an honor after Nvidia controversy
-  source: The Economic Times
-  url: https://economictimes.indiatimes.com/magazines/panache/will-elon-musk-hire-jensen-huang-says-it-would-be-an-honour-after-nvidia-ceos-controversy-what-happens-next/articleshow/135837029.cms
-  good: false
-  trending: true
-  why: ''
-  cat: BUSINESS
-  visual:
-    type: icon
-  photo:
-    url: https://live.staticflickr.com/7166/6682471915_e63df458e1_b.jpg
-    credit: 狐☯忠 ❂ Fidelis · CC BY 2.0 · Flickr
-    page: https://www.flickr.com/photos/64548789@N05/6682471915
-    query: computer microchip processor
-- title: US floats NATO membership for Ukraine if it gives up Donbas
-  source: New York Post
-  url: https://nypost.com/2026/11/14/world-news/us-floats-nato-membership-for-ukraine-in-exchange-for-giving-up-donbas/
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/7/78/Karlsruhe_Palace_Flag_of_Europe_2025-05-09_01.jpg/1280px-Karlsruhe_Palace_Flag_of_Europe_2025-05-09_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Entbert · CC BY 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Karlsruhe_Palace_Flag_of_Europe_2025-05-09_01.jpg
+    query: European Union flag
+- title: Zelenskyy says the U.S. is floating NATO membership as part of a Donbas deal.
+  source: Spokane Spokesman-Review
+  url: https://www.spokesman.com/stories/2026/nov/14/zelenskyy-says-us-floats-nato-membership-in-deal-f/
   good: false
   trending: false
-  why: Changes security guarantees affecting regional stability and citizens' safety.
-  cat: CONFLICT
+  why: Potential NATO membership shifts the geopolitical risk profile and security of ordinary citizens.
+  cat: POLITICS
   visual:
     type: map
     country: Ukraine
     place: Donbas
     lat: 48.0159
     lon: 37.8028
-    span: 6
+    span: 12
   photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Jordanian_Parliament_Dome_Building_in_Amman%2C_2024.jpg/1280px-Jordanian_Parliament_Dome_Building_in_Amman%2C_2024.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: Makeandtoss · CC0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Jordanian_Parliament_Dome_Building_in_Amman,_2024.jpg
-    query: parliament building dome
-- title: Draft Israel police agreement would let Shin Bet use Europol data
-  source: EUROPE SAYS
-  url: https://www.europesays.com/3374984/
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/6/61/NATO%2C_USACE_officials_break_ground_on_new_headquarters_building_%285225286837%29.jpg/1280px-NATO%2C_USACE_officials_break_ground_on_new_headquarters_building_%285225286837%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: U.S. Army Corps of Engineers Europe District from  · Public domain · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:NATO,_USACE_officials_break_ground_on_new_headquarters_building_(5225286837).jpg
+    query: NATO headquarters building
+- title: Scams cost Asia $136.5 billion last year as AI threats grow, experts warn.
+  source: CNA
+  url: https://www.channelnewsasia.com/asia/asia-scams-136-billion-global-anti-scam-alliance-summit-ai-threat-6549101
   good: false
   trending: false
-  why: Expands foreign intelligence agencies' access to domestic citizen data.
+  why: ''
+  cat: ECONOMY
+  visual:
+    type: number
+    number: '136.5'
+    label: billion lost to scams
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ad/50_Schweizer_Franken_mit_animierten_L%C3%B6wenzahnsamen.jpg/1280px-50_Schweizer_Franken_mit_animierten_L%C3%B6wenzahnsamen.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: SchmiAlf · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:50_Schweizer_Franken_mit_animierten_L%C3%B6wenzahnsamen.jpg
+    query: smartphone security app
+  chart_check:
+    result: 'not used: one number without a change — the count-up number is used instead'
+- title: Trump, Xi, and Putin plan an unprecedented joint meeting at APEC.
+  source: Greater Kashmir
+  url: https://www.greaterkashmir.com/world/trump-xi-and-putin-plan-an-unprecedented-joint-meeting-on-sidelines-of-apec-officials-12808028
+  good: false
+  trending: false
+  why: ''
   cat: POLITICS
   visual:
-    type: map
-    country: Israel
-    place: Israel
-    lat: 31.0461
-    lon: 34.8516
-    span: 6
+    type: icon
   photo:
-    url: https://live.staticflickr.com/5517/11383381483_2bff49b0ee_b.jpg
-    credit: NCinDC · CC BY 2.0 · Flickr
-    page: https://www.flickr.com/photos/11897392@N04/11383381483
-    query: government security building
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/3/33/Adiat_hall%2C_Summit_University_Offa_02.jpg/1280px-Adiat_hall%2C_Summit_University_Offa_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Royalesignature · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Adiat_hall,_Summit_University_Offa_02.jpg
+    query: international summit hall
