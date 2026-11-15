@@ -1,87 +1,95 @@
 date: 2026-11-15
 day: Sunday
 news:
-- title: China's actions in Japan are spreading fear and silencing critics.
-  source: Lokmat Times
-  url: https://www.lokmattimes.com/international/chinas-repression-in-japan-creates-fear-silences-voices-a001-w02/
+- title: SpaceX Starship reaches orbit following a booster explosion that halted a planned double catch
+  source: ITV News
+  url: https://www.itv.com/news/2026-11-13/spacexs-attempt-for-a-starship-double-catch-yields-mixed-results
   good: false
-  trending: false
+  trending: true
   why: ''
-  cat: WORLD
-  visual:
-    type: map
-    country: Japan
-    place: Japan
-    lat: 36.2048
-    lon: 138.2529
-    span: 25
-- title: EU leaders say European security is off the table in Ukraine peace talks.
-  source: U.S. News & World Report
-  url: https://www.usnews.com/news/world/articles/2026-11-13/europes-security-cannot-be-part-of-ukraine-peace-talks-eu-leaders-say
-  good: false
-  trending: false
-  why: European security arrangements directly impact the safety and stability of all citizens.
-  cat: POLITICS
-  visual:
-    type: map
-    country: Ukraine
-    place: Ukraine
-    lat: 48.3794
-    lon: 31.1656
-    span: 25
-  photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/7/78/Karlsruhe_Palace_Flag_of_Europe_2025-05-09_01.jpg/1280px-Karlsruhe_Palace_Flag_of_Europe_2025-05-09_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: Entbert · CC BY 4.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Karlsruhe_Palace_Flag_of_Europe_2025-05-09_01.jpg
-    query: European Union flag
-- title: Zelenskyy says the U.S. is floating NATO membership as part of a Donbas deal.
-  source: Spokane Spokesman-Review
-  url: https://www.spokesman.com/stories/2026/nov/14/zelenskyy-says-us-floats-nato-membership-in-deal-f/
-  good: false
-  trending: false
-  why: Potential NATO membership shifts the geopolitical risk profile and security of ordinary citizens.
-  cat: POLITICS
-  visual:
-    type: map
-    country: Ukraine
-    place: Donbas
-    lat: 48.0159
-    lon: 37.8028
-    span: 12
-  photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/6/61/NATO%2C_USACE_officials_break_ground_on_new_headquarters_building_%285225286837%29.jpg/1280px-NATO%2C_USACE_officials_break_ground_on_new_headquarters_building_%285225286837%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: U.S. Army Corps of Engineers Europe District from  · Public domain · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:NATO,_USACE_officials_break_ground_on_new_headquarters_building_(5225286837).jpg
-    query: NATO headquarters building
-- title: Scams cost Asia $136.5 billion last year as AI threats grow, experts warn.
-  source: CNA
-  url: https://www.channelnewsasia.com/asia/asia-scams-136-billion-global-anti-scam-alliance-summit-ai-threat-6549101
-  good: false
-  trending: false
-  why: ''
-  cat: ECONOMY
-  visual:
-    type: number
-    number: '136.5'
-    label: billion lost to scams
-  photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ad/50_Schweizer_Franken_mit_animierten_L%C3%B6wenzahnsamen.jpg/1280px-50_Schweizer_Franken_mit_animierten_L%C3%B6wenzahnsamen.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: SchmiAlf · CC BY-SA 4.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:50_Schweizer_Franken_mit_animierten_L%C3%B6wenzahnsamen.jpg
-    query: smartphone security app
-  chart_check:
-    result: 'not used: one number without a change — the count-up number is used instead'
-- title: Trump, Xi, and Putin plan an unprecedented joint meeting at APEC.
-  source: Greater Kashmir
-  url: https://www.greaterkashmir.com/world/trump-xi-and-putin-plan-an-unprecedented-joint-meeting-on-sidelines-of-apec-officials-12808028
-  good: false
-  trending: false
-  why: ''
-  cat: POLITICS
+  cat: TECH
   visual:
     type: icon
   photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/3/33/Adiat_hall%2C_Summit_University_Offa_02.jpg/1280px-Adiat_hall%2C_Summit_University_Offa_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: Royalesignature · CC BY-SA 4.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Adiat_hall,_Summit_University_Offa_02.jpg
-    query: international summit hall
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bb/Ares_I-X_launch_08.jpg/1280px-Ares_I-X_launch_08.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: NASA/Sandra Joseph and Kevin O'Connell · Public domain · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Ares_I-X_launch_08.jpg
+    query: space rocket
+- title: Trump threatens to double tariffs on Mexico over migrant caravans
+  source: Lokmat Times
+  url: https://www.lokmattimes.com/international/trump-threatens-to-double-tariffs-on-mexico-over-migrant-caravans-a001-w02/
+  good: false
+  trending: false
+  why: Higher tariffs on Mexican imports will raise prices for everyday household goods.
+  cat: ECONOMY
+  visual:
+    type: map
+    country: Mexico
+    place: Mexico
+    lat: 23.6345
+    lon: -102.5528
+    span: 25
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Border_Wall_at_Tijuana_and_San_Diego_Border.jpg/1280px-Border_Wall_at_Tijuana_and_San_Diego_Border.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Tomascastelazo · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Border_Wall_at_Tijuana_and_San_Diego_Border.jpg
+    query: border wall
+- title: Iran warns it will target European air bases if Trump restarts the war
+  source: GB News
+  url: https://www.gbnews.com/news/world/iran-threatens-attack-european-air-bases-donald-trump-restarts-war
+  good: false
+  trending: true
+  why: Escalating Middle East tensions could trigger direct military conflict involving Europe.
+  cat: CONFLICT
+  visual:
+    type: map
+    country: Iran
+    place: Iran
+    lat: 32.4279
+    lon: 53.688
+    span: 25
+  photo:
+    url: https://live.staticflickr.com/2280/2220539590_742621f380_b.jpg
+    credit: ClearFrost · CC BY-SA 2.0 · Flickr
+    page: https://www.flickr.com/photos/84753587@N00/2220539590
+    query: military jet
+- title: Trump to meet Quad leaders in Manila amid Indo-Pacific tensions
+  source: Lokmat Times
+  url: https://www.lokmattimes.com/international/trump-to-meet-quad-leaders-in-manila-amidst-indo-pacific-focus-a001-w02/
+  good: false
+  trending: false
+  why: ''
+  cat: POLITICS
+  visual:
+    type: map
+    country: Philippines
+    place: Manila
+    lat: 14.5995
+    lon: 120.9842
+    span: 3
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5b/Skyline_in_Manila_36.jpg/1280px-Skyline_in_Manila_36.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: SwarmCheng · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Skyline_in_Manila_36.jpg
+    query: Manila skyline
+  chart_check:
+    result: 'not used: a map needs 3+ places (got 0)'
+- title: Canadian Prime Minister Mark Carney calls the United States a bigger security threat than China
+  source: Breitbart News Network
+  url: https://www.breitbart.com/politics/2026/11/10/canadian-prime-minister-mark-carney-labels-united-states-more-of-a-security-threat-than-china/
+  good: false
+  trending: true
+  why: ''
+  cat: POLITICS
+  visual:
+    type: map
+    country: Canada
+    place: Canada
+    lat: 56.1304
+    lon: -106.3468
+    span: 25
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/6/63/Parlament_Wien_abends.jpg/1280px-Parlament_Wien_abends.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Thomas Wolf , www.foto-tw.de · CC BY-SA 3.0 de · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Parlament_Wien_abends.jpg
+    query: parliament building
