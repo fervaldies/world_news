@@ -798,12 +798,110 @@ def check_so_what(c, text):
     return sw[:60]
 
 
+# ── stage F1: the full article text for the chart step (GNews free gives only the first ~250 characters) ──
+ARTICLE_UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) " \
+             "Chrome/124.0 Safari/537.36 NewsReels/1.0"
+ARTICLE_MAX = 6000                       # characters per story given to the chart step
+FULLTEXT_NOTES = []
+
+
+def _article_paragraphs(html_text):
+    """Readable paragraphs of a news page: JSON-LD articleBody first, else the <p> texts (no menus / scripts)."""
+    import html as _html
+    from html.parser import HTMLParser
+    for m in re.finditer(r'<script[^>]+application/ld\+json[^>]*>(.*?)</script>', html_text, re.S | re.I):
+        try:
+            data = json.loads(m.group(1).strip())
+        except Exception:
+            continue
+        stack = data if isinstance(data, list) else [data]
+        while stack:
+            d = stack.pop()
+            if isinstance(d, dict):
+                body = d.get("articleBody")
+                if isinstance(body, str) and len(body) > 400:
+                    return [p.strip() for p in re.split(r"\n+", _html.unescape(body)) if len(p.strip()) > 30]
+                stack.extend(v for v in d.values() if isinstance(v, (dict, list)))
+            elif isinstance(d, list):
+                stack.extend(d)
+
+    class P(HTMLParser):
+        SKIP = {"script", "style", "nav", "footer", "aside", "header", "form", "figcaption", "noscript", "button"}
+
+        def __init__(self):
+            super().__init__(convert_charrefs=True)
+            self.skip, self.inp, self.buf, self.out = 0, False, [], []
+
+        def handle_starttag(self, tag, attrs):
+            if tag in self.SKIP:
+                self.skip += 1
+            elif tag == "p" and not self.skip:
+                self.inp, self.buf = True, []
+
+        def handle_endtag(self, tag):
+            if tag in self.SKIP and self.skip:
+                self.skip -= 1
+            elif tag == "p" and self.inp:
+                t = re.sub(r"\s+", " ", "".join(self.buf)).strip()
+                if len(t) > 30:
+                    self.out.append(t)
+                self.inp = False
+
+        def handle_data(self, data):
+            if self.inp and not self.skip:
+                self.buf.append(data)
+    p = P()
+    try:
+        p.feed(html_text)
+    except Exception:
+        pass
+    return p.out
+
+
+def article_text(url):
+    """The article's own text (up to ARTICLE_MAX characters), or '' when the page can't be read (paywall, block)."""
+    if not url or not url.startswith("http"):
+        return ""
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": ARTICLE_UA, "Accept-Language": "en,es;q=0.8",
+                                                   "Accept": "text/html,application/xhtml+xml"})
+        with urllib.request.urlopen(req, timeout=12) as r:
+            if "html" not in (r.headers.get("Content-Type") or "html"):
+                return ""
+            raw = r.read(3_000_000).decode(r.headers.get_content_charset() or "utf-8", "replace")
+    except Exception:
+        return ""
+    out, n = [], 0
+    for para in _article_paragraphs(raw):
+        if n + len(para) > ARTICLE_MAX:
+            break
+        out.append(para)
+        n += len(para) + 1
+    return "\n".join(out)
+
+
+def full_texts(urls):
+    """Full texts for the picked stories, in parallel (about 2–10 s in all). Never fatal."""
+    from concurrent.futures import ThreadPoolExecutor
+    try:
+        with ThreadPoolExecutor(max_workers=5) as ex:
+            got = list(ex.map(article_text, urls))
+    except Exception as e:
+        print(f"⚠️ Full article text skipped (non-fatal): {e}")
+        got = [""] * len(urls)
+    FULLTEXT_NOTES[:] = [bool(g) for g in got]
+    print(f"📰 Full article text for {sum(1 for g in got if g)} of {len(urls)} stories (the rest: GNews snippet only)")
+    return got
+
+
 def extract_charts(titles):
     """Per story: (chart dict or None, note). One AI call for the 5 stories."""
     texts = []
+    fulls = full_texts([(PICKED[i] if i < len(PICKED) else {}).get("url", "") for i in range(len(titles))])
     for i, t in enumerate(titles):
         info = PICKED[i] if i < len(PICKED) else {}
-        texts.append(" ".join(x for x in (t, info.get("description", ""), info.get("content", "")) if x).strip())
+        body = fulls[i] if len(fulls[i]) > len(info.get("content", "")) else info.get("content", "")
+        texts.append(" ".join(x for x in (t, info.get("description", ""), body) if x).strip())
     if not any(_num_tokens(x) for x in texts):
         return [(None, "no figures in the article") for _ in titles]
     blocks = "\n\n".join(f"STORY {i}\n{x}" for i, x in enumerate(texts))
@@ -1009,13 +1107,17 @@ def localize_chart(spec, tr, lang):
 
 def chart_telegram(day_name):
     """One Telegram line per fetch when a chart was dropped by the number check."""
-    bad = [n for n in CHART_NOTES if not n.startswith("✅")]
+    made = [n[1:].strip() for n in CHART_NOTES if n.startswith("✅")]
+    bad = [n[1:].strip() for n in CHART_NOTES if n.startswith("✖")]
     bot, chat = os.environ.get("TELEGRAM_BOT_TOKEN"), os.environ.get("TELEGRAM_CHAT_ID")
-    if not bad or not (bot and chat):
+    if not (made or bad) or not (bot and chat):
         return
     name = {"aus_news": "🇦🇺 Australia", "world_news": "🌍 World", "europe_news": "🇪🇺 Europe"}.get(
         os.path.basename(os.getcwd()), os.path.basename(os.getcwd()))
-    text = f"📊 {name} charts ({day_name}): " + " · ".join(CHART_NOTES)
+    full = sum(1 for f in FULLTEXT_NOTES if f)
+    text = f"📊 {name} charts ({day_name}): " + (f"✅ {len(made)} made ({', '.join(made)})" if made else "none made") + \
+        (" · ✖ dropped: " + " · ".join(bad) if bad else "") + \
+        (f" · full article read for {full}/{len(FULLTEXT_NOTES)}" if FULLTEXT_NOTES else "")
     try:
         data = urllib.parse.urlencode({"chat_id": chat, "text": text[:3500]}).encode()
         urllib.request.urlopen(f"https://api.telegram.org/bot{bot}/sendMessage", data=data, timeout=20)
@@ -1182,7 +1284,8 @@ def enrich_day_files(day_name, en_news):
             if c:
                 charts[i] = chart_spec(c, (PICKED[i] if i < len(PICKED) else {}).get("source"))
                 CHART_NOTES.append(f"✅ story {i + 1}: {c['chart']}")
-            elif note not in ("no chart-worthy figures", "no figures in the article"):
+            elif note not in ("no chart-worthy figures", "no figures in the article") and \
+                    not note.startswith("one number without a change"):
                 CHART_NOTES.append(f"✖ story {i + 1}: {note}")
         if any(charts):
             chart_tr = translate_charts(charts)
