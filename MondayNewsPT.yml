@@ -1,8 +1,132 @@
-date: 2026-11-09
+date: 2026-11-16
 day: Monday
 news:
-  - title: "Filipinas querem comprar mais mísseis BrahMos da Índia"
-  - title: "Ameaças de bomba com aviso de contagem regressiva atrapalham canais de TV europeus"
-  - title: "CEO da Nvidia admite caso com suposta espiã chinesa e gera investigação"
-  - title: "Papa Francisco encerra visita ao Uruguai e chega à Argentina na etapa mais tensa de sua turnê"
-  - title: "Derrotas de Trump nas eleições de meio de mandato aumentam fase difícil para a direita populista, embora a francesa Le Pen ainda possa vencer"
+- title: Israel mata principal comandante do Hamas e Jordânia condena três pessoas por ataque a igreja
+  source: Santa Ana Orange County Register
+  url: https://www.ocregister.com/2026/11/15/israel-kills-a-top-hamas-commander-as-jordan-sentences-3-in-church-attack-and-other-mideast-news/
+  good: false
+  trending: false
+  why: A escalada da violência no Médio Oriente ameaça a estabilidade regional e o abastecimento de energia.
+  cat: CONFLICT
+  visual:
+    type: map
+    country: Israel
+    place: Médio Oriente
+    lat: 31.0461
+    lon: 34.8516
+    span: 25
+  photo:
+    url: https://upload.wikimedia.org/wikipedia/commons/9/93/The_rubble_of_a_building_-_geograph.org.uk_-_4711042.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled
+    credit: Lairich Rig · CC BY-SA 2.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:The_rubble_of_a_building_-_geograph.org.uk_-_4711042.jpg
+    query: rubble building
+- title: Três navios são atingidos por drones no Mar Negro perto da Romênia, segundo primeiro-ministro
+  source: CNA
+  url: https://www.channelnewsasia.com/world/romania-black-sea-drone-strike-ships-6552996
+  good: false
+  trending: false
+  why: ''
+  cat: CONFLICT
+  visual:
+    type: map
+    country: Romania
+    place: Mar Negro
+    lat: 44.1598
+    lon: 28.6348
+    span: 12
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Cargo_ship_PONTIAC%2C_ENI_02320416%2C_MMSI_244660959._15-07-2024._%28actm.%29.jpg/1280px-Cargo_ship_PONTIAC%2C_ENI_02320416%2C_MMSI_244660959._15-07-2024._%28actm.%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Agnes Monkelbaan · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Cargo_ship_PONTIAC,_ENI_02320416,_MMSI_244660959._15-07-2024._(actm.).jpg
+    query: cargo ship
+  chart_check:
+    result: 'not used: 3 isn''t in the article; 0 isn''t in the article'
+- title: Canadá promete C$ 560 milhões para proteger florestas tropicais do Brasil
+  source: The News International
+  url: https://www.thenews.com.pk/latest/1423642-canada-makes-a-c560-million-pledge-for-brazils-tropical-forests-forever-facility
+  good: false
+  trending: false
+  why: ''
+  cat: CLIMATE
+  visual:
+    type: map
+    country: Brazil
+    place: Floresta Amazônica
+    lat: -3.4653
+    lon: -62.2159
+    span: 25
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/Tropical_rainforest_in_Sangha_Trinational.jpg/1280px-Tropical_rainforest_in_Sangha_Trinational.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: JosepMGracia · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Tropical_rainforest_in_Sangha_Trinational.jpg
+    query: tropical rainforest
+  chart_check:
+    result: 'not used: 5.6e+08 isn''t in the article; 0 isn''t in the article; a quoted sentence isn''t in the article'
+- title: Como data centers, contas de luz e raiva dos eleitores prejudicaram chances de Trump nas eleições de meio de mandato
+  source: Times of India
+  url: https://timesofindia.indiatimes.com/world/us/ai-electricity-bills-and-voter-anger-how-data-centres-tanked-trumps-midterm-hopes/articleshow/135634353.cms
+  good: false
+  trending: false
+  why: Os custos das infraestruturas tecnológicas têm impacto direto nas faturas domésticas e nas eleições.
+  cat: POLITICS
+  visual:
+    type: icon
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/7/74/Servers_in_a_Rack.jpg/1280px-Servers_in_a_Rack.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Abigor · CC BY-SA 3.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Servers_in_a_Rack.jpg
+    query: server rack
+- title: Carney apresenta novo orçamento para impulsionar economia do Canadá em meio a desaceleração da guerra comercial de Trump
+  source: WTOP
+  url: https://wtop.com/world/2026/11/carney-unveils-budget-to-strengthen-canadas-economy-as-trumps-trade-war-continues/
+  good: false
+  trending: true
+  why: ''
+  cat: ECONOMY
+  visual:
+    type: chart
+    chart: bars
+    unit: billion C$
+    prefix: ''
+    decimals: 1
+    source: AP
+    hedge: false
+    title_en: Canadian federal budget projections
+    labels_en:
+    - Multiyear spending and tax breaks
+    - Total projected spending
+    - Projected deficit
+    - Sovereign wealth fund
+    - Defense industry funding
+    - Investment incentive cost
+    values:
+    - 142.1
+    - 603
+    - 62.3
+    - 25
+    - 7.7
+    - 36
+    title_pt: Projeções do orçamento federal canadense
+    labels_pt:
+    - Gastos plurianuais e desonerações fiscales
+    - Gasto total projetado
+    - Déficit projetado
+    - Fundo soberano
+    - Financiamento da indústria de defesa
+    - Custo de incentivos ao investimento
+    unit_pt: bilhões de C$
+    fallback:
+      type: map
+      country: Canada
+      place: Ottawa
+      lat: 45.4215
+      lon: -75.6972
+      span: 12
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/6/63/Parlament_Wien_abends.jpg/1280px-Parlament_Wien_abends.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Thomas Wolf , www.foto-tw.de · CC BY-SA 3.0 de · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Parlament_Wien_abends.jpg
+    query: parliament building
+  chart_check:
+    result: ok
+    template: bars
