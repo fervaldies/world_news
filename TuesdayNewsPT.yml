@@ -1,73 +1,111 @@
-date: 2026-11-10
+date: 2026-11-17
 day: Tuesday
 news:
-- title: Acusações de espionagem contra Nvidia devem desencadear regras mais rígidas dos EUA sobre exportação de chips de IA para a China
-  why: ''
-  source: U.S. News & World Report
-  url: https://www.usnews.com/news/top-news/articles/2026-11-09/nvidia-spy-allegations-likely-to-spur-laws-to-tighten-chinas-access-to-ai-chips
-  cat: TECH
+- title: Lula conquista quarto mandato para governar o Brasil e enfrenta novos e grandes desafios
+  source: The Tribune
+  url: https://www.tribuneindia.com/news/world/lula-to-govern-brazil-for-4th-term-but-faces-range-of-challenges-heres-what-to-know/
   good: false
+  trending: false
+  why: A maior economia do Brasil enfrenta inflação e desigualdade sob nova liderança.
+  cat: POLITICS
   visual:
     type: map
-    country: United States of America
-    place: Estados Unidos
-    lat: 37.0902
-    lon: -95.7129
+    country: Brazil
+    place: Brasília
+    lat: -15.8267
+    lon: -47.8616
     span: 25
-    country2: China
-    place2: China
-    lat2: 35.8617
-    lon2: 104.1954
-    span2: 25
-- title: Líderes globais na cúpula do clima instam nações a acelerar cortes de emissões
-  why: ''
-  source: Al-Monitor
-  url: https://www.al-monitor.com/originals/2026/11/cop31-summit-leaders-urge-world-move-faster-climate
-  cat: CLIMATE
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d2/PalaciodoplanaltoFR.jpg/1280px-PalaciodoplanaltoFR.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Dasfour2022 · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:PalaciodoplanaltoFR.jpg
+    query: Brazilian flag presidential palace
+- title: Primeiro-ministro canadense Mark Carney chama os EUA de ameaça maior à segurança do que a China
+  source: Breitbart News Network
+  url: https://www.breitbart.com/politics/2026/11/10/canadian-prime-minister-mark-carney-labels-united-states-more-of-a-security-threat-than-china/
   good: false
-  visual:
-    type: icon
-- title: A morte trágica de um jovem migrante no Canadá expõe os riscos que trabalhadores vulneráveis enfrentam no exterior
-  why: As condições de trabalho de estrangeiros não regulamentadas ameaçam diretamente a segurança dos trabalhadores migrantes.
-  source: Lokmat Times
-  url: https://www.lokmattimes.com/international/canada-punjab-youths-tragic-death-highlights-migrant-vulnerability-a001-w02/
-  cat: SOCIETY
-  good: false
+  trending: false
+  why: Altera as relações Canadá-EUA e reformula a estratégia da aliança de segurança norte-americano.
+  cat: POLITICS
   visual:
     type: map
     country: Canada
-    place: Canadá
-    lat: 56.1304
-    lon: -106.3468
+    place: Ottawa
+    lat: 45.4215
+    lon: -75.6972
     span: 25
-- title: Índia e UE revisam progresso de acordo comercial antes da visita de Modi a Bruxelas
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/British_Columbia_Parliament_Building_in_Victoria%2C_British_Columbia%2C_Canada_07.jpg/1280px-British_Columbia_Parliament_Building_in_Victoria%2C_British_Columbia%2C_Canada_07.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Michal Klajban · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:British_Columbia_Parliament_Building_in_Victoria,_British_Columbia,_Canada_07.jpg
+    query: Canadian Parliament building
+- title: Ações de Wall Street despencam enquanto Nvidia lidera nova onda de vendas
+  source: WTOP
+  url: https://wtop.com/world/2026/11/stocks-decline-in-asia-as-investor-concerns-over-nvidia-fallout-extend-into-another-week/
+  good: false
+  trending: false
   why: ''
-  source: Hindustan Times
-  url: https://www.hindustantimes.com/india-news/india-eu-review-fta-progress-ahead-of-pm-modi-brussels-visit-push-investment-trade-ties-101794244839525.html
   cat: BUSINESS
+  visual:
+    type: icon
+  photo:
+    url: https://upload.wikimedia.org/wikipedia/commons/0/03/Floor_of_Toronto_Stock_Exchange_1956.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled
+    credit: Chris Lund · Public domain · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Floor_of_Toronto_Stock_Exchange_1956.jpg
+    query: stock market trading floor
+  chart_check:
+    result: 'not used: -1.9 isn''t in the article; -2.5 isn''t in the article; -1.4 isn''t in the article'
+- title: Califórnia processa OpenAI e exige mudanças determinadas pela Justiça após incidente de invasão
+  source: U.S. News & World Report
+  url: https://www.usnews.com/news/technology/articles/2026-11-16/california-sues-openai-seeking-court-ordered-changes-after-the-hugging-face-hack
   good: false
+  trending: true
+  why: Grande empresa de IA enfrenta ação judicial por violações de segurança que afetam dados de usuários.
+  cat: JUSTICE
   visual:
     type: map
-    country: India
-    place: Nova Deli
-    lat: 28.6139
-    lon: 77.209
+    country: United States of America
+    place: Califórnia
+    lat: 36.7783
+    lon: -119.4179
     span: 12
-    country2: Belgium
-    place2: Bruxelas
-    lat2: 50.8503
-    lon2: 4.3517
-    span2: 12
-- title: Bihar proíbe fogos de artifício perto de margens de rios e barcos particulares durante Chhath Puja para garantir segurança
-  why: ''
-  source: Hindustan Times
-  url: https://www.hindustantimes.com/india-news/bihar-govt-bans-firecrackers-near-ghats-private-boat-operations-during-chhath-puja-101794243169861.html
-  cat: SOCIETY
+- title: Albanese deve se reunir com Trump enquanto protestos de rua irrompem
+  source: PerthNow
+  url: https://www.perthnow.com.au/news/politics/albanese-set-to-meet-trump-as-anger-spills-onto-streets-c-23170435
   good: false
+  trending: false
+  why: ''
+  cat: POLITICS
   visual:
-    type: map
-    country: India
-    place: Bihar
-    lat: 25.0961
-    lon: 85.3131
-    span: 6
+    type: chart
+    chart: versus
+    unit: '%'
+    prefix: ''
+    decimals: 1
+    source: Filipino statistics bureau
+    hedge: false
+    title_en: Philippine inflation impact of Middle East war
+    items:
+    - label_en: Philippine inflation
+      from: 2.4
+      to: 7.8
+      label_pt: Inflação filipina
+    periods:
+    - Before Feb 2024
+    - October 2024
+    title_pt: Impacto da guerra no Oriente Médio na inflação filipina
+    fallback:
+      type: map
+      country: Australia
+      place: Camberra
+      lat: -35.2809
+      lon: 149.13
+      span: 25
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/2/24/Australian_House_of_Representatives_-_Parliament_of_Australia.jpg/1280px-Australian_House_of_Representatives_-_Parliament_of_Australia.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: JJ Harrison ( https://www.jjharrison.com.au/ ) · CC BY-SA 3.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Australian_House_of_Representatives_-_Parliament_of_Australia.jpg
+    query: Australian Parliament House
+  chart_check:
+    result: ok
+    template: versus
