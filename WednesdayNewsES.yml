@@ -1,78 +1,112 @@
-date: 2026-11-12
+date: 2026-11-18
 day: Wednesday
 news:
-- title: México detiene a un capo del narcotráfico vinculado a asesinatos y tráfico de drogas, junto con otras 19 personas
+- title: El jefe de defensa alemán afirma que los aliados de la OTAN discutirán sobre las fuerzas estadounidenses en Europa con el responsable político del Pentágono.
   source: Hindustan Times
-  url: https://www.hindustantimes.com/world-news/mexico-arrests-jalisco-cartel-kingpin-r2-linked-to-killings-drug-trafficking-19-others-held-101794193397363.html
+  url: https://www.hindustantimes.com/world-news/nato-allies-to-discuss-us-forces-in-europe-with-pentagon-policy-chief-says-german-defence-minister-101794903186100.html
   good: false
   trending: false
-  why: Las detenciones de cárteles reducen el crimen violento y la disponibilidad de drogas en las comunidades locales.
-  cat: JUSTICE
-  visual:
-    type: map
-    country: Mexico
-    place: México
-    lat: 23.6345
-    lon: -102.5528
-    span: 25
-- title: Los líderes europeos se dirigen a Dublín, trayendo alta política y un caos circulatorio masivo
-  source: The Irish Times
-  url: https://www.irishtimes.com/politics/2026/11/09/high-politics-and-traffic-chaos-europes-leaders-are-coming-to-dublin/
-  good: false
-  trending: false
-  why: ''
+  why: Los cambios en los niveles de tropas estadounidenses afectan a la seguridad europea y la estabilidad regional.
   cat: POLITICS
   visual:
     type: map
-    country: Ireland
-    place: Dublín
-    lat: 53.3498
-    lon: -6.2603
-    span: 3
-- title: Las conversaciones de EE. UU. con China siguen sin resolverse antes de cumbres clave, dice Marco Rubio
-  source: Lokmat Times
-  url: https://www.lokmattimes.com/international/us-china-ai-talks-unresolved-says-rubio-ahead-of-key-summits-a001-w02/
+    country: Germany
+    place: Berlín
+    lat: 52.52
+    lon: 13.405
+    span: 12
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/British_Columbia_Parliament_Building_in_Victoria%2C_British_Columbia%2C_Canada_07.jpg/1280px-British_Columbia_Parliament_Building_in_Victoria%2C_British_Columbia%2C_Canada_07.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Michal Klajban · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:British_Columbia_Parliament_Building_in_Victoria,_British_Columbia,_Canada_07.jpg
+    query: German parliament building
+- title: El Quad advierte contra los movimientos unilaterales en el Indopacífico en una clara señal a China.
+  source: Times Now
+  url: https://www.timesnownews.com/world/quad-warns-against-unilateral-actions-status-quo-change-in-indo-pacific-in-signal-to-china-article-156525945
   good: false
   trending: false
-  why: ''
-  cat: POLITICS
+  why: Las tensiones de seguridad regional impactan directamente en el comercio global y la estabilidad marítima.
+  cat: WORLD
   visual:
     type: map
-    country: China
-    place: China
-    lat: 35.8617
-    lon: 104.1954
+    country: Japan
+    place: Indo-Pacífico
+    lat: -10.0
+    lon: 125.0
     span: 25
-    country2: United States of America
-    place2: Estados Unidos
-    lat2: 37.0902
-    lon2: -95.7129
-    span2: 25
-- title: Los ingresos de OpenAI en el tercer trimestre se disparan casi un 50 por ciento hasta alcanzar los 10.000 millones de dólares
-  source: The Straits Times
-  url: https://www.straitstimes.com/business/openai-q3-revenue-soars-nearly-50-to-us10-billion
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5b/Container_ship_Helga_nearing_Greenock_Ocean_Terminal.jpg/1280px-Container_ship_Helga_nearing_Greenock_Ocean_Terminal.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: dave souza · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Container_ship_Helga_nearing_Greenock_Ocean_Terminal.jpg
+    query: container ship ocean
+- title: Estados Unidos ha perdido oficialmente su estatus de eliminación del sarampión.
+  source: CBC.ca
+  url: https://www.cbc.ca/news/health/u-s-loses-measles-elimination-status-9.7425114
   good: false
   trending: false
   why: ''
-  cat: BUSINESS
+  cat: HEALTH
   visual:
     type: icon
-- title: Rusia y Ucrania celebran casi cuatro horas de conversaciones mediadas por EE. UU.
-  source: The Hitavada
-  url: https://www.thehitavada.com/Encyc/2026/11/11/russia-ukraine-hold-nearly-4-hrs-of-us-mediated-talks.html
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/0/01/Testing_vaccine_in_laboratory._Holding_syringe_with_protective_medical_gloves_closeup._%2851714051263%29.jpg/1280px-Testing_vaccine_in_laboratory._Holding_syringe_with_protective_medical_gloves_closeup._%2851714051263%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Nenad Stojkovic · CC BY 2.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Testing_vaccine_in_laboratory._Holding_syringe_with_protective_medical_gloves_closeup._(51714051263).jpg
+    query: medical syringe vaccine
+- title: Muere a los 80 años Miguel Ángel Félix Gallardo, arquitecto del narcotráfico moderno en México.
+  source: Hindustan Times
+  url: https://www.hindustantimes.com/world-news/miguel-ngel-f-lix-gallardo-architect-of-mexico-s-modern-drug-trade-dies-at-80-101794798013660.html
   good: false
   trending: false
   why: ''
-  cat: CONFLICT
+  cat: JUSTICE
   visual:
-    type: map
-    country: Ukraine
-    place: Ucrania
-    lat: 48.3794
-    lon: 31.1656
-    span: 25
-    country2: Russia
-    place2: Rusia
-    lat2: 61.524
-    lon2: 105.3188
-    span2: 25
+    type: number
+    number: '80'
+    label: años de edad
+  photo:
+    url: https://upload.wikimedia.org/wikipedia/commons/c/c7/Prison_Bars_Jail_Cell.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled
+    credit: Jobs For Felons Hub · CC BY 2.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Prison_Bars_Jail_Cell.jpg
+    query: prison cell bars
+- title: Lula gobernará Brasil por cuarta vez y se enfrenta a grandes retos en el futuro.
+  source: The Tribune
+  url: https://www.tribuneindia.com/news/world/lula-to-govern-brazil-for-4th-term-but-faces-range-of-challenges-heres-what-to-know/
+  good: false
+  trending: false
+  why: ''
+  cat: POLITICS
+  visual:
+    type: chart
+    chart: bars
+    unit: '%'
+    prefix: ''
+    decimals: 1
+    source: MB Associados
+    hedge: false
+    title_en: Market reaction after Lula victory
+    labels_en:
+    - Brazil's currency, the real
+    - Stock market
+    values:
+    - 12.0
+    - 14.0
+    title_es: Reacción del mercado tras la victoria de Lula
+    labels_es:
+    - La moneda de Brasil, el real
+    - Bolsa de valores
+    fallback:
+      type: map
+      country: Brazil
+      place: Brasilia
+      lat: -15.794
+      lon: -47.882
+      span: 25
+  photo:
+    url: https://upload.wikimedia.org/wikipedia/commons/0/0c/Stamp_of_Brazil_-_1960_-_Colnect_189471_-_Cathedral.jpeg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled
+    credit: Post of Brazil · Public domain · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Stamp_of_Brazil_-_1960_-_Colnect_189471_-_Cathedral.jpeg
+    query: Brasilia cathedral architecture
+  chart_check:
+    result: ok
+    template: bars

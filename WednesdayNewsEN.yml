@@ -1,78 +1,108 @@
-date: 2026-11-12
+date: 2026-11-18
 day: Wednesday
 news:
-- title: Mexico arrests cartel kingpin linked to killings and drug trafficking, along with 19 others
+- title: German defense chief says NATO allies will discuss US forces in Europe with Pentagon policy leader.
   source: Hindustan Times
-  url: https://www.hindustantimes.com/world-news/mexico-arrests-jalisco-cartel-kingpin-r2-linked-to-killings-drug-trafficking-19-others-held-101794193397363.html
+  url: https://www.hindustantimes.com/world-news/nato-allies-to-discuss-us-forces-in-europe-with-pentagon-policy-chief-says-german-defence-minister-101794903186100.html
   good: false
   trending: false
-  why: Cartel arrests reduce violent crime and drug availability in local communities.
-  cat: JUSTICE
-  visual:
-    type: map
-    country: Mexico
-    place: Mexico
-    lat: 23.6345
-    lon: -102.5528
-    span: 25
-- title: Europe's leaders are heading to Dublin, bringing high politics and massive traffic chaos
-  source: The Irish Times
-  url: https://www.irishtimes.com/politics/2026/11/09/high-politics-and-traffic-chaos-europes-leaders-are-coming-to-dublin/
-  good: false
-  trending: false
-  why: ''
+  why: Changes to US troop levels affect European security and regional stability.
   cat: POLITICS
   visual:
     type: map
-    country: Ireland
-    place: Dublin
-    lat: 53.3498
-    lon: -6.2603
-    span: 3
-- title: US talks with China remain unresolved ahead of key summits, Marco Rubio says
-  source: Lokmat Times
-  url: https://www.lokmattimes.com/international/us-china-ai-talks-unresolved-says-rubio-ahead-of-key-summits-a001-w02/
+    country: Germany
+    place: Berlin
+    lat: 52.52
+    lon: 13.405
+    span: 12
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/British_Columbia_Parliament_Building_in_Victoria%2C_British_Columbia%2C_Canada_07.jpg/1280px-British_Columbia_Parliament_Building_in_Victoria%2C_British_Columbia%2C_Canada_07.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Michal Klajban · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:British_Columbia_Parliament_Building_in_Victoria,_British_Columbia,_Canada_07.jpg
+    query: German parliament building
+- title: The Quad warns against unilateral moves in the Indo-Pacific in a clear signal to China.
+  source: Times Now
+  url: https://www.timesnownews.com/world/quad-warns-against-unilateral-actions-status-quo-change-in-indo-pacific-in-signal-to-china-article-156525945
   good: false
   trending: false
-  why: ''
-  cat: POLITICS
+  why: Regional security tensions directly impact global trade and maritime stability.
+  cat: WORLD
   visual:
     type: map
-    country: China
-    place: China
-    lat: 35.8617
-    lon: 104.1954
+    country: Japan
+    place: Indo-Pacific
+    lat: -10.0
+    lon: 125.0
     span: 25
-    country2: United States of America
-    place2: United States
-    lat2: 37.0902
-    lon2: -95.7129
-    span2: 25
-- title: OpenAI's third-quarter revenue soared nearly 50 percent to reach $10 billion
-  source: The Straits Times
-  url: https://www.straitstimes.com/business/openai-q3-revenue-soars-nearly-50-to-us10-billion
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5b/Container_ship_Helga_nearing_Greenock_Ocean_Terminal.jpg/1280px-Container_ship_Helga_nearing_Greenock_Ocean_Terminal.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: dave souza · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Container_ship_Helga_nearing_Greenock_Ocean_Terminal.jpg
+    query: container ship ocean
+- title: The U.S. has officially lost its measles elimination status.
+  source: CBC.ca
+  url: https://www.cbc.ca/news/health/u-s-loses-measles-elimination-status-9.7425114
   good: false
   trending: false
   why: ''
-  cat: BUSINESS
+  cat: HEALTH
   visual:
     type: icon
-- title: Russia and Ukraine hold nearly four hours of US-mediated talks
-  source: The Hitavada
-  url: https://www.thehitavada.com/Encyc/2026/11/11/russia-ukraine-hold-nearly-4-hrs-of-us-mediated-talks.html
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/0/01/Testing_vaccine_in_laboratory._Holding_syringe_with_protective_medical_gloves_closeup._%2851714051263%29.jpg/1280px-Testing_vaccine_in_laboratory._Holding_syringe_with_protective_medical_gloves_closeup._%2851714051263%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Nenad Stojkovic · CC BY 2.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Testing_vaccine_in_laboratory._Holding_syringe_with_protective_medical_gloves_closeup._(51714051263).jpg
+    query: medical syringe vaccine
+- title: Miguel Ángel Félix Gallardo, architect of Mexico's modern drug trade, has died at 80.
+  source: Hindustan Times
+  url: https://www.hindustantimes.com/world-news/miguel-ngel-f-lix-gallardo-architect-of-mexico-s-modern-drug-trade-dies-at-80-101794798013660.html
   good: false
   trending: false
   why: ''
-  cat: CONFLICT
+  cat: JUSTICE
   visual:
-    type: map
-    country: Ukraine
-    place: Ukraine
-    lat: 48.3794
-    lon: 31.1656
-    span: 25
-    country2: Russia
-    place2: Russia
-    lat2: 61.524
-    lon2: 105.3188
-    span2: 25
+    type: number
+    number: '80'
+    label: years of age
+  photo:
+    url: https://upload.wikimedia.org/wikipedia/commons/c/c7/Prison_Bars_Jail_Cell.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled
+    credit: Jobs For Felons Hub · CC BY 2.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Prison_Bars_Jail_Cell.jpg
+    query: prison cell bars
+- title: Lula will govern Brazil for a fourth term and faces major challenges ahead.
+  source: The Tribune
+  url: https://www.tribuneindia.com/news/world/lula-to-govern-brazil-for-4th-term-but-faces-range-of-challenges-heres-what-to-know/
+  good: false
+  trending: false
+  why: ''
+  cat: POLITICS
+  visual:
+    type: chart
+    chart: bars
+    unit: '%'
+    prefix: ''
+    decimals: 1
+    source: MB Associados
+    hedge: false
+    title_en: Market reaction after Lula victory
+    labels_en:
+    - Brazil's currency, the real
+    - Stock market
+    values:
+    - 12.0
+    - 14.0
+    fallback:
+      type: map
+      country: Brazil
+      place: Brasília
+      lat: -15.794
+      lon: -47.882
+      span: 25
+  photo:
+    url: https://upload.wikimedia.org/wikipedia/commons/0/0c/Stamp_of_Brazil_-_1960_-_Colnect_189471_-_Cathedral.jpeg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled
+    credit: Post of Brazil · Public domain · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Stamp_of_Brazil_-_1960_-_Colnect_189471_-_Cathedral.jpeg
+    query: Brasilia cathedral architecture
+  chart_check:
+    result: ok
+    template: bars
