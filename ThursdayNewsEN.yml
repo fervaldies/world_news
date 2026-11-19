@@ -1,78 +1,106 @@
-date: 2026-11-12
+date: 2026-11-19
 day: Thursday
 news:
-- title: An Israeli settler leader was turned away upon arriving in France.
-  source: Hindustan Times
-  url: https://www.hindustantimes.com/world-news/israeli-settler-representative-turned-back-after-arriving-in-france-101794429139456.html
+- title: India pushes for fair global climate action
+  source: Lokmat Times
+  url: https://www.lokmattimes.com/international/india-demands-fair-global-stocktake-for-climate-action-a001-w02/
+  good: false
+  trending: false
+  why: Determines financial burdens and energy costs for everyday citizens worldwide.
+  cat: CLIMATE
+  visual:
+    type: map
+    country: India
+    place: New Delhi
+    lat: 28.6139
+    lon: 77.209
+    span: 25
+- title: China calls for ending trade and investment barriers at APEC
+  source: The Economic Times
+  url: https://economictimes.indiatimes.com/news/international/world-news/chinas-xi-calls-for-tearing-down-trade-investment-barriers-at-apec-summit/articleshow/135946522.cms
+  good: false
+  trending: false
+  why: ''
+  cat: ECONOMY
+  visual:
+    type: map
+    country: Peru
+    place: Lima
+    lat: -12.0464
+    lon: -77.0428
+    span: 25
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Cargo_ship_PONTIAC%2C_ENI_02320416%2C_MMSI_244660959._15-07-2024._%28actm.%29.jpg/1280px-Cargo_ship_PONTIAC%2C_ENI_02320416%2C_MMSI_244660959._15-07-2024._%28actm.%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Agnes Monkelbaan · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Cargo_ship_PONTIAC,_ENI_02320416,_MMSI_244660959._15-07-2024._(actm.).jpg
+    query: cargo ship port
+- title: Lula returns for a fourth term in Brazil and faces major challenges
+  source: The Tribune
+  url: https://www.tribuneindia.com/news/world/lula-to-govern-brazil-for-4th-term-but-faces-range-of-challenges-heres-what-to-know/
   good: false
   trending: false
   why: ''
   cat: POLITICS
   visual:
-    type: map
-    country: France
-    place: France
-    lat: 46.2276
-    lon: 2.2137
-    span: 25
-- title: Bomb threats warning the clock is ticking disrupt TV channels across Europe.
-  source: U.S. News & World Report
-  url: https://www.usnews.com/news/world/articles/2026-11-06/bomb-threats-warning-the-clock-is-ticking-disrupt-tv-channels-across-europe
+    type: chart
+    chart: bars
+    unit: trillion reais
+    prefix: ''
+    decimals: 1
+    source: Brazilian Forum on Public Safety
+    hedge: false
+    title_en: Brazil public debt growth
+    labels_en:
+    - '2022'
+    - '2023'
+    values:
+    - 7.2
+    - 11.1
+    fallback:
+      type: map
+      country: Brazil
+      place: Brasilia
+      lat: -15.8267
+      lon: -47.9218
+      span: 25
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d5/Warsaw_Presidential_Palace_%2822248p%29.jpg/1280px-Warsaw_Presidential_Palace_%2822248p%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Rhododendrites · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Warsaw_Presidential_Palace_(22248p).jpg
+    query: presidential palace building
+  chart_check:
+    result: ok
+    template: bars
+- title: Minister calls Meta talks confidential amid deal rumors
+  source: SooToday
+  url: https://www.sootoday.com/national-news/minister-says-discussions-with-meta-confidential-following-reports-of-possible-deal-13032018
   good: false
   trending: false
-  why: Disruptions threaten daily television broadcasting and emergency services across Europe.
-  cat: TECH
+  why: ''
+  cat: BUSINESS
   visual:
-    type: map
-    country: France
-    place: Europe
-    lat: 54.526
-    lon: 15.2551
-    span: 25
-- title: India and Nigeria sign a new agreement to boost human rights.
-  source: Lokmat Times
-  url: https://www.lokmattimes.com/international/india-nigeria-boost-human-rights-cooperation-with-new-agreement-a001-w02/
+    type: icon
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e0/A_view_of_the_server_room_at_The_National_Archives.jpg/1280px-A_view_of_the_server_room_at_The_National_Archives.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: The National Archives (UK) · CC BY 3.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:A_view_of_the_server_room_at_The_National_Archives.jpg
+    query: server room technology
+- title: Canadian Prime Minister Mark Carney labels the US a bigger security threat than China
+  source: Breitbart News Network
+  url: https://www.breitbart.com/politics/2026/11/10/canadian-prime-minister-mark-carney-labels-united-states-more-of-a-security-threat-than-china/
   good: false
   trending: false
   why: ''
   cat: WORLD
   visual:
     type: map
-    country: India
-    place: India
-    lat: 20.5937
-    lon: 78.9629
+    country: Canada
+    place: Ottawa
+    lat: 45.4215
+    lon: -75.6972
     span: 25
-    country2: Nigeria
-    place2: Nigeria
-    lat2: 9.082
-    lon2: 8.6753
-    span2: 25
-- title: Migrants trek north through Mexico, buoyed by the US election result.
-  source: U.S. News & World Report
-  url: https://www.usnews.com/news/world/articles/2026-11-11/migrants-trek-north-through-mexico-buoyed-by-us-election-result
-  good: false
-  trending: false
-  why: ''
-  cat: SOCIETY
-  visual:
-    type: map
-    country: Mexico
-    place: Mexico
-    lat: 23.6345
-    lon: -102.5528
-    span: 25
-- title: Pope Leo XIV arrives in Uruguay to begin his South American tour.
-  source: ITV News
-  url: https://www.itv.com/news/2026-11-06/pope-leo-xiv-lands-in-uruguay-to-begin-south-american-tour
-  good: false
-  trending: false
-  why: ''
-  cat: WORLD
-  visual:
-    type: map
-    country: Uruguay
-    place: Uruguay
-    lat: -32.5228
-    lon: -55.7658
-    span: 12
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/6/63/Parlament_Wien_abends.jpg/1280px-Parlament_Wien_abends.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Thomas Wolf , www.foto-tw.de · CC BY-SA 3.0 de · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Parlament_Wien_abends.jpg
+    query: parliament building

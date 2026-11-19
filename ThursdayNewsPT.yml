@@ -1,78 +1,111 @@
-date: 2026-11-12
+date: 2026-11-19
 day: Thursday
 news:
-- title: Liderança de colonos israelenses é rejeitada ao chegar à França.
-  source: Hindustan Times
-  url: https://www.hindustantimes.com/world-news/israeli-settler-representative-turned-back-after-arriving-in-france-101794429139456.html
+- title: Índia pressiona por ação climática global justa
+  source: Lokmat Times
+  url: https://www.lokmattimes.com/international/india-demands-fair-global-stocktake-for-climate-action-a001-w02/
+  good: false
+  trending: false
+  why: Determina os encargos financeiros e os custos de energia para os cidadãos comuns em todo o mundo.
+  cat: CLIMATE
+  visual:
+    type: map
+    country: India
+    place: Nova Delhi
+    lat: 28.6139
+    lon: 77.209
+    span: 25
+- title: China pede fim de barreiras comerciais e de investimento na APEC
+  source: The Economic Times
+  url: https://economictimes.indiatimes.com/news/international/world-news/chinas-xi-calls-for-tearing-down-trade-investment-barriers-at-apec-summit/articleshow/135946522.cms
+  good: false
+  trending: false
+  why: ''
+  cat: ECONOMY
+  visual:
+    type: map
+    country: Peru
+    place: Lima
+    lat: -12.0464
+    lon: -77.0428
+    span: 25
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Cargo_ship_PONTIAC%2C_ENI_02320416%2C_MMSI_244660959._15-07-2024._%28actm.%29.jpg/1280px-Cargo_ship_PONTIAC%2C_ENI_02320416%2C_MMSI_244660959._15-07-2024._%28actm.%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Agnes Monkelbaan · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Cargo_ship_PONTIAC,_ENI_02320416,_MMSI_244660959._15-07-2024._(actm.).jpg
+    query: cargo ship port
+- title: Lula retorna para um quarto mandato no Brasil e enfrenta grandes desafios
+  source: The Tribune
+  url: https://www.tribuneindia.com/news/world/lula-to-govern-brazil-for-4th-term-but-faces-range-of-challenges-heres-what-to-know/
   good: false
   trending: false
   why: ''
   cat: POLITICS
   visual:
-    type: map
-    country: France
-    place: França
-    lat: 46.2276
-    lon: 2.2137
-    span: 25
-- title: Ameaças de bomba alertando que o tempo está esgotando interrompem canais de TV pela Europa.
-  source: U.S. News & World Report
-  url: https://www.usnews.com/news/world/articles/2026-11-06/bomb-threats-warning-the-clock-is-ticking-disrupt-tv-channels-across-europe
+    type: chart
+    chart: bars
+    unit: trillion reais
+    prefix: ''
+    decimals: 1
+    source: Brazilian Forum on Public Safety
+    hedge: false
+    title_en: Brazil public debt growth
+    labels_en:
+    - '2022'
+    - '2023'
+    values:
+    - 7.2
+    - 11.1
+    title_pt: Crescimento da dívida pública do Brasil
+    labels_pt:
+    - '2022'
+    - '2023'
+    unit_pt: trilhões de reais
+    fallback:
+      type: map
+      country: Brazil
+      place: Brasília
+      lat: -15.8267
+      lon: -47.9218
+      span: 25
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d5/Warsaw_Presidential_Palace_%2822248p%29.jpg/1280px-Warsaw_Presidential_Palace_%2822248p%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Rhododendrites · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Warsaw_Presidential_Palace_(22248p).jpg
+    query: presidential palace building
+  chart_check:
+    result: ok
+    template: bars
+- title: Ministro classifica conversas com a Meta como confidenciais em meio a rumores de acordo
+  source: SooToday
+  url: https://www.sootoday.com/national-news/minister-says-discussions-with-meta-confidential-following-reports-of-possible-deal-13032018
   good: false
   trending: false
-  why: Interrupções ameaçam a transmissão de televisão diária e os serviços de emergência em toda a Europa.
-  cat: TECH
+  why: ''
+  cat: BUSINESS
   visual:
-    type: map
-    country: France
-    place: Europa
-    lat: 54.526
-    lon: 15.2551
-    span: 25
-- title: Índia e Nigéria assinam novo acordo para impulsionar os direitos humanos.
-  source: Lokmat Times
-  url: https://www.lokmattimes.com/international/india-nigeria-boost-human-rights-cooperation-with-new-agreement-a001-w02/
+    type: icon
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e0/A_view_of_the_server_room_at_The_National_Archives.jpg/1280px-A_view_of_the_server_room_at_The_National_Archives.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: The National Archives (UK) · CC BY 3.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:A_view_of_the_server_room_at_The_National_Archives.jpg
+    query: server room technology
+- title: Primeiro-ministro canadense Mark Carney rotula os EUA como maior ameaça à segurança do que a China
+  source: Breitbart News Network
+  url: https://www.breitbart.com/politics/2026/11/10/canadian-prime-minister-mark-carney-labels-united-states-more-of-a-security-threat-than-china/
   good: false
   trending: false
   why: ''
   cat: WORLD
   visual:
     type: map
-    country: India
-    place: Índia
-    lat: 20.5937
-    lon: 78.9629
+    country: Canada
+    place: Ottawa
+    lat: 45.4215
+    lon: -75.6972
     span: 25
-    country2: Nigeria
-    place2: Nigéria
-    lat2: 9.082
-    lon2: 8.6753
-    span2: 25
-- title: Migrantes caminham para o norte através do México, impulsionados pelo resultado da eleição nos EUA.
-  source: U.S. News & World Report
-  url: https://www.usnews.com/news/world/articles/2026-11-11/migrants-trek-north-through-mexico-buoyed-by-us-election-result
-  good: false
-  trending: false
-  why: ''
-  cat: SOCIETY
-  visual:
-    type: map
-    country: Mexico
-    place: México
-    lat: 23.6345
-    lon: -102.5528
-    span: 25
-- title: Papa Leão XIV chega ao Uruguai para iniciar sua turnê sul-americana.
-  source: ITV News
-  url: https://www.itv.com/news/2026-11-06/pope-leo-xiv-lands-in-uruguay-to-begin-south-american-tour
-  good: false
-  trending: false
-  why: ''
-  cat: WORLD
-  visual:
-    type: map
-    country: Uruguay
-    place: Uruguai
-    lat: -32.5228
-    lon: -55.7658
-    span: 12
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/6/63/Parlament_Wien_abends.jpg/1280px-Parlament_Wien_abends.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Thomas Wolf , www.foto-tw.de · CC BY-SA 3.0 de · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Parlament_Wien_abends.jpg
+    query: parliament building
