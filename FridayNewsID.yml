@@ -1,71 +1,120 @@
-date: 2026-11-13
+date: 2026-11-20
 day: Friday
 news:
-- title: CEO Nvidia Jensen Huang Mundur Usai Terlibat Dua Skandal, CFO Colette Kress Ambil Alih
-  source: The Tribune
-  url: https://www.tribuneindia.com/news/india/nvidia-ceo-jensen-huang-quits-over-twin-affairs-kress-takes-charge-as-interim-ceo/
+- title: Konflik Timur Tengah adalah ancaman terbesar bagi keamanan energi global yang pernah ada, peringatkan IEA
+  source: Euronews
+  url: https://www.euronews.com/2026/11/19/middle-east-conflict-poses-biggest-threat-to-global-energy-security-in-history-iea-warns
   good: false
   trending: false
-  why: ''
-  cat: BUSINESS
+  why: Hal itu dapat memicu kelangkaan bahan bakar yang parah dan tagihan utilitas yang jauh lebih tinggi.
+  cat: ENERGY
   visual:
     type: icon
-- title: SpaceX Rencanakan Investasi Rp1.182 Triliun untuk Bangun Pusat Data di Texas dan Arizona
-  source: The New York Times
-  url: https://www.nytimes.com/2026/11/12/business/spacex-data-center.html
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e0/Refinery_Tanks_2.jpg/1280px-Refinery_Tanks_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Carl Young · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Refinery_Tanks_2.jpg
+    query: oil refinery pipes
+- title: Inflasi Inggris capai level tertinggi dalam 12 bulan seiring lonjakan biaya bahan bakar mobil
+  source: Euronews
+  url: https://www.euronews.com/2026/11/19/uk-inflation-hits-12-month-high-on-surging-motor-fuel-costs
   good: false
   trending: false
-  why: Memperluas infrastruktur komputasi awan besar-besaran dan pasar kerja regional.
-  cat: TECH
-  visual:
-    type: map
-    country: United States of America
-    place: Texas & Arizona
-    lat: 31.5
-    lon: -104.5
-    span: 25
-  chart_check:
-    result: 'not used: bars need 2–8 values (got 1)'
-- title: Perjanjian Perdagangan Bebas Kanada Diharapkan Bulan Depan Jelang Kunjungan PM Modi
-  source: Lokmat Times
-  url: https://www.lokmattimes.com/national/india-canada-fta-likely-next-month-ahead-of-pm-modis-visit-a001-w02/
-  good: false
-  trending: true
-  why: Mendorong perdagangan bilateral, menciptakan peluang ekonomi baru bagi warga negara.
+  why: Hal itu mengurangi daya beli rumah tangga dan meningkatkan biaya hidup.
   cat: ECONOMY
   visual:
+    type: chart
+    chart: bignum
+    unit: '%'
+    prefix: ''
+    decimals: 1
+    source: Office for National Statistics
+    hedge: false
+    title_en: UK consumer prices index inflation
+    so_what_en: Highest in 12 months
+    value: 3.6
+    label_en: in the year to September
+    change_unit: pts
+    previous: 3.5
+    change: 0.1
+    period_prev: September
+    title_id: Inflasi indeks harga konsumen Inggris
+    label_id: dalam setahun hingga September
+    period_prev_id: September
+    so_what_id: Tertinggi dalam 12 bulan
+    fallback:
+      type: map
+      country: United Kingdom
+      place: Britania Raya
+      lat: 55.3781
+      lon: -3.436
+      span: 12
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Fuel_pump_at_a_Valero_gas_station_in_Greenville%2C_South_Carolina_01.jpg/1280px-Fuel_pump_at_a_Valero_gas_station_in_Greenville%2C_South_Carolina_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Harrison Keely · CC BY 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Fuel_pump_at_a_Valero_gas_station_in_Greenville,_South_Carolina_01.jpg
+    query: gas station fuel pump
+  chart_check:
+    result: ok
+    template: bignum
+- title: Paus Leo desak Amerika Selatan jembatani perpecahan di perbatasan Uruguay-Argentina
+  source: U.S. News & World Report
+  url: https://www.usnews.com/news/world/articles/2026-11-07/pope-leo-urges-south-america-to-bridge-divides-on-uruguay-argentina-border
+  good: false
+  trending: true
+  why: ''
+  cat: WORLD
+  visual:
     type: map
-    country: Canada
-    place: Kanada
-    lat: 56.13
-    lon: -106.35
-    span: 25
-- title: Arab Saudi Ceggat Rudal Usai Gedung Aramco di Riyadh Alami Kerusakan
-  source: Baltimore Sun
-  url: https://www.baltimoresun.com/2026/11/08/saudi-arabia-intercepts-missiles-as-aramco-building-in-riyadh-is-damaged-and-other-mideast-news/
+    country: Uruguay
+    place: Perbatasan Uruguay-Argentina
+    lat: -33.4489
+    lon: -58.4438
+    span: 6
+    country2: Argentina
+    place2: Perbatasan Uruguay-Argentina
+    lat2: -33.4489
+    lon2: -58.4438
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b1/Jian_Yalu_River_Border_Railway_Bridge_korean_side_2011_07_24.jpg/1280px-Jian_Yalu_River_Border_Railway_Bridge_korean_side_2011_07_24.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Jin Ping Han · CC BY-SA 3.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Jian_Yalu_River_Border_Railway_Bridge_korean_side_2011_07_24.jpg
+    query: river border bridge
+- title: Prancis kalahkan Swedia sebagai pemimpin kesetaraan gender Eropa, namun kemajuan secara keseluruhan melambat
+  source: EUobserver
+  url: https://euobserver.com/249501/france-dethrones-sweden-as-eu-gender-equality-leader-but-overall-progress-is-slowing/
   good: false
   trending: false
   why: ''
-  cat: CONFLICT
+  cat: SOCIETY
   visual:
     type: map
-    country: Saudi Arabia
-    place: Riyadh
-    lat: 24.71
-    lon: 46.67
+    country: France
+    place: Prancis
+    lat: 46.2276
+    lon: 2.2137
     span: 12
-  chart_check:
-    result: 'not used: one number without a change — the count-up number is used instead'
-- title: Lima Orang Ditemukan Hidup Usai Bertahan Tiga Bulan Terdampar di Laut dengan Perahu Kecil
-  source: Fox News
-  url: https://www.foxnews.com/travel/5-found-alive-3-months-adrift-sea-tiny-20-foot-boat
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e6/Paris_Night.jpg/1280px-Paris_Night.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Benh LIEU SONG · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Paris_Night.jpg
+    query: Paris skyline view
+- title: Doberman berhasil diselamatkan dari lubang tambang dalam di Victoria barat
+  source: ABC (Australian Broadcasting Corporation)
+  url: https://www.abc.net.au/news/2026-11-20/dog-rescued-from-disused-mineshaft-in-western-victoria/107394006
   good: true
   trending: false
   why: ''
   cat: GOOD NEWS
   visual:
-    type: number
-    number: '3'
-    label: bulan terkatung-katung
-  chart_check:
-    result: 'not used: one number without a change — the count-up number is used instead; 5 isn''t in the article'
+    type: map
+    country: Australia
+    place: Western Victoria
+    lat: -37.4713
+    lon: 142.7858
+    span: 6
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a7/Rotten_fence_surrounding_deep_mine_shaft_-_geograph.org.uk_-_5184167.jpg/1280px-Rotten_fence_surrounding_deep_mine_shaft_-_geograph.org.uk_-_5184167.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Matthew Hatton · CC BY-SA 2.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Rotten_fence_surrounding_deep_mine_shaft_-_geograph.org.uk_-_5184167.jpg
+    query: deep mine shaft
