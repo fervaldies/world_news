@@ -2,94 +2,90 @@ date: 2026-11-15
 day: Sunday
 news:
 - title: SpaceX Starship Capai Orbit Usai Ledakan Booster Batalkan Rencana Tangkap Ganda
-  source: ITV News
-  url: https://www.itv.com/news/2026-11-13/spacexs-attempt-for-a-starship-double-catch-yields-mixed-results
+  source: Bangkok Post
+  url: https://www.bangkokpost.com/business/general/3358379/stocks-slide-as-anthropic-ipo-fails-to-calm-ai-fears
   good: false
   trending: true
   why: ''
-  cat: TECH
+  cat: BUSINESS
   visual:
     type: icon
   photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bb/Ares_I-X_launch_08.jpg/1280px-Ares_I-X_launch_08.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: NASA/Sandra Joseph and Kevin O'Connell · Public domain · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Ares_I-X_launch_08.jpg
-    query: space rocket
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/Google_server%2C_circa_1999%2C_Computer_History_Museum.jpg/1280px-Google_server%2C_circa_1999%2C_Computer_History_Museum.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: The wub · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Google_server,_circa_1999,_Computer_History_Museum.jpg
+    query: computer servers
 - title: Trump Ancam Lipatgandakan Tarif Impor Meksiko Terkait Karavan Migran
-  source: Lokmat Times
-  url: https://www.lokmattimes.com/international/trump-threatens-to-double-tariffs-on-mexico-over-migrant-caravans-a001-w02/
+  source: Al-Monitor
+  url: https://www.al-monitor.com/originals/2026/11/israeli-strike-vehicle-gaza-kills-three-gaza-health-ministry-says
   good: false
   trending: false
-  why: Tarif yang lebih tinggi atas impor dari Meksiko akan menaikkan harga barang kebutuhan rumah tangga sehari-hari.
-  cat: ECONOMY
-  visual:
-    type: map
-    country: Mexico
-    place: Meksiko
-    lat: 23.6345
-    lon: -102.5528
-    span: 25
-  photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Border_Wall_at_Tijuana_and_San_Diego_Border.jpg/1280px-Border_Wall_at_Tijuana_and_San_Diego_Border.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: Tomascastelazo · CC BY-SA 4.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Border_Wall_at_Tijuana_and_San_Diego_Border.jpg
-    query: border wall
-- title: Iran Peringatkan Akan Targetkan Pangkalan Udara Eropa Jika Trump Kobarkan Kembali Perang
-  source: GB News
-  url: https://www.gbnews.com/news/world/iran-threatens-attack-european-air-bases-donald-trump-restarts-war
-  good: false
-  trending: true
-  why: Meningkatnya ketegangan di Timur Tengah dapat memicu konflik militer langsung yang melibatkan Eropa.
+  why: Kekerasan Timur Tengah mengancam stabilitas regional dan keselamatan warga sipil.
   cat: CONFLICT
   visual:
     type: map
-    country: Iran
-    place: Iran
-    lat: 32.4279
-    lon: 53.688
-    span: 25
-  photo:
-    url: https://live.staticflickr.com/2280/2220539590_742621f380_b.jpg
-    credit: ClearFrost · CC BY-SA 2.0 · Flickr
-    page: https://www.flickr.com/photos/84753587@N00/2220539590
-    query: military jet
-- title: Trump Akan Temui Pemimpin Quad di Manila Di Tengah Ketegangan Indo-Pasifik
-  source: Lokmat Times
-  url: https://www.lokmattimes.com/international/trump-to-meet-quad-leaders-in-manila-amidst-indo-pacific-focus-a001-w02/
-  good: false
-  trending: false
-  why: ''
-  cat: POLITICS
-  visual:
-    type: map
-    country: Philippines
-    place: Manila
-    lat: 14.5995
-    lon: 120.9842
+    country: Palestine
+    place: Gaza
+    lat: 31.5
+    lon: 34.47
     span: 3
   photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5b/Skyline_in_Manila_36.jpg/1280px-Skyline_in_Manila_36.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: SwarmCheng · CC BY-SA 4.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Skyline_in_Manila_36.jpg
-    query: Manila skyline
+    url: https://upload.wikimedia.org/wikipedia/commons/f/f1/Kharkiv_downtown_street_destroyed_by_Russian_bombardment.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled
+    credit: Міністерство внутрішніх справ України · CC BY 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Kharkiv_downtown_street_destroyed_by_Russian_bombardment.jpg
+    query: destroyed street
   chart_check:
-    result: 'not used: a map needs 3+ places (got 0)'
-- title: Perdana Menteri Kanada Mark Carney Sebut Amerika Serikat Ancaman Keamanan Lebih Besar Dibanding China
-  source: Breitbart News Network
-  url: https://www.breitbart.com/politics/2026/11/10/canadian-prime-minister-mark-carney-labels-united-states-more-of-a-security-threat-than-china/
+    result: 'not used: 3 isn''t in the article; 0 isn''t in the article'
+- title: Iran Peringatkan Akan Targetkan Pangkalan Udara Eropa Jika Trump Kobarkan Kembali Perang
+  source: Lokmat Times
+  url: https://www.lokmattimes.com/international/world-uyghur-congress-urges-global-action-against-alleged-genocide-in-china-a001-w01/
   good: false
   trending: true
   why: ''
-  cat: POLITICS
+  cat: WORLD
   visual:
     type: map
-    country: Canada
-    place: Kanada
-    lat: 56.1304
-    lon: -106.3468
+    country: China
+    place: China
+    lat: 35.8617
+    lon: 104.1954
     span: 25
+  chart_check:
+    result: 'not used: 3 isn''t in the article; 0 isn''t in the article; a quoted sentence isn''t in the article'
+- title: Trump Akan Temui Pemimpin Quad di Manila Di Tengah Ketegangan Indo-Pasifik
+  source: U.S. News & World Report
+  url: https://www.usnews.com/news/world/articles/2026-11-16/pope-leo-ends-south-america-tour-that-drew-millions-with-one-final-vast-crowd
+  good: false
+  trending: false
+  why: ''
+  cat: SOCIETY
+  visual:
+    type: map
+    country: Argentina
+    place: Amerika Selatan
+    lat: -38.4161
+    lon: -63.6167
+    span: 25
+  chart_check:
+    result: 'not used: 0 isn''t in the article; a quoted sentence isn''t in the article'
+- title: Perdana Menteri Kanada Mark Carney Sebut Amerika Serikat Ancaman Keamanan Lebih Besar Dibanding China
+  source: Times of India
+  url: https://timesofindia.indiatimes.com/india/latest-india-world-news-live-updates-today-breaking-news-november-22-2026/liveblog/136062909.cms
+  good: false
+  trending: true
+  why: ''
+  cat: WORLD
+  visual:
+    type: map
+    country: Nigeria
+    place: Nigeria
+    lat: 9.082
+    lon: 8.6753
+    span: 12
   photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/6/63/Parlament_Wien_abends.jpg/1280px-Parlament_Wien_abends.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: Thomas Wolf , www.foto-tw.de · CC BY-SA 3.0 de · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Parlament_Wien_abends.jpg
-    query: parliament building
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b1/Wooden_boat_at_teknaf_beach.jpg/1280px-Wooden_boat_at_teknaf_beach.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Rocky Masum This work was made by Masum-al-Hasan R · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Wooden_boat_at_teknaf_beach.jpg
+    query: wooden boat
+  chart_check:
+    result: 'not used: 0 isn''t in the article'
