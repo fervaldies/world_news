@@ -1,0 +1,67 @@
+name: What If scheduled Instagram posts
+
+# Every hour: posts the What If Instagram reels that Newsdesk queued (private repo whatif-queue, draft releases)
+# once their time has come, then deletes the video from the queue and tells Telegram.
+# Nothing due → it stops after the quick check (~15 s). Public repo → no Actions minutes.
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: whatif-poster
+  cancel-in-progress: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: whatif_poster.py
+          sparse-checkout-cone-mode: false
+
+      - name: Anything due?
+        id: due
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+          QUEUE_REPO: fervaldies/whatif-queue
+        run: python3 whatif_poster.py list
+
+      - name: Get the Instagram uploader (world-news-reels)
+        if: steps.due.outputs.due != '0'
+        uses: actions/checkout@v4
+        with:
+          repository: fervaldies/world-news-reels
+          token: ${{ secrets.GH_PAT }}
+          path: wnr
+          sparse-checkout: |
+            upload_instagram.py
+            post_extras.py
+          sparse-checkout-cone-mode: false
+
+      - name: Install ffmpeg
+        if: steps.due.outputs.due != '0'
+        timeout-minutes: 5
+        run: |
+          CURL="curl -fsSL --connect-timeout 20 --max-time 180 --retry 3 --retry-delay 5 --retry-all-errors"
+          if $CURL https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz -o ffmpeg.tar.xz \
+             && tar -xf ffmpeg.tar.xz; then
+            sudo mv ffmpeg-master-latest-linux64-gpl/bin/ffmpeg ffmpeg-master-latest-linux64-gpl/bin/ffprobe /usr/local/bin/
+          else
+            sudo apt-get update && sudo apt-get install -y ffmpeg
+          fi
+
+      - name: Post what's due
+        if: steps.due.outputs.due != '0'
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+          QUEUE_REPO: fervaldies/whatif-queue
+          INSTAGRAM_TOKEN: ${{ secrets.INSTAGRAM_TOKEN }}
+          WHATIF_INSTAGRAM_EN_USER_ID: ${{ secrets.WHATIF_INSTAGRAM_EN_USER_ID }}
+          WHATIF_INSTAGRAM_ES_USER_ID: ${{ secrets.WHATIF_INSTAGRAM_ES_USER_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          UPLOADER_DIR: wnr
+        run: python3 whatif_poster.py post
