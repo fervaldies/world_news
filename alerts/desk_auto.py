@@ -87,7 +87,7 @@ def check_explainer(y, langs):
     return None
 
 
-def write(kind, ck, topic, langs):
+def write(kind, ck, topic, langs, headline=None):
     """(yaml, writer). Gemini first; if the text fails the checks, Claude once. Raises if both fail."""
     last = None
     for prefer in ("gemini", "claude"):
@@ -96,7 +96,7 @@ def write(kind, ck, topic, langs):
                 y, who = D.write_explainer(ck, topic, prefer)     # its system text already says: hedge the unconfirmed
                 bad = check_explainer(y, langs)
             else:
-                y, who = A.write_special(ck, topic, topic + HEDGE, prefer)
+                y, who = A.write_special(ck, topic, (headline or topic) + HEDGE, prefer)
                 if any(l in langs for l in ("pt", "id")):
                     A.add_extra(ck, y, prefer)
                 bad = check_special(y, langs)
@@ -149,6 +149,45 @@ def got_topic(st, f, topic):
     D.menu(f"⚡ Written by {'Claude' if who == 'claude' else 'Gemini'}: {head or topic}\n🎬 Making and posting "
            f"{len(tasks)} video{'s' if len(tasks) > 1 else ''} (about {mins}–{mins + 6} min). You'll get the links "
            f"and a 🗑 Delete button for {DELETE_MIN} min.")
+    return ("post", jid)
+
+
+def alert_all(st, items):
+    """⚡ Auto post all: every story of a breaking alert, written, made and posted without review (one job)."""
+    n = len(used_today(st))
+    if n >= CAP:
+        D.menu(f"⚡ Today's Auto Post All limit is reached ({n} of {CAP}). Use 📝 Draft all instead (with review).")
+        return None
+    langs = list(LANGS)
+    A.say(f"⚡ Auto posting {len(items)} stor{'y' if len(items) == 1 else 'ies'} in {' + '.join(l.upper() for l in langs)}, "
+          f"no review.\n✍️ Writing… (about a minute each)")
+    tasks, done, failed = [], [], []
+    for i, it in enumerate(items):
+        ck = it["channel"]
+        try:
+            y, who = write("breaking", ck, it["topic"], langs, it.get("headline"))
+        except Exception as e:
+            failed.append(f"{D.CH[ck].split()[0]} {it['topic']} ({str(e)[:60]})")
+            continue
+        y["breaking_lead"] = True                              # the small red BREAKING tag on the lead story
+        for lang in langs:
+            if y.get(f"news_{lang}"):
+                tasks.append({"type": "special", "kind": "special", "channel": ck, "lang": lang, "yaml": y, "slot": f"b{i + 1}",
+                              "label": f"{D.CH[ck].split()[0]} Breaking {lang.upper()} · {it['topic'][:28]}"})
+        done.append(f"{D.CH[ck].split()[0]} {it['topic']} ({'Claude' if who == 'claude' else 'Gemini'})")
+    if not tasks:
+        D.menu("⚠️ Auto post all stopped: no story passed the checks. Nothing was posted."
+               + ("\n" + "\n".join("• " + f for f in failed) if failed else ""))
+        return None
+    jid = D.new_job(st, tasks, "auto breaking all")
+    st["jobs"][jid]["auto"] = True
+    st.setdefault("auto_log", []).append(A.iso())              # one press = one of the daily Auto Posts
+    st["auto_log"] = st["auto_log"][-30:]
+    mins = 4 + 2 * len(tasks)
+    D.menu("⚡ Written:\n" + "\n".join("• " + x for x in done)
+           + (f"\n⚠️ Skipped (text failed the checks):\n" + "\n".join("• " + f for f in failed) if failed else "")
+           + f"\n🎬 Making and posting {len(tasks)} video{'s' if len(tasks) > 1 else ''} (about {mins}–{mins + 8} min). "
+           f"You'll get the links and a 🗑 Delete button for {DELETE_MIN} min.")
     return ("post", jid)
 
 

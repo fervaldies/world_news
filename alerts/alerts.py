@@ -357,8 +357,13 @@ def send_alert(st, items):
     st["alerts"][aid] = {"t": iso(), "items": items}
     text = "🚨 Breaking news check — big stories right now:\n\n" + "\n".join(
         f"{i + 1}. {CHANNELS[it['channel']]['flag']} {it['topic']} — {it['headline']}" for i, it in enumerate(items)) + \
-        "\n\nTap one to draft a special edition."
+        "\n\nTap one to draft it" + (", 📝 to draft them all, or ⚡ to post them all now without review."
+                                     if len(items) > 1 else ", or ⚡ to post it now without review.")
     rows = [[(f"{i + 1}. {CHANNELS[it['channel']]['flag']} {it['topic']}"[:60], f"s:{aid}:{i}")] for i, it in enumerate(items)]
+    if len(items) > 1:                                               # change: all the stories at once
+        rows.append([(f"📝 Draft all {len(items)} (review each)", f"ba:{aid}")])
+    rows.append([(f"⚡ Auto post all {len(items)} (no review)" if len(items) > 1 else "⚡ Auto post it (no review)",
+                  f"bx:{aid}")])
     rows.append([("✖️ Dismiss", f"d:{aid}")])
     say(text, rows)
     log(f"Alert sent ({len(items)} stories)")
@@ -511,6 +516,23 @@ def handle(st, upd, allow_publish=True):
     if parts[0] == "d":                                              # dismiss an alert
         drop_buttons(msg)
         return None
+    if parts[0] in ("ba", "bx") and len(parts) == 2:                 # 📝 draft all / ⚡ auto post all
+        a = st["alerts"].get(parts[1])
+        if not a or now() - parse_iso(a["t"]) > timedelta(hours=ALERT_TTL_H):
+            say("⌛ That alert has expired — send CHECK for a fresh one.")
+            return None
+        if a.get("done"):
+            say("That alert was already handled.")
+            return None
+        a["done"] = parts[0]
+        drop_buttons(msg)
+        if parts[0] == "ba":
+            say(f"✍️ Drafting all {len(a['items'])} special editions — each one arrives with its own buttons…")
+            for it in a["items"]:
+                draft(st, it["channel"], it["topic"], it["headline"], "gemini")
+            return None
+        DESK.AUTO.A, DESK.AUTO.D = sys.modules[__name__], DESK
+        return DESK.AUTO.alert_all(st, a["items"])
     if parts[0] == "s" and len(parts) == 3:                          # story tapped → draft
         a = st["alerts"].get(parts[1])
         if not a or now() - parse_iso(a["t"]) > timedelta(hours=ALERT_TTL_H):
