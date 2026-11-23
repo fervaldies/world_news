@@ -26,6 +26,7 @@ import yaml
 
 import desk_more as MORE                       # stage 4: Your take + Comments
 import desk_auto as AUTO                       # change 4: ⚡ Auto Post All
+import desk_trials as TRIALS                   # change 3: 🧪 Trials makes trial videos
 
 A = None                                          # alerts module (set by alerts.py)
 MENU = [["🔴 Special edition", "📚 Explainer"], ["🔎 Fact check", "📊 Charts of the Week"],
@@ -383,6 +384,7 @@ NOT_MINE = object()
 def route(st, kind, data, obj):
     """Desk part of handle(): returns NOT_MINE (alerts.py handles it), None, or ('post', job_id)."""
     AUTO.A, AUTO.D = A, sys.modules[__name__]
+    TRIALS.A, TRIALS.D = A, sys.modules[__name__]
     msg = (obj.get("message") or {}) if kind == "tap" else {}
     if kind == "text":
         t = data.strip()
@@ -390,7 +392,9 @@ def route(st, kind, data, obj):
         if low in ("/start", "menu", "/menu", "help", "/help"):
             menu("🤖 Newsdesk on Telegram — pick an option below.")
             return None
-        if t in ("🧪 Trials", "/trials", "trials"):
+        if t == "🧪 Trials":                                      # change 3: make trial videos
+            return TRIALS.begin(st)
+        if t in ("/trials", "trials"):                            # the Newsdesk trial batches (as before)
             return trials_status()
         if t in ("ℹ️ Status", "/status", "status"):
             status(st)
@@ -415,6 +419,8 @@ def route(st, kind, data, obj):
         f = flow(st)
         if f and f.get("flow") == "auto" and f.get("step") == "topic":    # ⚡ Auto Post All: the typed topic
             return AUTO.got_topic(st, f, t)
+        if f and f.get("flow") == "trials" and f.get("step") == "topic":  # 🧪 Trials: the typed topic
+            return TRIALS.got_topic(st, f, t)
         if f and f.get("step") == "topic":                      # the typed topic
             return got_topic(st, f, t)
         return NOT_MINE
@@ -427,6 +433,10 @@ def route(st, kind, data, obj):
         return AUTO.start(st, parts[1], msg)
     if parts[0] == "dl" and len(parts) == 4:                     # 🗑 delete an auto post
         return AUTO.delete_tap(st, parts, msg)
+    if parts[0] == "tr" and len(parts) in (2, 3):                # 🧪 Trials: accounts / how many / status
+        return TRIALS.tap(st, parts, msg)
+    if parts[0] == "trm" and len(parts) == 2:                    # 🧪 Trials: make / rewrite
+        return TRIALS.draft_tap(st, parts, msg)
     if parts[0] not in ("c", "l", "w", "g", "x", "k"):
         return NOT_MINE
     f = flow(st)
@@ -747,15 +757,20 @@ def render(task, logf):
     cwd = reels_dir(ck)
     c = A.CHANNELS[ck]
     v, m = A.pick(c["video"], "mp4", cwd), A.pick(c["music"], "mp3", cwd)
+    if task.get("trial"):                                        # change 3: its own background + music (recorded)
+        TRIALS.A, TRIALS.D = A, sys.modules[__name__]
+        v, m = TRIALS.pick_assets(c, cwd)
+        task["bg"], task["music"] = v, m
     if not (v and m):
         return None
-    out = f"tg_{task['kind']}_{lang}"
+    out = f"tg_{task['kind']}{task.get('slot', '')}_{lang}"
     subprocess.run(["rm", "-rf", os.path.join(cwd, out)])
     if task["type"] == "special":
         with open(os.path.join(cwd, "tg_special.yml"), "w", encoding="utf-8") as f:
             yaml.safe_dump(task["yaml"], f, allow_unicode=True, sort_keys=False, width=1000)
         ok = A.sh(["python", "make_reels_es_en.py", "--yml", "tg_special.yml", "--video", v, "--music", m, "--lang", lang,
-                   "--output-dir", out, "--no-week-label", "--title-color", "red"], logf, cwd=cwd)
+                   "--output-dir", out, "--no-week-label", "--title-color", "red"], logf,
+                  {"SPECIAL_TINT": task["tint"]} if task.get("tint") else None, cwd=cwd)
         vids, caps = glob.glob(f"{cwd}/{out}/reel_{lang}_*.mp4"), glob.glob(f"{cwd}/{out}/caption_{lang}_*.txt")
         return (vids[0], caps[0]) if ok and vids and caps else None
     if task["type"] == "charts":
@@ -821,7 +836,7 @@ def run_job(st, jid):
     made, failed, skipped = [], [], []
     for n, task in enumerate(job["tasks"]):
         logf = os.path.abspath(f"logs/{n}_{task['channel']}_{task['lang']}.log")
-        if task["type"] == "special" and A.already_posted(task["channel"], task["lang"], task["yaml"]):
+        if task["type"] == "special" and not task.get("trial") and A.already_posted(task["channel"], task["lang"], task["yaml"]):
             skipped.append(task["label"])
             A.log(f"{n + 1}: already posted — skipped")
             continue
@@ -859,6 +874,15 @@ def run_job(st, jid):
     done = []
     for task, vid, cap, logf in made:
         cwd = reels_dir(task["channel"])
+        if task.get("trial"):                                    # change 3: Instagram trial reel only, never promoted
+            TRIALS.A, TRIALS.D = A, sys.modules[__name__]
+            if TRIALS.post_trial(task, vid, cap, logf, cwd, jid, st):
+                done.append(task["label"])
+            else:
+                failed.append(task["label"] + " (Instagram trial)")
+                A.tg_file("sendDocument", "document", logf, chat_id=A.CHAT, caption=f"⚠️ {task['label']}: posting problem — log")
+            A.log(f"{task['channel']} {task['lang']}: trial {'ok' if task['label'] in done else 'failed'}")
+            continue
         env = post_env(task["channel"], task["lang"])
         if task.get("title"):
             env["YT_TITLE"] = task["title"]

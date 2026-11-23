@@ -599,6 +599,11 @@ def run_bot():
         DESK.MORE.tick(st)
     except Exception as e:
         log(f"Part 2 reminders: {type(e).__name__}")
+    try:                                                              # change 3: trial reels' viral watch (hourly)
+        DESK.TRIALS.A, DESK.TRIALS.D = sys.modules[__name__], DESK
+        DESK.TRIALS.tick(st)
+    except Exception as e:
+        log(f"Trial watch: {type(e).__name__}")
     result = None
     waiting_jobs = sorted(((j["t"], jid) for jid, j in (st.get("jobs") or {}).items() if j["status"] == "queued"))
     if waiting_jobs:

@@ -20,7 +20,7 @@ from datetime import timedelta
 
 A = None                                       # alerts module (set by desk.py)
 D = None                                       # desk module
-KINDS = {"breaking": "🚨 Breaking news", "special": "🔴 Special edition", "explainer": "📚 Explainer"}
+KINDS = {"breaking": "🚨 Breaking news", "special": "🔴 Special edition", "explainer": "📚 Explainer", "trials": "🧪 Trials"}
 CAP = int(os.environ.get("AUTO_DAILY_CAP") or 3)
 LANGS = [l.strip() for l in (os.environ.get("AUTO_LANGS") or "en,es").split(",") if l.strip()]
 DELETE_MIN = 30
@@ -116,6 +116,8 @@ def got_topic(st, f, topic):
         st.pop("desk", None)
         D.menu(f"⚡ Today's Auto Post All limit is reached ({CAP}).")
         return None
+    if kind == "trials":
+        return trials_topic(st, topic)
     ck = pick_channel(topic)
     A.say(f"⚡ {D.CH[ck]} · {KINDS[kind]} · {' + '.join(l.upper() for l in langs)}\n✍️ Writing… (about a minute)")
     try:
@@ -262,3 +264,32 @@ def delete_tap(st, parts, msg):
     except Exception as e:
         A.say(f"⚠️ {name} {item['lang'].upper()} not deleted: {str(e)[:120]}. Delete it in the app.")
     return None
+
+
+def trials_topic(st, topic):
+    """⚡ for 🧪 Trials: every account that can post trials, AUTO_TRIALS_N (3) each, on this topic."""
+    T = D.TRIALS
+    acc = T.accounts()
+    if not acc:
+        st.pop("desk", None)
+        D.menu("⚠️ No account can post trial reels yet. Nothing was posted.")
+        return None
+    drafts, who = {}, "gemini"
+    for ck in sorted({c for c, _ in acc}):
+        A.say(f"⚡ 🧪 {D.CH[ck]} · {T.AUTO_N} trials per account\n✍️ Writing…")
+        try:
+            drafts[ck], who = write("special", ck, topic, [l for c, l in acc if c == ck])
+        except Exception as e:
+            A.say(f"⚠️ {D.CH[ck]}: {str(e)[:120]} — skipped.")
+    tasks = T.make_tasks(drafts, [f"{c}:{l}" for c, l in acc], T.AUTO_N)
+    st.pop("desk", None)
+    if not tasks:
+        D.menu("⚠️ Auto Post All stopped: no text passed the checks. Nothing was posted.")
+        return None
+    jid = D.new_job(st, tasks, "auto trials")
+    st["jobs"][jid].update(auto=True, topic=topic)
+    st.setdefault("auto_log", []).append(A.iso())
+    mins = 4 + 2 * len(tasks)
+    D.menu(f"⚡ Making and posting {len(tasks)} trial reels (Instagram only, never promoted; about {mins}–{mins + 6} "
+           "min). I'll tell you if one goes viral.")
+    return ("post", jid)
