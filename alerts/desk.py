@@ -14,6 +14,7 @@ it sets desk.A = itself before calling anything here. Public-log rule: only shor
 import glob
 import json
 import os
+import sys
 import random
 import re
 import subprocess
@@ -24,6 +25,7 @@ from datetime import datetime, timedelta
 import yaml
 
 import desk_more as MORE                       # stage 4: Your take + Comments
+import desk_auto as AUTO                       # change 4: ⚡ Auto Post All
 
 A = None                                          # alerts module (set by alerts.py)
 MENU = [["🔴 Special edition", "📚 Explainer"], ["🔎 Fact check", "📊 Charts of the Week"],
@@ -380,6 +382,7 @@ NOT_MINE = object()
 
 def route(st, kind, data, obj):
     """Desk part of handle(): returns NOT_MINE (alerts.py handles it), None, or ('post', job_id)."""
+    AUTO.A, AUTO.D = A, sys.modules[__name__]
     msg = (obj.get("message") or {}) if kind == "tap" else {}
     if kind == "text":
         t = data.strip()
@@ -405,10 +408,13 @@ def route(st, kind, data, obj):
             st["_force_check"] = True                             # the bot loop runs the check right away
             st["_asked_check"] = True
             menu("🚨 Checking for breaking news now — big stories come here in a minute or two.")
+            ask_buttons("Or post one yourself without checking it:", [AUTO.button("breaking")])
             return None
         if t in FLOW_OF:
             return begin(st, FLOW_OF[t])
         f = flow(st)
+        if f and f.get("flow") == "auto" and f.get("step") == "topic":    # ⚡ Auto Post All: the typed topic
+            return AUTO.got_topic(st, f, t)
         if f and f.get("step") == "topic":                      # the typed topic
             return got_topic(st, f, t)
         return NOT_MINE
@@ -417,6 +423,10 @@ def route(st, kind, data, obj):
         return MORE.tap(st, parts, msg)
     if parts[0] == "tb" or (parts[0] == "t" and len(parts) == 2):   # trial batch details (button codes fixed)
         return trial_details(parts[1], msg)
+    if parts[0] == "au" and len(parts) == 2 and parts[1] in AUTO.KINDS:   # ⚡ Auto Post All
+        return AUTO.start(st, parts[1], msg)
+    if parts[0] == "dl" and len(parts) == 4:                     # 🗑 delete an auto post
+        return AUTO.delete_tap(st, parts, msg)
     if parts[0] not in ("c", "l", "w", "g", "x", "k"):
         return NOT_MINE
     f = flow(st)
@@ -452,8 +462,11 @@ def begin(st, name):
     title = {"special": "🔴 Special edition — which channels?", "explainer": "📚 Explainer — which channel?",
              "claim": "🔎 Fact check — which channel?", "charts": "📊 Charts of the Week — which channel?",
              "daily": "📰 Daily — which channels?", "weekly": "🗓️ Weekly — which channels?"}[name]
-    m = ask_buttons(title, toggles("c", list(CH.items()), [], allow_all=multi) if multi else
-                    [[(lab, f"c:{k}")] for k, lab in CH.items()] + [[("✖ Cancel", "x:cancel")]])
+    rows = (toggles("c", list(CH.items()), [], allow_all=multi) if multi else
+            [[(lab, f"c:{k}")] for k, lab in CH.items()] + [[("✖ Cancel", "x:cancel")]])
+    if name in ("special", "explainer"):                         # ⚡ Auto Post All: only the topic, no checks
+        rows = rows + [AUTO.button(name)]
+    m = ask_buttons(title, rows)
     f["msg"] = (m or {}).get("message_id")
     return None
 
@@ -830,7 +843,7 @@ def run_job(st, jid):
         A.save_state(st)
         menu("⚠️ Nothing to post." + (f" Already posted: {', '.join(skipped)}." if skipped else ""))
         return
-    if A.APPROVE_VIDEO:
+    if A.APPROVE_VIDEO and not job.get("auto"):                  # ⚡ Auto Post All: no preview, no approval
         for task, vid, cap, _ in made:
             A.tg_file("sendVideo", "video", vid, chat_id=A.CHAT, supports_streaming="true", caption=f"🎬 {task['label']}")
         ask = A.say(f"Post {len(made)} video{'s' if len(made) > 1 else ''} now? (YouTube, Instagram, Facebook)",
@@ -866,6 +879,12 @@ def run_job(st, jid):
             failed.append(task["label"] + (" (YouTube)" if not yt else "") + (" (Instagram/Facebook)" if not ig else ""))
             A.tg_file("sendDocument", "document", logf, chat_id=A.CHAT, caption=f"⚠️ {task['label']}: posting problem — log")
         A.log(f"{task['channel']} {task['lang']}: YouTube {'ok' if yt else 'failed'} · Instagram/Facebook {'ok' if ig else 'failed'}")
+    if job.get("auto"):                                          # ⚡ the links + 🗑 delete buttons
+        try:
+            AUTO.A, AUTO.D = A, sys.modules[__name__]
+            AUTO.after_post(st, jid, [(t, lf) for t, _, _, lf in made])
+        except Exception as e:
+            A.log(f"auto: links not sent ({type(e).__name__})")
     job["status"] = "posted" if done else "failed"
     A.save_state(st)
     menu(("✅ Posted: " + ", ".join(done) if done else "⚠️ Nothing posted")
