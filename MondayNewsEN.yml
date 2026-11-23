@@ -1,123 +1,132 @@
-date: 2026-11-16
+date: 2026-11-23
 day: Monday
 news:
-- title: Israel kills a top Hamas commander and Jordan sentences three people for a church attack
-  source: Santa Ana Orange County Register
-  url: https://www.ocregister.com/2026/11/15/israel-kills-a-top-hamas-commander-as-jordan-sentences-3-in-church-attack-and-other-mideast-news/
-  good: false
-  trending: false
-  why: Escalating Middle East violence threatens wider regional stability and energy supplies.
-  cat: CONFLICT
-  visual:
-    type: map
-    country: Israel
-    place: Middle East
-    lat: 31.0461
-    lon: 34.8516
-    span: 25
-  photo:
-    url: https://upload.wikimedia.org/wikipedia/commons/9/93/The_rubble_of_a_building_-_geograph.org.uk_-_4711042.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled
-    credit: Lairich Rig · CC BY-SA 2.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:The_rubble_of_a_building_-_geograph.org.uk_-_4711042.jpg
-    query: rubble building
-- title: Three ships hit by drones in the Black Sea near Romania, according to the prime minister
-  source: CNA
-  url: https://www.channelnewsasia.com/world/romania-black-sea-drone-strike-ships-6552996
+- title: FBI cybersecurity alarms rise as the US defends chip restrictions on China
+  source: Lokmat Times
+  url: https://www.lokmattimes.com/international/fbi-incident-raises-cyber-security-alarms-us-defends-chip-restrictions-on-china-a001-w02/
   good: false
   trending: false
   why: ''
-  cat: CONFLICT
+  cat: TECH
   visual:
-    type: map
-    country: Romania
-    place: Black Sea
-    lat: 44.1598
-    lon: 28.6348
-    span: 12
+    type: icon
   photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Cargo_ship_PONTIAC%2C_ENI_02320416%2C_MMSI_244660959._15-07-2024._%28actm.%29.jpg/1280px-Cargo_ship_PONTIAC%2C_ENI_02320416%2C_MMSI_244660959._15-07-2024._%28actm.%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: Agnes Monkelbaan · CC BY-SA 4.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Cargo_ship_PONTIAC,_ENI_02320416,_MMSI_244660959._15-07-2024._(actm.).jpg
-    query: cargo ship
+    url: https://live.staticflickr.com/2086/2389301872_fde50efc57_b.jpg
+    credit: BotheredByBees · CC BY 2.0 · Flickr
+    page: https://www.flickr.com/photos/87273935@N00/2389301872
+    query: microchip semiconductor
   chart_check:
-    result: 'not used: 3 isn''t in the article; 0 isn''t in the article'
-- title: Canada pledges C$560 million to protect Brazil's tropical forests
-  source: The News International
-  url: https://www.thenews.com.pk/latest/1423642-canada-makes-a-c560-million-pledge-for-brazils-tropical-forests-forever-facility
+    result: 'not used: the year 2024 isn''t in the article'
+- title: COP31 climate talks collapse after the EU and others reject the deal
+  source: The Nation
+  url: https://www.nation.com.pk/23-Nov-2026/cop31-climate-talks-collapse-eu-others-reject-deal
   good: false
   trending: false
   why: ''
   cat: CLIMATE
   visual:
-    type: map
-    country: Brazil
-    place: Amazon rainforest
-    lat: -3.4653
-    lon: -62.2159
-    span: 25
+    type: chart
+    chart: slope
+    unit: '%'
+    prefix: ''
+    decimals: 0
+    source: Nawaiwaqt Group
+    hedge: false
+    title_en: World final energy consumption share
+    periods:
+    - now
+    - '2035'
+    series:
+    - label_en: World final energy consumption share
+      from: 23
+      to: 35
+    highlight: 0
+    fallback:
+      type: icon
   photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/Tropical_rainforest_in_Sangha_Trinational.jpg/1280px-Tropical_rainforest_in_Sangha_Trinational.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: JosepMGracia · CC BY-SA 4.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Tropical_rainforest_in_Sangha_Trinational.jpg
-    query: tropical rainforest
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Climate_Emergency_campaigner_David_Spratt_%283621800113%29.jpg/1280px-Climate_Emergency_campaigner_David_Spratt_%283621800113%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Takver from Australia · CC BY-SA 2.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Climate_Emergency_campaigner_David_Spratt_(3621800113).jpg
+    query: climate conference hall
   chart_check:
-    result: 'not used: 5.6e+08 isn''t in the article; 0 isn''t in the article; a quoted sentence isn''t in the article'
-- title: How data centers, electricity bills and voter anger damaged Trump's midterm chances
-  source: Times of India
-  url: https://timesofindia.indiatimes.com/world/us/ai-electricity-bills-and-voter-anger-how-data-centres-tanked-trumps-midterm-hopes/articleshow/135634353.cms
+    result: ok
+    template: slope
+- title: India and the EU are set to sign their long-awaited free trade agreement
+  source: Times Now
+  url: https://www.timesnownews.com/business-economy/economy/india-eu-to-sign-long-awaited-fta-on-december-16-report-article-156550269
   good: false
   trending: false
-  why: Tech infrastructure costs directly impact household utility bills and elections.
-  cat: POLITICS
-  visual:
-    type: icon
-  photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/7/74/Servers_in_a_Rack.jpg/1280px-Servers_in_a_Rack.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: Abigor · CC BY-SA 3.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Servers_in_a_Rack.jpg
-    query: server rack
-- title: Carney unveils a new budget to boost Canada's economy amid a slowdown from Trump's trade war
-  source: WTOP
-  url: https://wtop.com/world/2026/11/carney-unveils-budget-to-strengthen-canadas-economy-as-trumps-trade-war-continues/
-  good: false
-  trending: true
-  why: ''
-  cat: ECONOMY
+  why: It affects prices and product availability for everyday shoppers.
+  cat: BUSINESS
   visual:
     type: chart
     chart: bars
-    unit: billion C$
+    unit: '%'
     prefix: ''
-    decimals: 1
-    source: AP
+    decimals: 0
+    source: Times Now
     hedge: false
-    title_en: Canadian federal budget projections
+    title_en: Tariff elimination under trade agreement
     labels_en:
-    - Multiyear spending and tax breaks
-    - Total projected spending
-    - Projected deficit
-    - Sovereign wealth fund
-    - Defense industry funding
-    - Investment incentive cost
+    - EU initial
+    - India initial
+    - EU total
+    - India total
     values:
-    - 142.1
-    - 603
-    - 62.3
-    - 25
-    - 7.7
-    - 36
+    - 90
+    - 86
+    - 99.3
+    - 96.6
     fallback:
       type: map
-      country: Canada
-      place: Ottawa
-      lat: 45.4215
-      lon: -75.6972
-      span: 12
+      country: India
+      place: New Delhi
+      lat: 28.6139
+      lon: 77.209
+      span: 25
+      country2: Belgium
+      place2: Brussels
+      lat2: 50.8503
+      lon2: 4.3517
+      span2: 25
   photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/6/63/Parlament_Wien_abends.jpg/1280px-Parlament_Wien_abends.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: Thomas Wolf , www.foto-tw.de · CC BY-SA 3.0 de · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Parlament_Wien_abends.jpg
-    query: parliament building
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Cargo_ship_PONTIAC%2C_ENI_02320416%2C_MMSI_244660959._15-07-2024._%28actm.%29.jpg/1280px-Cargo_ship_PONTIAC%2C_ENI_02320416%2C_MMSI_244660959._15-07-2024._%28actm.%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Agnes Monkelbaan · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Cargo_ship_PONTIAC,_ENI_02320416,_MMSI_244660959._15-07-2024._(actm.).jpg
+    query: cargo ship port
   chart_check:
     result: ok
     template: bars
+- title: Saudi Arabia intercepts missiles after an Aramco building in Riyadh is damaged
+  source: Baltimore Sun
+  url: https://www.baltimoresun.com/2026/11/08/saudi-arabia-intercepts-missiles-as-aramco-building-in-riyadh-is-damaged-and-other-mideast-news/
+  good: false
+  trending: false
+  why: It threatens regional stability and impacts global oil supply prices.
+  cat: CONFLICT
+  visual:
+    type: map
+    country: Saudi Arabia
+    place: Riyadh
+    lat: 24.7136
+    lon: 46.6753
+    span: 12
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/5/51/Anacortes_Refinery_31911.JPG/1280px-Anacortes_Refinery_31911.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Walter Siegmund (talk) · CC BY 2.5 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Anacortes_Refinery_31911.JPG
+    query: oil refinery plant
+- title: Brazil's Jair Bolsonaro moved to the ICU days before a key Supreme Court vote on his sentence
+  source: Times Now
+  url: https://www.timesnownews.com/world/brazils-jair-bolsonaro-moved-to-icu-days-before-key-supreme-court-vote-on-his-sentence-article-156547967
+  good: false
+  trending: false
+  why: ''
+  cat: JUSTICE
+  visual:
+    type: icon
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4c/Supreme_Court_of_the_United_Kingdom%2C_Court_1_Interior%2C_London%2C_UK_-_Diliff.jpg/1280px-Supreme_Court_of_the_United_Kingdom%2C_Court_1_Interior%2C_London%2C_UK_-_Diliff.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Diliff · CC BY-SA 3.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Supreme_Court_of_the_United_Kingdom,_Court_1_Interior,_London,_UK_-_Diliff.jpg
+    query: Supreme Court building

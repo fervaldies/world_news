@@ -1,132 +1,140 @@
-date: 2026-11-16
+date: 2026-11-23
 day: Monday
 news:
-- title: Israel mata a un alto comandante de Hamás y Jordania condena a tres personas por un ataque a una iglesia
-  source: Santa Ana Orange County Register
-  url: https://www.ocregister.com/2026/11/15/israel-kills-a-top-hamas-commander-as-jordan-sentences-3-in-church-attack-and-other-mideast-news/
-  good: false
-  trending: false
-  why: La escalada de violencia en Oriente Medio amenaza la estabilidad regional y el suministro energético.
-  cat: CONFLICT
-  visual:
-    type: map
-    country: Israel
-    place: Oriente Medio
-    lat: 31.0461
-    lon: 34.8516
-    span: 25
-  photo:
-    url: https://upload.wikimedia.org/wikipedia/commons/9/93/The_rubble_of_a_building_-_geograph.org.uk_-_4711042.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled
-    credit: Lairich Rig · CC BY-SA 2.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:The_rubble_of_a_building_-_geograph.org.uk_-_4711042.jpg
-    query: rubble building
-- title: Tres buques alcanzados por drones en el mar Negro cerca de Rumanía, según el primer ministro
-  source: CNA
-  url: https://www.channelnewsasia.com/world/romania-black-sea-drone-strike-ships-6552996
+- title: Aumentan las alertas de ciberseguridad del FBI mientras EE. UU. defiende las restricciones a los chips en China
+  source: Lokmat Times
+  url: https://www.lokmattimes.com/international/fbi-incident-raises-cyber-security-alarms-us-defends-chip-restrictions-on-china-a001-w02/
   good: false
   trending: false
   why: ''
-  cat: CONFLICT
+  cat: TECH
   visual:
-    type: map
-    country: Romania
-    place: Mar Negro
-    lat: 44.1598
-    lon: 28.6348
-    span: 12
+    type: icon
   photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Cargo_ship_PONTIAC%2C_ENI_02320416%2C_MMSI_244660959._15-07-2024._%28actm.%29.jpg/1280px-Cargo_ship_PONTIAC%2C_ENI_02320416%2C_MMSI_244660959._15-07-2024._%28actm.%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: Agnes Monkelbaan · CC BY-SA 4.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Cargo_ship_PONTIAC,_ENI_02320416,_MMSI_244660959._15-07-2024._(actm.).jpg
-    query: cargo ship
+    url: https://live.staticflickr.com/2086/2389301872_fde50efc57_b.jpg
+    credit: BotheredByBees · CC BY 2.0 · Flickr
+    page: https://www.flickr.com/photos/87273935@N00/2389301872
+    query: microchip semiconductor
   chart_check:
-    result: 'not used: 3 isn''t in the article; 0 isn''t in the article'
-- title: Canadá promete 560 millones de dólares canadienses para proteger los bosques tropicales de Brasil
-  source: The News International
-  url: https://www.thenews.com.pk/latest/1423642-canada-makes-a-c560-million-pledge-for-brazils-tropical-forests-forever-facility
+    result: 'not used: the year 2024 isn''t in the article'
+- title: Colapsan las negociaciones climáticas de la COP31 tras el rechazo del acuerdo por parte de la UE y otros países
+  source: The Nation
+  url: https://www.nation.com.pk/23-Nov-2026/cop31-climate-talks-collapse-eu-others-reject-deal
   good: false
   trending: false
   why: ''
   cat: CLIMATE
   visual:
-    type: map
-    country: Brazil
-    place: Selva amazónica
-    lat: -3.4653
-    lon: -62.2159
-    span: 25
+    type: chart
+    chart: slope
+    unit: '%'
+    prefix: ''
+    decimals: 0
+    source: Nawaiwaqt Group
+    hedge: false
+    title_en: World final energy consumption share
+    periods:
+    - now
+    - '2035'
+    series:
+    - label_en: World final energy consumption share
+      from: 23
+      to: 35
+      label_es: Participación en el consumo de energía final mundial
+    highlight: 0
+    title_es: Participación en el consumo de energía final mundial
+    fallback:
+      type: icon
   photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/Tropical_rainforest_in_Sangha_Trinational.jpg/1280px-Tropical_rainforest_in_Sangha_Trinational.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: JosepMGracia · CC BY-SA 4.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Tropical_rainforest_in_Sangha_Trinational.jpg
-    query: tropical rainforest
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Climate_Emergency_campaigner_David_Spratt_%283621800113%29.jpg/1280px-Climate_Emergency_campaigner_David_Spratt_%283621800113%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Takver from Australia · CC BY-SA 2.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Climate_Emergency_campaigner_David_Spratt_(3621800113).jpg
+    query: climate conference hall
   chart_check:
-    result: 'not used: 5.6e+08 isn''t in the article; 0 isn''t in the article; a quoted sentence isn''t in the article'
-- title: Cómo los centros de datos, las facturas de la luz y el enfado de los votantes mermaron las opciones de Trump en las elecciones de mitad de mandato
-  source: Times of India
-  url: https://timesofindia.indiatimes.com/world/us/ai-electricity-bills-and-voter-anger-how-data-centres-tanked-trumps-midterm-hopes/articleshow/135634353.cms
+    result: ok
+    template: slope
+- title: La India y la UE se disponen a firmar su ansiado acuerdo de libre comercio
+  source: Times Now
+  url: https://www.timesnownews.com/business-economy/economy/india-eu-to-sign-long-awaited-fta-on-december-16-report-article-156550269
   good: false
   trending: false
-  why: Los costes de la infraestructura tecnológica afectan directamente a las facturas de los hogares y a las elecciones.
-  cat: POLITICS
-  visual:
-    type: icon
-  photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/7/74/Servers_in_a_Rack.jpg/1280px-Servers_in_a_Rack.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: Abigor · CC BY-SA 3.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Servers_in_a_Rack.jpg
-    query: server rack
-- title: Carney presenta un nuevo presupuesto para impulsar la economía de Canadá en plena ralentización por la guerra comercial de Trump
-  source: WTOP
-  url: https://wtop.com/world/2026/11/carney-unveils-budget-to-strengthen-canadas-economy-as-trumps-trade-war-continues/
-  good: false
-  trending: true
-  why: ''
-  cat: ECONOMY
+  why: Afecta a los precios y a la disponibilidad de productos para los compradores cotidianos.
+  cat: BUSINESS
   visual:
     type: chart
     chart: bars
-    unit: billion C$
+    unit: '%'
     prefix: ''
-    decimals: 1
-    source: AP
+    decimals: 0
+    source: Times Now
     hedge: false
-    title_en: Canadian federal budget projections
+    title_en: Tariff elimination under trade agreement
     labels_en:
-    - Multiyear spending and tax breaks
-    - Total projected spending
-    - Projected deficit
-    - Sovereign wealth fund
-    - Defense industry funding
-    - Investment incentive cost
+    - EU initial
+    - India initial
+    - EU total
+    - India total
     values:
-    - 142.1
-    - 603
-    - 62.3
-    - 25
-    - 7.7
-    - 36
-    title_es: Proyecciones del presupuesto federal canadiense
+    - 90
+    - 86
+    - 99.3
+    - 96.6
+    title_es: Eliminación de aranceles en virtud del acuerdo comercial
     labels_es:
-    - Gasto plurianual y exenciones fiscales
-    - Gasto total proyectado
-    - Déficit proyectado
-    - Fondo soberano de riqueza
-    - Financiación de la industria de defensa
-    - Costo de incentivos a la inversión
-    unit_es: mil millones de C$
+    - UE inicial
+    - India inicial
+    - UE total
+    - India total
     fallback:
       type: map
-      country: Canada
-      place: Ottawa
-      lat: 45.4215
-      lon: -75.6972
-      span: 12
+      country: India
+      place: Nueva Delhi
+      lat: 28.6139
+      lon: 77.209
+      span: 25
+      country2: Belgium
+      place2: Bruselas
+      lat2: 50.8503
+      lon2: 4.3517
+      span2: 25
   photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/6/63/Parlament_Wien_abends.jpg/1280px-Parlament_Wien_abends.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: Thomas Wolf , www.foto-tw.de · CC BY-SA 3.0 de · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Parlament_Wien_abends.jpg
-    query: parliament building
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Cargo_ship_PONTIAC%2C_ENI_02320416%2C_MMSI_244660959._15-07-2024._%28actm.%29.jpg/1280px-Cargo_ship_PONTIAC%2C_ENI_02320416%2C_MMSI_244660959._15-07-2024._%28actm.%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Agnes Monkelbaan · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Cargo_ship_PONTIAC,_ENI_02320416,_MMSI_244660959._15-07-2024._(actm.).jpg
+    query: cargo ship port
   chart_check:
     result: ok
     template: bars
+- title: Arabia Saudí intercepta misiles tras los daños sufridos por un edificio de Aramco en Riad
+  source: Baltimore Sun
+  url: https://www.baltimoresun.com/2026/11/08/saudi-arabia-intercepts-missiles-as-aramco-building-in-riyadh-is-damaged-and-other-mideast-news/
+  good: false
+  trending: false
+  why: Amenaza la estabilidad regional e impacta en los precios del suministro mundial de petróleo.
+  cat: CONFLICT
+  visual:
+    type: map
+    country: Saudi Arabia
+    place: Riad
+    lat: 24.7136
+    lon: 46.6753
+    span: 12
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/5/51/Anacortes_Refinery_31911.JPG/1280px-Anacortes_Refinery_31911.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Walter Siegmund (talk) · CC BY 2.5 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Anacortes_Refinery_31911.JPG
+    query: oil refinery plant
+- title: El expresidente brasileño Jair Bolsonaro es trasladado a la UCI días antes de una votación clave del Tribunal Supremo sobre su condena
+  source: Times Now
+  url: https://www.timesnownews.com/world/brazils-jair-bolsonaro-moved-to-icu-days-before-key-supreme-court-vote-on-his-sentence-article-156547967
+  good: false
+  trending: false
+  why: ''
+  cat: JUSTICE
+  visual:
+    type: icon
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4c/Supreme_Court_of_the_United_Kingdom%2C_Court_1_Interior%2C_London%2C_UK_-_Diliff.jpg/1280px-Supreme_Court_of_the_United_Kingdom%2C_Court_1_Interior%2C_London%2C_UK_-_Diliff.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Diliff · CC BY-SA 3.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Supreme_Court_of_the_United_Kingdom,_Court_1_Interior,_London,_UK_-_Diliff.jpg
+    query: Supreme Court building
