@@ -41,6 +41,23 @@ jobs:
             post_extras.py
           sparse-checkout-cone-mode: false
 
+      # Big videos: the uploader pushes them to world_news/temp_upload with git (GitHub's file API refuses them),
+      # from a clone in ./world_news — the same way it does on the laptop.
+      - name: Clone world_news for big video uploads
+        if: steps.due.outputs.due != '0'
+        uses: actions/checkout@v4
+        with:
+          repository: fervaldies/world_news
+          token: ${{ secrets.GH_PAT }}
+          path: world_news
+          fetch-depth: 1
+
+      - name: Git name for those uploads
+        if: steps.due.outputs.due != '0'
+        run: |
+          git -C world_news config user.name "whatif-poster"
+          git -C world_news config user.email "whatif-poster@users.noreply.github.com"
+
       - name: Install ffmpeg
         if: steps.due.outputs.due != '0'
         timeout-minutes: 5
