@@ -1,111 +1,123 @@
-date: 2026-11-10
+date: 2026-11-24
 day: Tuesday
 news:
-- title: Dugaan Spionase Nvidia Kemungkinan Picu Aturan Ekspor Chip AI AS ke China Lebih Ketat
-  why: Ekonomi terbesar Brasil menghadapi inflasi dan ketimpangan di bawah kepemimpinan baru.
-  source: The Tribune
-  url: https://www.tribuneindia.com/news/world/lula-to-govern-brazil-for-4th-term-but-faces-range-of-challenges-heres-what-to-know/
-  cat: POLITICS
+- title: Polisi Jerman Selidiki 450 Sekolah Usai Terima Email Ancaman Bom
+  source: Hindustan Times
+  url: https://www.hindustantimes.com/world-news/450-schools-in-germany-receive-bomb-threat-emails-police-launch-investigation-europe-news-101795430332636.html
   good: false
-  visual:
-    type: map
-    country: Brazil
-    place: Brasília
-    lat: -15.8267
-    lon: -47.8616
-    span: 25
   trending: false
-  photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d2/PalaciodoplanaltoFR.jpg/1280px-PalaciodoplanaltoFR.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: Dasfour2022 · CC BY-SA 4.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:PalaciodoplanaltoFR.jpg
-    query: Brazilian flag presidential palace
-- title: Pemimpin Global di KTT Iklim Desak Negara-Negara Percepat Pengurangan Emisi
-  why: Mengubah hubungan Kanada-AS dan membentuk ulang strategi aliansi keamanan Amerika Utara.
-  source: Breitbart News Network
-  url: https://www.breitbart.com/politics/2026/11/10/canadian-prime-minister-mark-carney-labels-united-states-more-of-a-security-threat-than-china/
-  cat: POLITICS
-  good: false
-  visual:
-    type: map
-    country: Canada
-    place: Ottawa
-    lat: 45.4215
-    lon: -75.6972
-    span: 25
-  trending: false
-  photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/British_Columbia_Parliament_Building_in_Victoria%2C_British_Columbia%2C_Canada_07.jpg/1280px-British_Columbia_Parliament_Building_in_Victoria%2C_British_Columbia%2C_Canada_07.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: Michal Klajban · CC BY-SA 4.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:British_Columbia_Parliament_Building_in_Victoria,_British_Columbia,_Canada_07.jpg
-    query: Canadian Parliament building
-- title: Kematian Tragis Migran Muda di Kanada Ungkap Risiko Pekerja Rentan di Luar Negeri
   why: ''
-  source: WTOP
-  url: https://wtop.com/world/2026/11/stocks-decline-in-asia-as-investor-concerns-over-nvidia-fallout-extend-into-another-week/
-  cat: BUSINESS
-  good: false
+  cat: POLITICS
   visual:
-    type: icon
-  trending: false
+    type: chart
+    chart: bars
+    unit: schools
+    prefix: ''
+    decimals: 0
+    source: Bild
+    hedge: false
+    title_en: Hoax bomb threats in Europe
+    labels_en:
+    - Italy
+    - Scotland and Northern Ireland and the Republic of Ireland
+    values:
+    - 6000
+    - 700
+    title_id: Ancaman bom palsu di Eropa
+    labels_id:
+    - Italia
+    - Skotlandia dan Irlandia Utara serta Republik Irlandia
+    unit_id: sekolah
+    fallback:
+      type: map
+      country: Germany
+      place: Jerman
+      lat: 51.1657
+      lon: 10.4515
+      span: 25
   photo:
-    url: https://upload.wikimedia.org/wikipedia/commons/0/03/Floor_of_Toronto_Stock_Exchange_1956.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled
-    credit: Chris Lund · Public domain · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Floor_of_Toronto_Stock_Exchange_1956.jpg
-    query: stock market trading floor
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/0/06/Derelict_residential_building_in_Rerik-West%2C_SW_view%2C_2026-09-07.jpg/1280px-Derelict_residential_building_in_Rerik-West%2C_SW_view%2C_2026-09-07.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Radomianin · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Derelict_residential_building_in_Rerik-West,_SW_view,_2026-09-07.jpg
+    query: German school building
   chart_check:
-    result: 'not used: -1.9 isn''t in the article; -2.5 isn''t in the article; -1.4 isn''t in the article'
-- title: India dan UE Tinjau Progres Perjanjian Dagang Jelang Kunjungan Modi ke Brussel
-  why: Perusahaan AI besar menghadapi tindakan hukum atas pelanggaran keamanan yang memengaruhi data pengguna.
-  source: U.S. News & World Report
-  url: https://www.usnews.com/news/technology/articles/2026-11-16/california-sues-openai-seeking-court-ordered-changes-after-the-hugging-face-hack
-  cat: JUSTICE
+    result: ok
+    template: bars
+- title: Enam Belas Tersangka Kartel Tewas dalam Bentrok dengan Pasca Penangkapan Bos Besar
+  source: Hindustan Times
+  url: https://www.hindustantimes.com/world-news/cartel-suspects-killed-in-clash-with-mexicos-security-forces-after-drug-kingpins-arrest-101795453050977.html
   good: false
+  trending: false
+  why: Kekerasan kartel secara langsung mengancam keselamatan publik dan stabilitas komunitas di Meksiko.
+  cat: CONFLICT
+  visual:
+    type: map
+    country: Mexico
+    place: Meksiko
+    lat: 23.6345
+    lon: 102.5528
+    span: 25
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cd/Military_Checkpoint_Oaxaca_Mexico.jpg/1280px-Military_Checkpoint_Oaxaca_Mexico.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: nsaum75 ¡שיחת! ‎ · CC BY-SA 3.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Military_Checkpoint_Oaxaca_Mexico.jpg
+    query: military checkpoint Mexico
+- title: Jensen Huang Kembali ke Nvidia di Tengah Isu Skandal Mata-Mata Tiongkok
+  source: Times Now
+  url: https://www.timesnownews.com/world/us/us-news/jensen-huang-back-nvidia-ceo-where-is-alice-huang-china-spy-scandal-megaspeed-article-156556793
+  good: false
+  trending: true
+  why: ''
+  cat: TECH
   visual:
     type: map
     country: United States of America
-    place: California
-    lat: 36.7783
-    lon: -119.4179
+    place: Nvidia
+    lat: 37.3688
+    lon: -122.0363
     span: 12
-  trending: true
-- title: Bihar Larang Petasan di Dekat Tebing Sungai dan Perahu Pribadi Selama Chhath Puja untuk Jamin Keamanan
-  why: ''
-  source: PerthNow
-  url: https://www.perthnow.com.au/news/politics/albanese-set-to-meet-trump-as-anger-spills-onto-streets-c-23170435
-  cat: POLITICS
-  good: false
-  visual:
-    type: chart
-    chart: versus
-    unit: '%'
-    prefix: ''
-    decimals: 1
-    source: Filipino statistics bureau
-    hedge: false
-    title_en: Philippine inflation impact of Middle East war
-    items:
-    - label_en: Philippine inflation
-      from: 2.4
-      to: 7.8
-      label_id: Inflasi Filipina
-    periods:
-    - Before Feb 2024
-    - October 2024
-    title_id: Dampak perang Timur Tengah terhadap inflasi Filipina
-    fallback:
-      type: map
-      country: Australia
-      place: Canberra
-      lat: -35.2809
-      lon: 149.13
-      span: 25
-  trending: false
   photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/2/24/Australian_House_of_Representatives_-_Parliament_of_Australia.jpg/1280px-Australian_House_of_Representatives_-_Parliament_of_Australia.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: JJ Harrison ( https://www.jjharrison.com.au/ ) · CC BY-SA 3.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Australian_House_of_Representatives_-_Parliament_of_Australia.jpg
-    query: Australian Parliament House
+    url: https://live.staticflickr.com/4041/4372145011_0c8470350b_b.jpg
+    credit: marfis75 · CC BY 2.0 · Flickr
+    page: https://www.flickr.com/photos/45409431@N00/4372145011
+    query: computer microchip
+- title: Keuangan AS Ungkap Cara Iran Alirkan Hampir $15 Miliar Lewat Bank Global
+  source: Times Now
+  url: https://www.timesnownews.com/world/us/us-news/china-uk-to-uae-us-treasury-reveals-how-iran-routed-nearly-15-billion-through-banks-article-156556668
+  good: false
+  trending: false
+  why: Saluran perbankan global yang digunakan untuk keuangan ilegal dapat memengaruhi peraturan keamanan internasional.
+  cat: ECONOMY
+  visual:
+    type: map
+    country: United States of America
+    place: Departemen Keuangan AS
+    lat: 38.8977
+    lon: -77.0365
+    span: 3
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e1/Us-treasury-building.jpg/1280px-Us-treasury-building.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: MeanieHyaena · CC BY 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Us-treasury-building.jpg
+    query: US Treasury building
   chart_check:
-    result: ok
-    template: versus
+    result: 'not used: 1 isn''t in the article; 0.9 isn''t in the article'
+- title: Kawasan Pemukiman Bergaya Jepang Direncanakan di Sekitar Stasiun Kereta Cepat Virar
+  source: Hindustan Times
+  url: https://www.hindustantimes.com/cities/mumbai-news/japanstyle-township-planned-around-virar-bullet-train-station-101795375986619.html
+  good: false
+  trending: false
+  why: ''
+  cat: TRANSPORT
+  visual:
+    type: map
+    country: India
+    place: Virar
+    lat: 19.4559
+    lon: 72.8123
+    span: 12
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/6/69/Jakarta-Bandung_High_Speed_Train_1.png/1280px-Jakarta-Bandung_High_Speed_Train_1.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: China News Service · CC BY 3.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Jakarta-Bandung_High_Speed_Train_1.png
+    query: high speed train
