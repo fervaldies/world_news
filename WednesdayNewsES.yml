@@ -1,112 +1,131 @@
-date: 2026-11-18
+date: 2026-11-25
 day: Wednesday
 news:
-- title: El jefe de defensa alemán afirma que los aliados de la OTAN discutirán sobre las fuerzas estadounidenses en Europa con el responsable político del Pentágono.
-  source: Hindustan Times
-  url: https://www.hindustantimes.com/world-news/nato-allies-to-discuss-us-forces-in-europe-with-pentagon-policy-chief-says-german-defence-minister-101794903186100.html
+- title: Los comandantes militares de la India y China celebran una segunda reunión para debatir sobre las prácticas fronterizas en Arunachal.
+  source: Times Now
+  url: https://www.timesnownews.com/india/military-practices-along-arunachal-pradesh-lac-discussed-as-the-corps-commanders-of-india-and-china-met-for-second-time-article-156561578
   good: false
   trending: false
-  why: Los cambios en los niveles de tropas estadounidenses afectan a la seguridad europea y la estabilidad regional.
-  cat: POLITICS
+  why: ''
+  cat: CONFLICT
   visual:
     type: map
-    country: Germany
-    place: Berlín
-    lat: 52.52
-    lon: 13.405
+    country: India
+    place: Arunachal Pradesh
+    lat: 28.218
+    lon: 94.727
     span: 12
   photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/British_Columbia_Parliament_Building_in_Victoria%2C_British_Columbia%2C_Canada_07.jpg/1280px-British_Columbia_Parliament_Building_in_Victoria%2C_British_Columbia%2C_Canada_07.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: Michal Klajban · CC BY-SA 4.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:British_Columbia_Parliament_Building_in_Victoria,_British_Columbia,_Canada_07.jpg
-    query: German parliament building
-- title: El Quad advierte contra los movimientos unilaterales en el Indopacífico en una clara señal a China.
-  source: Times Now
-  url: https://www.timesnownews.com/world/quad-warns-against-unilateral-actions-status-quo-change-in-indo-pacific-in-signal-to-china-article-156525945
-  good: false
-  trending: false
-  why: Las tensiones de seguridad regional impactan directamente en el comercio global y la estabilidad marítima.
-  cat: WORLD
-  visual:
-    type: map
-    country: Japan
-    place: Indo-Pacífico
-    lat: -10.0
-    lon: 125.0
-    span: 25
-  photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5b/Container_ship_Helga_nearing_Greenock_Ocean_Terminal.jpg/1280px-Container_ship_Helga_nearing_Greenock_Ocean_Terminal.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: dave souza · CC BY-SA 4.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Container_ship_Helga_nearing_Greenock_Ocean_Terminal.jpg
-    query: container ship ocean
-- title: Estados Unidos ha perdido oficialmente su estatus de eliminación del sarampión.
-  source: CBC.ca
-  url: https://www.cbc.ca/news/health/u-s-loses-measles-elimination-status-9.7425114
-  good: false
-  trending: false
-  why: ''
-  cat: HEALTH
-  visual:
-    type: icon
-  photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/0/01/Testing_vaccine_in_laboratory._Holding_syringe_with_protective_medical_gloves_closeup._%2851714051263%29.jpg/1280px-Testing_vaccine_in_laboratory._Holding_syringe_with_protective_medical_gloves_closeup._%2851714051263%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: Nenad Stojkovic · CC BY 2.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Testing_vaccine_in_laboratory._Holding_syringe_with_protective_medical_gloves_closeup._(51714051263).jpg
-    query: medical syringe vaccine
-- title: Muere a los 80 años Miguel Ángel Félix Gallardo, arquitecto del narcotráfico moderno en México.
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4f/Border_fence_on_Anglesey_Mountain_-_geograph.org.uk_-_5812043.jpg/1280px-Border_fence_on_Anglesey_Mountain_-_geograph.org.uk_-_5812043.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Eric Jones · CC BY-SA 2.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Border_fence_on_Anglesey_Mountain_-_geograph.org.uk_-_5812043.jpg
+    query: mountain border fence
+- title: La India y Canadá negocian un nuevo acuerdo de cooperación en materia de defensa.
   source: Hindustan Times
-  url: https://www.hindustantimes.com/world-news/miguel-ngel-f-lix-gallardo-architect-of-mexico-s-modern-drug-trade-dies-at-80-101794798013660.html
-  good: false
-  trending: false
-  why: ''
-  cat: JUSTICE
-  visual:
-    type: number
-    number: '80'
-    label: años de edad
-  photo:
-    url: https://upload.wikimedia.org/wikipedia/commons/c/c7/Prison_Bars_Jail_Cell.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled
-    credit: Jobs For Felons Hub · CC BY 2.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Prison_Bars_Jail_Cell.jpg
-    query: prison cell bars
-- title: Lula gobernará Brasil por cuarta vez y se enfrenta a grandes retos en el futuro.
-  source: The Tribune
-  url: https://www.tribuneindia.com/news/world/lula-to-govern-brazil-for-4th-term-but-faces-range-of-challenges-heres-what-to-know/
+  url: https://www.hindustantimes.com/world-news/india-canada-negotiating-for-framework-deal-on-defence-cooperation-101795503932408.html
   good: false
   trending: false
   why: ''
   cat: POLITICS
   visual:
+    type: map
+    country: India
+    place: Nueva Delhi
+    lat: 28.6139
+    lon: 77.209
+    span: 25
+    country2: Canada
+    place2: Ottawa
+    lat2: 45.4215
+    lon2: -75.6972
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/1/19/Old_and_new_Parliament_Houses%3B_Canberra_Australia.jpg/1280px-Old_and_new_Parliament_Houses%3B_Canberra_Australia.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Thennicke · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Old_and_new_Parliament_Houses;_Canberra_Australia.jpg
+    query: parliament building flags
+- title: La secretaria del Tesoro de EE. UU. afirma que la economía de Irán se hunde y los líderes entran en pánico debido a las sanciones.
+  source: Lokmat Times
+  url: https://www.lokmattimes.com/international/us-sanctions-irans-economy-underwater-leaders-panicking-says-treasury-secretary-a001-w01/
+  good: false
+  trending: false
+  why: ''
+  cat: ECONOMY
+  visual:
+    type: map
+    country: United States of America
+    place: Washington
+    lat: 38.8951
+    lon: -77.0364
+    span: 25
+    country2: Iran
+    place2: Teherán
+    lat2: 35.6892
+    lon2: 51.389
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d2/Treasury_Building%2C_Brisbane_river_facade%2C_2020%2C_02.jpg/1280px-Treasury_Building%2C_Brisbane_river_facade%2C_2020%2C_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Kgbo · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Treasury_Building,_Brisbane_river_facade,_2020,_02.jpg
+    query: treasury building facade
+- title: La japonesa Mori Trust invierte 20 millones de libras en el proyecto Chembur de Chandak Group.
+  source: Lokmat Times
+  url: https://www.lokmattimes.com/business/chandak-group-secures-ps20-million-investment-for-chembur-project-from-japans-mori-trust-a001-w01/
+  good: false
+  trending: false
+  why: ''
+  cat: BUSINESS
+  visual:
+    type: map
+    country: India
+    place: Mumbai
+    lat: 19.076
+    lon: 72.8777
+    span: 3
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cd/Skyscraper_Construction_in_Frankfurt%2C_Germany.jpg/1280px-Skyscraper_Construction_in_Frankfurt%2C_Germany.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Spinarak · CC0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Skyscraper_Construction_in_Frankfurt,_Germany.jpg
+    query: modern skyscraper construction
+- title: A medida que se extiende la IA, una de cada cinco empresas japonesas planea recortar puestos de trabajo de oficina para recién llegados.
+  source: The Star
+  url: https://www.thestar.com.my/aseanplus/aseanplus-news/2026/11/24/20-per-cent-of-firms-in-japan-to-cut-new-graduate-hires-for-clerical-jobs-as-ai-spreads
+  good: false
+  trending: false
+  why: La automatización de la IA puede eliminar muchos trabajos de oficina de nivel de entrada.
+  cat: TECH
+  visual:
     type: chart
-    chart: bars
+    chart: waffle
     unit: '%'
     prefix: ''
     decimals: 1
-    source: MB Associados
+    source: Mynavi Corp.
     hedge: false
-    title_en: Market reaction after Lula victory
+    title_en: AI impact on entry-level jobs
     labels_en:
-    - Brazil's currency, the real
-    - Stock market
+    - plan to hire a smaller number
+    - expect no change
+    - plan to hire more
     values:
-    - 12.0
-    - 14.0
-    title_es: Reacción del mercado tras la victoria de Lula
+    - 19.6
+    - 79.2
+    - 1.2
+    title_es: Impacto de la IA en los puestos de trabajo iniciales
     labels_es:
-    - La moneda de Brasil, el real
-    - Bolsa de valores
+    - planean contratar a un número menor
+    - no esperan cambios
+    - planean contratar a más
     fallback:
       type: map
-      country: Brazil
-      place: Brasilia
-      lat: -15.794
-      lon: -47.882
-      span: 25
+      country: Japan
+      place: Tokio
+      lat: 35.6762
+      lon: 139.6503
+      span: 12
   photo:
-    url: https://upload.wikimedia.org/wikipedia/commons/0/0c/Stamp_of_Brazil_-_1960_-_Colnect_189471_-_Cathedral.jpeg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled
-    credit: Post of Brazil · Public domain · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Stamp_of_Brazil_-_1960_-_Colnect_189471_-_Cathedral.jpeg
-    query: Brasilia cathedral architecture
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d6/Modern_office_workspace_with_a_stylish_desk.jpg/1280px-Modern_office_workspace_with_a_stylish_desk.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Shixart1985 · CC BY 2.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Modern_office_workspace_with_a_stylish_desk.jpg
+    query: modern office desks
   chart_check:
     result: ok
-    template: bars
+    template: waffle
