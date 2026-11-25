@@ -131,7 +131,9 @@ def gemini_call(messages, max_tokens=600):
 
     payload = json.dumps({
         "contents": [{"parts": [{"text": prompt_text}]}],
-        "generationConfig": {"maxOutputTokens": max_tokens}
+        # Gemini's "thinking" uses the same token allowance as the answer, so a small limit cuts the
+        # answer off mid-JSON. Give it plenty of room (only the tokens actually used are counted).
+        "generationConfig": {"maxOutputTokens": max(int(max_tokens), 8192)}
     }).encode("utf-8")
 
     url = f"{GEMINI_URL}?key={GEMINI_API_KEY}"
@@ -145,7 +147,15 @@ def gemini_call(messages, max_tokens=600):
         try:
             with urllib.request.urlopen(req, timeout=30) as r:
                 result = json.loads(r.read().decode("utf-8"))
-            return result["candidates"][0]["content"]["parts"][0]["text"]
+            cand = (result.get("candidates") or [{}])[0]
+            parts = (cand.get("content") or {}).get("parts") or []
+            text = "".join(p.get("text", "") for p in parts if not p.get("thought"))
+            reason = cand.get("finishReason", "")
+            if reason == "MAX_TOKENS":
+                raise ValueError("Gemini's answer was cut off (MAX_TOKENS)")
+            if not text.strip():
+                raise ValueError(f"Gemini sent an empty answer (finishReason {reason or 'unknown'})")
+            return text
         except urllib.error.HTTPError as e:
             error_body = e.read().decode("utf-8")
             print(f"  ❌ Gemini API error {e.code}: {error_body}")
@@ -254,9 +264,11 @@ def pick_best_5(headlines):
     """Use GitHub Models to pick the 5 best, varied, globally relevant stories."""
     numbered = trend_numbered(headlines)            # ★ on stories people are searching for
     print("🤖 Picking best 5 via GitHub Models...")
-    text = github_models_call([{
-        "role": "user",
-        "content": (
+    def check_pick(d):
+        ix = d.get("selected_indexes")
+        if not isinstance(ix, list) or not ix or not all(isinstance(i, int) for i in ix):
+            raise ValueError("no list of story numbers")
+    data = ai_json((
             "You are a world news editor. Pick the 5 best stories from the list.\n\n"
             "STEP 1 — Remove duplicates FIRST. Group headlines that describe the same "
             "underlying event (same country + same topic = same story, even if the "
@@ -273,11 +285,9 @@ def pick_best_5(headlines):
             "Return ONLY raw JSON, no markdown, no backticks:\n"
             '{"selected_indexes": [0, 1, 2, 3, 4]}\n\n'
             f"Indexes are 0-based. Stories:\n\n{numbered}"
-        )
-    }], max_tokens=100)
-    text    = extract_json(text)
-    indexes = json.loads(text)["selected_indexes"]
-    selected = [headlines[i] for i in indexes if i < len(headlines)]
+        ), 300, check_pick)
+    indexes = data["selected_indexes"]
+    selected = list(dict.fromkeys(headlines[i] for i in indexes if 0 <= i < len(headlines)))
     if len(selected) < 5:
         for h in headlines:
             if h not in selected:
@@ -294,18 +304,22 @@ def translate_to_spanish(headlines):
     headlines_text = "\n".join(f"- {n['title']}" for n in headlines)
 
     print("🌐 Translating via GitHub Models...")
-    text = github_models_call([{
-        "role": "user",
-        "content": (
+    data = ai_json((
             "Translate these headlines to Spanish from Spain. "
             "Return ONLY raw JSON, no markdown, no backticks, no explanation:\n"
             '{"news": [{"title": "translated"}, {"title": "translated"}, '
             '{"title": "translated"}, {"title": "translated"}, {"title": "translated"}]}\n\n'
             f"Headlines:\n{headlines_text}"
-        )
-    }])
+        ), 1200, lambda d: check_news(d, len(headlines)))
+    return json.dumps(data, ensure_ascii=False)
 
-    return extract_json(text)
+
+def check_news(d, n):
+    """The answer must be {"news": [{"title": "..."}, ...]} with exactly n non-empty titles."""
+    news = d.get("news")
+    if not isinstance(news, list) or len(news) != n or \
+            not all(isinstance(x, dict) and str(x.get("title") or "").strip() for x in news):
+        raise ValueError(f"expected {n} titles")
 
 
 # ── Google Trends boost ───────────────────────────────────────────────────────
@@ -400,9 +414,7 @@ def rewrite_headlines(headlines):
     """Rewrite raw API headlines to sound natural and punchy for social media."""
     numbered = "\n".join(f"{i+1}. {n['title']}" for i, n in enumerate(headlines))
     print("✍️ Rewriting headlines for natural language...")
-    text = github_models_call([{
-        "role": "user",
-        "content": (
+    data = ai_json((
             "Rewrite these 5 news headlines to sound natural and punchy for social media. "
             "Rules: remove prefixes like 'LIVE UPDATES:', 'Study:', 'Report:', 'Breaking:'. "
             "Remove dates in parentheses. Replace semicolons with a comma or 'and'. "
@@ -412,11 +424,8 @@ def rewrite_headlines(headlines):
             '{"news": [{"title": "rewritten"}, {"title": "rewritten"}, '
             '{"title": "rewritten"}, {"title": "rewritten"}, {"title": "rewritten"}]}\n\n'
             f"Headlines:\n{numbered}"
-        )
-    }])
-    text = extract_json(text)
-    rewritten = json.loads(text)["news"]
-    return rewritten
+        ), 1200, lambda d: check_news(d, len(headlines)))
+    return data["news"]
 
 
 # ── main ──────────────────────────────────────────────────────────────────────
@@ -476,9 +485,7 @@ def write_extra_languages(en_news, day_name, date_str):
     for code, style in EXTRA_LANGS.items():
         try:
             print(f"🌐 Translating to {code}...")
-            text = github_models_call([{
-                "role": "user",
-                "content": (
+            data = ai_json((
                     f"Translate these 5 news headlines into {style} "
                     "Keep every number, name, place and organisation exactly as in the original; "
                     "natural, concise headline style; same order; no extra words. "
@@ -486,9 +493,7 @@ def write_extra_languages(en_news, day_name, date_str):
                     '{"news": [{"title": "..."}, {"title": "..."}, {"title": "..."}, '
                     '{"title": "..."}, {"title": "..."}]}\n\n'
                     f"Headlines:\n{headlines_text}"
-                )
-            }])
-            data = json.loads(extract_json(text))
+                ), 1500, lambda d: check_news(d, len(en_news)))
             news = [n["title"].strip() for n in data.get("news", []) if n.get("title")]
             if len(news) != len(en_news):
                 raise ValueError(f"got {len(news)} headlines instead of {len(en_news)}")
@@ -542,13 +547,13 @@ def friday_good_news(en_news):
         if not cands:
             return en_news
         numbered = "\n".join(f"{i}. {t}" for i, (t, a) in enumerate(cands))
-        text = github_models_call([{"role": "user", "content": (
+        j = ai_json((
             "Pick the ONE headline that is genuinely good news for ordinary people (a breakthrough, rescue, "
             "record, recovery, community win, conservation success). Not sport results, not company profits, "
             "not anything involving deaths or disasters. If none qualifies, answer -1. Then rewrite it as a "
             "natural, punchy, factual headline under 18 words. Return ONLY raw JSON: "
-            '{"index": 0, "title": "..."}\n\n' + numbered)}], max_tokens=200)
-        j = json.loads(extract_json(text))
+            '{"index": 0, "title": "..."}\n\n' + numbered), 400,
+            lambda d: int(d.get("index", -1)))
         i = int(j.get("index", -1))
         if i < 0 or i >= len(cands) or not str(j.get("title", "")).strip():
             print("ℹ️ No good-news story today — keeping the normal five")
