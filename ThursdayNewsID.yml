@@ -1,111 +1,101 @@
-date: 2026-11-19
+date: 2026-11-26
 day: Thursday
 news:
-- title: India Desak Aksi Iklim Global yang Adil
-  source: Lokmat Times
-  url: https://www.lokmattimes.com/international/india-demands-fair-global-stocktake-for-climate-action-a001-w02/
-  good: false
-  trending: false
-  why: Menentukan beban keuangan dan biaya energi bagi warga sehari-hari di seluruh dunia.
-  cat: CLIMATE
-  visual:
-    type: map
-    country: India
-    place: New Delhi
-    lat: 28.6139
-    lon: 77.209
-    span: 25
-- title: China Serukan Penghapusan Hambatan Perdagangan dan Investasi di APEC
-  source: The Economic Times
-  url: https://economictimes.indiatimes.com/news/international/world-news/chinas-xi-calls-for-tearing-down-trade-investment-barriers-at-apec-summit/articleshow/135946522.cms
+- title: Nigeria sita 227 juta dollar AS sabu dan tangkap lima warga negara Meksiko.
+  source: Hindustan Times
+  url: https://www.hindustantimes.com/world-news/nigeria-seizes-meth-worth-usd-227-million-arrests-5-mexicans-101795624898627.html
   good: false
   trending: false
   why: ''
-  cat: ECONOMY
+  cat: CRIME
   visual:
     type: map
-    country: Peru
-    place: Lima
-    lat: -12.0464
-    lon: -77.0428
+    country: Nigeria
+    place: Nigeria
+    lat: 9.082
+    lon: 8.6753
     span: 25
   photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Cargo_ship_PONTIAC%2C_ENI_02320416%2C_MMSI_244660959._15-07-2024._%28actm.%29.jpg/1280px-Cargo_ship_PONTIAC%2C_ENI_02320416%2C_MMSI_244660959._15-07-2024._%28actm.%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: Agnes Monkelbaan · CC BY-SA 4.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Cargo_ship_PONTIAC,_ENI_02320416,_MMSI_244660959._15-07-2024._(actm.).jpg
-    query: cargo ship port
-- title: Lula Kembali Jabat Periode Keempat di Brasil dan Hadapi Tantangan Besar
-  source: The Tribune
-  url: https://www.tribuneindia.com/news/world/lula-to-govern-brazil-for-4th-term-but-faces-range-of-challenges-heres-what-to-know/
-  good: false
-  trending: false
-  why: ''
-  cat: POLITICS
-  visual:
-    type: chart
-    chart: bars
-    unit: trillion reais
-    prefix: ''
-    decimals: 1
-    source: Brazilian Forum on Public Safety
-    hedge: false
-    title_en: Brazil public debt growth
-    labels_en:
-    - '2022'
-    - '2023'
-    values:
-    - 7.2
-    - 11.1
-    title_id: Pertumbuhan utang publik Brasil
-    labels_id:
-    - '2022'
-    - '2023'
-    unit_id: triliun real
-    fallback:
-      type: map
-      country: Brazil
-      place: Brasilia
-      lat: -15.8267
-      lon: -47.9218
-      span: 25
-  photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d5/Warsaw_Presidential_Palace_%2822248p%29.jpg/1280px-Warsaw_Presidential_Palace_%2822248p%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: Rhododendrites · CC BY-SA 4.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Warsaw_Presidential_Palace_(22248p).jpg
-    query: presidential palace building
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Shipping_container_-_Port_of_Rotterdam_-_2017_-_3.jpg/1280px-Shipping_container_-_Port_of_Rotterdam_-_2017_-_3.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: AgainErick · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Shipping_container_-_Port_of_Rotterdam_-_2017_-_3.jpg
+    query: shipping containers port
   chart_check:
-    result: ok
-    template: bars
-- title: Menteri Sebut Pembicaraan dengan Meta Bersifat Rahasia di Tengah Rumor Kesepakatan
-  source: SooToday
-  url: https://www.sootoday.com/national-news/minister-says-discussions-with-meta-confidential-following-reports-of-possible-deal-13032018
+    result: 'not used: 0 isn''t in the article'
+- title: Saham infrastruktur AI terus merosot sementara Anthropic akhiri hari di zona hijau.
+  source: EUROPE SAYS
+  url: https://www.europesays.com/3400765/
   good: false
   trending: false
-  why: ''
-  cat: BUSINESS
+  why: Kejatuhan pasar saham mengancam tabungan pensiun dan stabilitas ekonomi secara luas.
+  cat: TECH
   visual:
     type: icon
   photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e0/A_view_of_the_server_room_at_The_National_Archives.jpg/1280px-A_view_of_the_server_room_at_The_National_Archives.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: The National Archives (UK) · CC BY 3.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:A_view_of_the_server_room_at_The_National_Archives.jpg
-    query: server room technology
-- title: Perdana Menteri Kanada Mark Carney Sebut AS Ancaman Keamanan yang Lebih Besar Dibanding China
-  source: Breitbart News Network
-  url: https://www.breitbart.com/politics/2026/11/10/canadian-prime-minister-mark-carney-labels-united-states-more-of-a-security-threat-than-china/
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/7/74/Servers_in_a_Rack.jpg/1280px-Servers_in_a_Rack.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Abigor · CC BY-SA 3.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Servers_in_a_Rack.jpg
+    query: computer servers rack
+  chart_check:
+    result: 'not used: bars need 2–8 values (got 16); -3.8 isn''t in the article; 0 isn''t in the article'
+- title: Merz dari Jerman bela bantuan Ukraina dan peringatkan Rusia adalah ancaman yang kian besar.
+  source: U.S. News & World Report
+  url: https://www.usnews.com/news/world/articles/2026-11-25/germanys-merz-defends-aid-for-ukraine-says-russia-poses-growing-threat-to-europe
+  good: false
+  trending: false
+  why: Perubahan keamanan Eropa memengaruhi stabilitas regional dan belanja pertahanan domestik.
+  cat: POLITICS
+  visual:
+    type: map
+    country: Germany
+    place: Jerman
+    lat: 51.1657
+    lon: 10.4515
+    span: 25
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/Bundestag_Deutschland_Reichstagsgeb%C3%A4ude_Berlin_Panorama.jpg/1280px-Bundestag_Deutschland_Reichstagsgeb%C3%A4ude_Berlin_Panorama.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Norbert Nagel · CC BY-SA 3.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Bundestag_Deutschland_Reichstagsgeb%C3%A4ude_Berlin_Panorama.jpg
+    query: Bundestag building
+- title: Kepulauan Solomon pilih Australia sebagai mitra keamanan utama dalam perjanjian yang singkirkan China.
+  source: Hindustan Times
+  url: https://www.hindustantimes.com/world-news/solomon-islands-names-australia-as-its-primary-security-partner-in-a-new-treaty-that-excludes-china-101795584765685.html
   good: false
   trending: false
   why: ''
   cat: WORLD
   visual:
     type: map
-    country: Canada
-    place: Ottawa
-    lat: 45.4215
-    lon: -75.6972
+    country: Solomon Islands
+    place: Kepulauan Solomon
+    lat: -9.6457
+    lon: 160.1562
     span: 25
   photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/6/63/Parlament_Wien_abends.jpg/1280px-Parlament_Wien_abends.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: Thomas Wolf , www.foto-tw.de · CC BY-SA 3.0 de · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Parlament_Wien_abends.jpg
-    query: parliament building
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d5/Koh_Mak_%28island%29%2C_Thailand%2C_Palm_trees_on_the_beach.jpg/1280px-Koh_Mak_%28island%29%2C_Thailand%2C_Palm_trees_on_the_beach.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Vyacheslav Argenberg · CC BY 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Koh_Mak_(island),_Thailand,_Palm_trees_on_the_beach.jpg
+    query: tropical island palm trees
+  chart_check:
+    result: 'not used: 0 isn''t in the article'
+- title: Darurat kebakaran hutan diumumkan di sebuah pulau Australia saat warga diberi tahu sudah terlambat untuk mengungsi.
+  source: Lokmat Times
+  url: https://www.lokmattimes.com/international/bushfire-emergency-on-australian-island-residents-told-too-late-to-leave-a001-w02/
+  good: false
+  trending: false
+  why: ''
+  cat: CLIMATE
+  visual:
+    type: map
+    country: Australia
+    place: Australia
+    lat: -25.2744
+    lon: 133.7751
+    span: 25
+  photo:
+    url: https://upload.wikimedia.org/wikipedia/commons/3/37/Easter_Sunday_bushfire_smoke.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled
+    credit: User:JarrahTree · CC BY 2.5 au · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Easter_Sunday_bushfire_smoke.JPG
+    query: bushfire smoke trees
+  chart_check:
+    result: 'not used: 0 isn''t in the article'
