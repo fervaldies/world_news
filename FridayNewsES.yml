@@ -1,120 +1,100 @@
-date: 2026-11-20
+date: 2026-11-27
 day: Friday
 news:
-- title: El conflicto en Oriente Medio es la mayor amenaza para la seguridad energética mundial de la historia, advierte la AIE
-  source: Euronews
-  url: https://www.euronews.com/2026/11/19/middle-east-conflict-poses-biggest-threat-to-global-energy-security-in-history-iea-warns
-  good: false
-  trending: false
-  why: Podría desencadenar escasez grave de combustible y facturas de servicios mucho más altas.
-  cat: ENERGY
-  visual:
-    type: icon
-  photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e0/Refinery_Tanks_2.jpg/1280px-Refinery_Tanks_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: Carl Young · CC BY-SA 4.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Refinery_Tanks_2.jpg
-    query: oil refinery pipes
-- title: La inflación en el Reino Unido alcanza un máximo de 12 meses debido al encarecimiento de los carburantes
-  source: Euronews
-  url: https://www.euronews.com/2026/11/19/uk-inflation-hits-12-month-high-on-surging-motor-fuel-costs
-  good: false
-  trending: false
-  why: Reduce el poder adquisitivo de los hogares y aumenta el coste de la vida.
-  cat: ECONOMY
-  visual:
-    type: chart
-    chart: bignum
-    unit: '%'
-    prefix: ''
-    decimals: 1
-    source: Office for National Statistics
-    hedge: false
-    title_en: UK consumer prices index inflation
-    so_what_en: Highest in 12 months
-    value: 3.6
-    label_en: in the year to September
-    change_unit: pts
-    previous: 3.5
-    change: 0.1
-    period_prev: September
-    title_es: Inflación del índice de precios al consumo en el Reino Unido
-    label_es: en el año hasta septiembre
-    period_prev_es: septiembre
-    so_what_es: La más alta en 12 meses
-    fallback:
-      type: map
-      country: United Kingdom
-      place: Reino Unido
-      lat: 55.3781
-      lon: -3.436
-      span: 12
-  photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Fuel_pump_at_a_Valero_gas_station_in_Greenville%2C_South_Carolina_01.jpg/1280px-Fuel_pump_at_a_Valero_gas_station_in_Greenville%2C_South_Carolina_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: Harrison Keely · CC BY 4.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Fuel_pump_at_a_Valero_gas_station_in_Greenville,_South_Carolina_01.jpg
-    query: gas station fuel pump
-  chart_check:
-    result: ok
-    template: bignum
-- title: El papa León insta a Sudamérica a superar las divisiones en la frontera entre Uruguay y Argentina
+- title: México quiere negociar con EE. UU. sobre el uso del espacio aéreo por parte de SpaceX.
   source: U.S. News & World Report
-  url: https://www.usnews.com/news/world/articles/2026-11-07/pope-leo-urges-south-america-to-bridge-divides-on-uruguay-argentina-border
-  good: false
-  trending: true
-  why: ''
-  cat: WORLD
-  visual:
-    type: map
-    country: Uruguay
-    place: Frontera entre Uruguay y Argentina
-    lat: -33.4489
-    lon: -58.4438
-    span: 6
-    country2: Argentina
-    place2: Frontera entre Uruguay y Argentina
-    lat2: -33.4489
-    lon2: -58.4438
-  photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b1/Jian_Yalu_River_Border_Railway_Bridge_korean_side_2011_07_24.jpg/1280px-Jian_Yalu_River_Border_Railway_Bridge_korean_side_2011_07_24.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: Jin Ping Han · CC BY-SA 3.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Jian_Yalu_River_Border_Railway_Bridge_korean_side_2011_07_24.jpg
-    query: river border bridge
-- title: Francia supera a Suecia como líder europeo en igualdad de género, pero el progreso general se frena
-  source: EUobserver
-  url: https://euobserver.com/249501/france-dethrones-sweden-as-eu-gender-equality-leader-but-overall-progress-is-slowing/
+  url: https://www.usnews.com/news/world/articles/2026-11-26/mexico-seeking-talks-with-us-on-spacex-airspace-use
   good: false
   trending: false
   why: ''
-  cat: SOCIETY
+  cat: TECH
   visual:
     type: map
-    country: France
-    place: Francia
-    lat: 46.2276
-    lon: 2.2137
+    country: Mexico
+    place: Mexico
+    lat: 23.6345
+    lon: -102.5528
+    span: 25
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Space_Shuttle_Columbia_launching.jpg/1280px-Space_Shuttle_Columbia_launching.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: NASA · Public domain · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Space_Shuttle_Columbia_launching.jpg
+    query: rocket launch pad
+- title: Nvidia deja de enviar productos al Sur Global mientras aumenta la competencia en IA.
+  source: The daily Star
+  url: https://www.dailystar.co.uk/news/us-news/america-gone-war-china-over-37920404
+  good: false
+  trending: false
+  why: Afecta el acceso global a la tecnología informática avanzada y a las herramientas de inteligencia artificial.
+  cat: BUSINESS
+  visual:
+    type: map
+    country: United States of America
+    place: Global South
+    lat: 0.0
+    lon: 0.0
+    span: 90
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/7/74/Servers_in_a_Rack.jpg/1280px-Servers_in_a_Rack.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Abigor · CC BY-SA 3.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Servers_in_a_Rack.jpg
+    query: computer server rack
+  chart_check:
+    result: 'not used: 0 isn''t in the article'
+- title: El alemán Merz defiende la ayuda a Ucrania y advierte de una creciente amenaza rusa.
+  source: U.S. News & World Report
+  url: https://www.usnews.com/news/world/articles/2026-11-25/germanys-merz-defends-aid-for-ukraine-says-russia-poses-growing-threat-to-europe
+  good: false
+  trending: false
+  why: ''
+  cat: CONFLICT
+  visual:
+    type: map
+    country: Germany
+    place: Germany
+    lat: 51.1657
+    lon: 10.4515
     span: 12
   photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e6/Paris_Night.jpg/1280px-Paris_Night.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: Benh LIEU SONG · CC BY-SA 4.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Paris_Night.jpg
-    query: Paris skyline view
-- title: Rescatan sano y salvo a un dóberman de un profundo pozo minero en el oeste de Victoria
-  source: ABC (Australian Broadcasting Corporation)
-  url: https://www.abc.net.au/news/2026-11-20/dog-rescued-from-disused-mineshaft-in-western-victoria/107394006
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/Bundestag_Deutschland_Reichstagsgeb%C3%A4ude_Berlin_Panorama.jpg/1280px-Bundestag_Deutschland_Reichstagsgeb%C3%A4ude_Berlin_Panorama.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Norbert Nagel · CC BY-SA 3.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Bundestag_Deutschland_Reichstagsgeb%C3%A4ude_Berlin_Panorama.jpg
+    query: Bundestag building
+- title: Meta y Ray-Ban se enfrentan a acciones legales en Alemania por la privacidad de las gafas inteligentes.
+  source: Hindustan Times
+  url: https://www.hindustantimes.com/world-news/rayban-meta-face-legal-action-in-germany-over-data-privacy-risks-linked-to-ai-powered-smart-glasses-101795538262813.html
+  good: false
+  trending: false
+  why: ''
+  cat: JUSTICE
+  visual:
+    type: map
+    country: Germany
+    place: Germany
+    lat: 51.1657
+    lon: 10.4515
+    span: 12
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fa/COP30_-_Smart_Glasses_01.jpg/1280px-COP30_-_Smart_Glasses_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Xuthoria · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:COP30_-_Smart_Glasses_01.jpg
+    query: smart glasses
+- title: Cuatro cazadores de patos rescatados con vida tras hundirse su barco en la bahía de Saginaw
+  source: M Live Michigan
+  url: https://www.mlive.com/news/saginaw-bay-city/2026/11/four-duck-hunters-rescued-after-boat-sinks-in-saginaw-bay.html
   good: true
   trending: false
   why: ''
   cat: GOOD NEWS
   visual:
     type: map
-    country: Australia
-    place: Western Victoria
-    lat: -37.4713
-    lon: 142.7858
-    span: 6
+    country: United States of America
+    place: Saginaw Bay
+    lat: 43.8584
+    lon: -83.6935
+    span: 3
   photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a7/Rotten_fence_surrounding_deep_mine_shaft_-_geograph.org.uk_-_5184167.jpg/1280px-Rotten_fence_surrounding_deep_mine_shaft_-_geograph.org.uk_-_5184167.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: Matthew Hatton · CC BY-SA 2.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Rotten_fence_surrounding_deep_mine_shaft_-_geograph.org.uk_-_5184167.jpg
-    query: deep mine shaft
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b1/Moscow%2C_rescue_boat_26%2C_Mar_2026_03.jpg/1280px-Moscow%2C_rescue_boat_26%2C_Mar_2026_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Retired electrician · CC0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Moscow,_rescue_boat_26,_Mar_2026_03.jpg
+    query: rescue boat

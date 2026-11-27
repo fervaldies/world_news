@@ -1,120 +1,100 @@
-date: 2026-11-20
+date: 2026-11-27
 day: Friday
 news:
-- title: Konflik Timur Tengah adalah ancaman terbesar bagi keamanan energi global yang pernah ada, peringatkan IEA
-  source: Euronews
-  url: https://www.euronews.com/2026/11/19/middle-east-conflict-poses-biggest-threat-to-global-energy-security-in-history-iea-warns
-  good: false
-  trending: false
-  why: Hal itu dapat memicu kelangkaan bahan bakar yang parah dan tagihan utilitas yang jauh lebih tinggi.
-  cat: ENERGY
-  visual:
-    type: icon
-  photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e0/Refinery_Tanks_2.jpg/1280px-Refinery_Tanks_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: Carl Young · CC BY-SA 4.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Refinery_Tanks_2.jpg
-    query: oil refinery pipes
-- title: Inflasi Inggris capai level tertinggi dalam 12 bulan seiring lonjakan biaya bahan bakar mobil
-  source: Euronews
-  url: https://www.euronews.com/2026/11/19/uk-inflation-hits-12-month-high-on-surging-motor-fuel-costs
-  good: false
-  trending: false
-  why: Hal itu mengurangi daya beli rumah tangga dan meningkatkan biaya hidup.
-  cat: ECONOMY
-  visual:
-    type: chart
-    chart: bignum
-    unit: '%'
-    prefix: ''
-    decimals: 1
-    source: Office for National Statistics
-    hedge: false
-    title_en: UK consumer prices index inflation
-    so_what_en: Highest in 12 months
-    value: 3.6
-    label_en: in the year to September
-    change_unit: pts
-    previous: 3.5
-    change: 0.1
-    period_prev: September
-    title_id: Inflasi indeks harga konsumen Inggris
-    label_id: dalam setahun hingga September
-    period_prev_id: September
-    so_what_id: Tertinggi dalam 12 bulan
-    fallback:
-      type: map
-      country: United Kingdom
-      place: Britania Raya
-      lat: 55.3781
-      lon: -3.436
-      span: 12
-  photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Fuel_pump_at_a_Valero_gas_station_in_Greenville%2C_South_Carolina_01.jpg/1280px-Fuel_pump_at_a_Valero_gas_station_in_Greenville%2C_South_Carolina_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: Harrison Keely · CC BY 4.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Fuel_pump_at_a_Valero_gas_station_in_Greenville,_South_Carolina_01.jpg
-    query: gas station fuel pump
-  chart_check:
-    result: ok
-    template: bignum
-- title: Paus Leo desak Amerika Selatan jembatani perpecahan di perbatasan Uruguay-Argentina
+- title: Meksiko Ingin Berunding dengan AS soal Penggunaan Wilayah Udara SpaceX
   source: U.S. News & World Report
-  url: https://www.usnews.com/news/world/articles/2026-11-07/pope-leo-urges-south-america-to-bridge-divides-on-uruguay-argentina-border
-  good: false
-  trending: true
-  why: ''
-  cat: WORLD
-  visual:
-    type: map
-    country: Uruguay
-    place: Perbatasan Uruguay-Argentina
-    lat: -33.4489
-    lon: -58.4438
-    span: 6
-    country2: Argentina
-    place2: Perbatasan Uruguay-Argentina
-    lat2: -33.4489
-    lon2: -58.4438
-  photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b1/Jian_Yalu_River_Border_Railway_Bridge_korean_side_2011_07_24.jpg/1280px-Jian_Yalu_River_Border_Railway_Bridge_korean_side_2011_07_24.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: Jin Ping Han · CC BY-SA 3.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Jian_Yalu_River_Border_Railway_Bridge_korean_side_2011_07_24.jpg
-    query: river border bridge
-- title: Prancis kalahkan Swedia sebagai pemimpin kesetaraan gender Eropa, namun kemajuan secara keseluruhan melambat
-  source: EUobserver
-  url: https://euobserver.com/249501/france-dethrones-sweden-as-eu-gender-equality-leader-but-overall-progress-is-slowing/
+  url: https://www.usnews.com/news/world/articles/2026-11-26/mexico-seeking-talks-with-us-on-spacex-airspace-use
   good: false
   trending: false
   why: ''
-  cat: SOCIETY
+  cat: TECH
   visual:
     type: map
-    country: France
-    place: Prancis
-    lat: 46.2276
-    lon: 2.2137
+    country: Mexico
+    place: Mexico
+    lat: 23.6345
+    lon: -102.5528
+    span: 25
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Space_Shuttle_Columbia_launching.jpg/1280px-Space_Shuttle_Columbia_launching.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: NASA · Public domain · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Space_Shuttle_Columbia_launching.jpg
+    query: rocket launch pad
+- title: Nvidia Hentikan Pengiriman ke Global South Seiring Persaingan AI yang Kian Memanas
+  source: The daily Star
+  url: https://www.dailystar.co.uk/news/us-news/america-gone-war-china-over-37920404
+  good: false
+  trending: false
+  why: Hal ini memengaruhi akses global ke teknologi komputasi canggih dan alat AI.
+  cat: BUSINESS
+  visual:
+    type: map
+    country: United States of America
+    place: Global South
+    lat: 0.0
+    lon: 0.0
+    span: 90
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/7/74/Servers_in_a_Rack.jpg/1280px-Servers_in_a_Rack.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Abigor · CC BY-SA 3.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Servers_in_a_Rack.jpg
+    query: computer server rack
+  chart_check:
+    result: 'not used: 0 isn''t in the article'
+- title: Merz dari Jerman Bela Bantuan untuk Ukraina dan Peringatkan Ancaman Rusia yang Meningkat
+  source: U.S. News & World Report
+  url: https://www.usnews.com/news/world/articles/2026-11-25/germanys-merz-defends-aid-for-ukraine-says-russia-poses-growing-threat-to-europe
+  good: false
+  trending: false
+  why: ''
+  cat: CONFLICT
+  visual:
+    type: map
+    country: Germany
+    place: Germany
+    lat: 51.1657
+    lon: 10.4515
     span: 12
   photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e6/Paris_Night.jpg/1280px-Paris_Night.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: Benh LIEU SONG · CC BY-SA 4.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Paris_Night.jpg
-    query: Paris skyline view
-- title: Doberman berhasil diselamatkan dari lubang tambang dalam di Victoria barat
-  source: ABC (Australian Broadcasting Corporation)
-  url: https://www.abc.net.au/news/2026-11-20/dog-rescued-from-disused-mineshaft-in-western-victoria/107394006
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/Bundestag_Deutschland_Reichstagsgeb%C3%A4ude_Berlin_Panorama.jpg/1280px-Bundestag_Deutschland_Reichstagsgeb%C3%A4ude_Berlin_Panorama.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Norbert Nagel · CC BY-SA 3.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Bundestag_Deutschland_Reichstagsgeb%C3%A4ude_Berlin_Panorama.jpg
+    query: Bundestag building
+- title: Meta dan Ray-Ban Hadapi Langkah Hukum di Jerman Terkait Privasi Kacamata Pintar
+  source: Hindustan Times
+  url: https://www.hindustantimes.com/world-news/rayban-meta-face-legal-action-in-germany-over-data-privacy-risks-linked-to-ai-powered-smart-glasses-101795538262813.html
+  good: false
+  trending: false
+  why: ''
+  cat: JUSTICE
+  visual:
+    type: map
+    country: Germany
+    place: Germany
+    lat: 51.1657
+    lon: 10.4515
+    span: 12
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fa/COP30_-_Smart_Glasses_01.jpg/1280px-COP30_-_Smart_Glasses_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Xuthoria · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:COP30_-_Smart_Glasses_01.jpg
+    query: smart glasses
+- title: Empat Pemburu Bebek Diselamatkan Hidup-hidup Setelah Kapal Mereka Tenggelam di Saginaw Bay
+  source: M Live Michigan
+  url: https://www.mlive.com/news/saginaw-bay-city/2026/11/four-duck-hunters-rescued-after-boat-sinks-in-saginaw-bay.html
   good: true
   trending: false
   why: ''
   cat: GOOD NEWS
   visual:
     type: map
-    country: Australia
-    place: Western Victoria
-    lat: -37.4713
-    lon: 142.7858
-    span: 6
+    country: United States of America
+    place: Saginaw Bay
+    lat: 43.8584
+    lon: -83.6935
+    span: 3
   photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a7/Rotten_fence_surrounding_deep_mine_shaft_-_geograph.org.uk_-_5184167.jpg/1280px-Rotten_fence_surrounding_deep_mine_shaft_-_geograph.org.uk_-_5184167.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: Matthew Hatton · CC BY-SA 2.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Rotten_fence_surrounding_deep_mine_shaft_-_geograph.org.uk_-_5184167.jpg
-    query: deep mine shaft
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b1/Moscow%2C_rescue_boat_26%2C_Mar_2026_03.jpg/1280px-Moscow%2C_rescue_boat_26%2C_Mar_2026_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Retired electrician · CC0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Moscow,_rescue_boat_26,_Mar_2026_03.jpg
+    query: rescue boat
