@@ -1,68 +1,139 @@
-date: 2026-11-21
+date: 2026-11-28
 day: Saturday
 news:
-- title: França ultrapassa a Suécia e lidera igualdade de gênero na UE, embora o progresso geral esteja desacelerando.
-  source: EUobserver
-  url: https://euobserver.com/249501/france-dethrones-sweden-as-eu-gender-equality-leader-but-overall-progress-is-slowing/
+- title: Primeiro-ministro Carney apoia a Rodovia Mackenzie Valley para conectar e transformar o Norte do Canadá
+  source: The Expositor
+  url: https://www.brantfordexpositor.ca/press-releases/pr-newswire/prime-minister-carney-lists-the-mackenzie-valley-highway-as-a-project-of-national-interest-to-connect-and-transform-canadas-north/
   good: false
   trending: false
-  why: Mostra a mudança nos padrões trabalhistas e sociais nos países europeus.
-  cat: SOCIETY
+  why: O desenvolvimento de uma nova rodovia conecta comunidades remotas do norte e transforma o transporte regional.
+  cat: POLITICS
   visual:
     type: map
-    country: France
-    place: França
-    lat: 46.603354
-    lon: 1.888334
-    span: 12
-- title: Por dentro das falsas ameaças de bomba que recentemente puseram escolas e aeroportos em pânico pela Europa.
-  source: U.S. News & World Report
-  url: https://www.usnews.com/news/world/articles/2026-11-17/exclusive-death-is-near-inside-the-hoax-bomb-threats-that-rattled-europes-schools-and-airports
+    country: Canada
+    place: Mackenzie Valley
+    lat: 65.0
+    lon: -125.0
+    span: 25
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/8/84/Snowy_Mountains_Highway%2C_Kiandra.JPG/1280px-Snowy_Mountains_Highway%2C_Kiandra.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: MDRX · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Snowy_Mountains_Highway,_Kiandra.JPG
+    query: snowy mountain highway
+- title: Índia pode se tornar polo de fabricação de submarinos para o Sudeste Asiático, diz CEO da TKMS
+  source: The Economic Times
+  url: https://economictimes.indiatimes.com/news/defence/india-could-become-submarine-manufacturing-hub-for-southeast-asia-tkms-ceo/articleshow/136222026.cms
   good: false
   trending: false
   why: ''
-  cat: JUSTICE
+  cat: BUSINESS
   visual:
-    type: icon
+    type: chart
+    chart: bignum
+    unit: ''
+    prefix: $
+    decimals: 1
+    source: TOI
+    hedge: true
+    title_en: Submarine deal value
+    value: 9
+    label_en: billion
+    change_unit: billion
+    previous: 8
+    title_pt: Valor do acordo de submarinos
+    label_pt: bilhões
+    fallback:
+      type: map
+      country: India
+      place: Índia
+      lat: 20.5937
+      lon: 78.9629
+      span: 25
   photo:
-    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8c/202201_Atrium_and_Transit_Re-Security_Area_at_Frankfurt_Airport_Terminal_1_Concourse_AZ.jpg/1280px-202201_Atrium_and_Transit_Re-Security_Area_at_Frankfurt_Airport_Terminal_1_Concourse_AZ.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
-    credit: MNXANL · CC BY-SA 4.0 · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:202201_Atrium_and_Transit_Re-Security_Area_at_Frankfurt_Airport_Terminal_1_Concourse_AZ.jpg
-    query: airport terminal security
-- title: Nigéria diz que apoio da inteligência dos EUA ajuda a combater militantes e garantir a eleição de 2027.
-  source: U.S. News & World Report
-  url: https://www.usnews.com/news/world/articles/2026-11-16/nigeria-says-us-intelligence-support-helping-target-militants-secure-2027-election
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1a/US_Navy_030814-N-0000X-001_USS_Ohio_%28SSGN_726%29_is_in_dry_dock_undergoing_a_conversion_from_a_Ballistic_Missile_Submarine_%28SSBN%29_to_a_Guided_Missile_Submarine_%28SSGN%29_designation.jpg/1280px-thumbnail.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: U.S. Navy photo · Public domain · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:US_Navy_030814-N-0000X-001_USS_Ohio_(SSGN_726)_is_in_dry_dock_undergoing_a_conversion_from_a_Ballistic_Missile_Submarine_(SSBN)_to_a_Guided_Missile_Submarine_(SSGN)_designation.jpg
+    query: submarine shipyard dock
+  chart_check:
+    result: ok
+    template: bignum
+- title: Drones da China estão reconfigurando forças militares em toda a Ásia
+  source: Deccan Herald
+  url: https://www.deccanherald.com/opinion/chinas-drones-are-reshaping-asias-militaries-4233373
   good: false
   trending: false
-  why: Impacta a segurança e a estabilidade regional para os cidadãos antes da votação.
+  why: ''
   cat: CONFLICT
   visual:
     type: map
-    country: Nigeria
-    place: Nigéria
-    lat: 9.082003
-    lon: 8.675277
+    country: China
+    place: China
+    lat: 35.8617
+    lon: 104.1954
     span: 25
-- title: Papa Leão encerra megaturné pela América do Sul com mais uma multidão.
-  source: U.S. News & World Report
-  url: https://www.usnews.com/news/world/articles/2026-11-16/pope-leo-ends-south-america-tour-that-drew-millions-with-one-final-vast-crowd
-  good: false
-  trending: false
-  why: ''
-  cat: WORLD
-  visual:
-    type: icon
   photo:
-    url: https://upload.wikimedia.org/wikipedia/commons/f/fe/Trinity_Episcopal_Cathedral_in_Columbia%2C_the_capital_city_of_South_Carolina_It_is_the_first_Episcopal%2C_and_the_oldest_surviving%2C_sanctuary_in_Columbia.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled
-    credit: Carol M. Highsmith · Public domain · Wikimedia Commons
-    page: https://commons.wikimedia.org/wiki/File:Trinity_Episcopal_Cathedral_in_Columbia,_the_capital_city_of_South_Carolina_It_is_the_first_Episcopal,_and_the_oldest_surviving,_sanctuary_in_Columbia.jpg
-    query: cathedrals in South America
-- title: Negociações da ONU sobre armas autônomas entram na prorrogação com países divididos.
-  source: Times of India
-  url: https://timesofindia.indiatimes.com/india/latest-india-world-news-live-updates-today-breaking-news-november-22-2026/liveblog/136038500.cms
+    url: https://upload.wikimedia.org/wikipedia/commons/a/a3/F7F-2D_Tigercat_of_VU-6_in_flight_with_KD2R_drone_in_1953.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled
+    credit: USN · Public domain · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:F7F-2D_Tigercat_of_VU-6_in_flight_with_KD2R_drone_in_1953.jpg
+    query: military drone flight
+- title: Chips de IA banidos da Nvidia aparecem em data center de Xangai ligado a Alice Huang
+  source: Times Now
+  url: https://www.timesnownews.com/world/us/us-news/nvidia-blackwell-chips-shanghai-data-center-alice-huang-jensen-huang-article-156576902
   good: false
   trending: false
   why: ''
   cat: TECH
   visual:
+    type: chart
+    chart: bars
+    unit: million yuan
+    prefix: ''
+    decimals: 1
+    source: Bloomberg
+    hedge: false
+    title_en: Loan amounts for Shanghai firms
+    labels_en:
+    - Shanghai Shuoyao
+    - Shanghai Kezhan
+    - Shanghai Longjie
+    values:
+    - 96
+    - 90
+    - 200
+    title_pt: Valores de empréstimo para empresas de Xangai
+    labels_pt:
+    - Shanghai Shuoyao
+    - Shanghai Kezhan
+    - Shanghai Longjie
+    unit_pt: milhões de yuans
+    fallback:
+      type: map
+      country: China
+      place: Xangai
+      lat: 31.2304
+      lon: 121.4737
+      span: 12
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/0/04/Network_switches_arranged_in_a_server_rack_with_visible_LED_lights_indicating_connection_status_and_power_levels.jpg/1280px-Network_switches_arranged_in_a_server_rack_with_visible_LED_lights_indicating_connection_status_and_power_levels.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Shixart1985 · CC BY 2.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Network_switches_arranged_in_a_server_rack_with_visible_LED_lights_indicating_connection_status_and_power_levels.jpg
+    query: server rack lights
+  chart_check:
+    result: ok
+    template: bars
+- title: Atual campeã, a Índia goleia a Malásia por 6-0 no Women's Asian Champions Trophy
+  source: Lokmat Times
+  url: https://www.lokmattimes.com/other-sports/womens-asian-champions-trophy-defending-champions-india-outclass-malaysia-6-2-to-set-up-final-with-china-a001-w02/
+  good: false
+  trending: false
+  why: ''
+  cat: SPORT
+  visual:
     type: icon
+  photo:
+    url: https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/Katie_Bam_USA_2.jpg/1280px-Katie_Bam_USA_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+    credit: Ady Kerry / STX · CC BY-SA 4.0 · Wikimedia Commons
+    page: https://commons.wikimedia.org/wiki/File:Katie_Bam_USA_2.jpg
+    query: field hockey stick
+  chart_check:
+    result: 'not used: 16.7 isn''t in the article; 83.3 isn''t in the article; a quoted sentence isn''t in the article'
